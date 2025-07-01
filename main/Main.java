@@ -16,5 +16,7 @@ public class Main {
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
         window.pack();
+
+        gamePanel.startGameLoop();
     }
 }
