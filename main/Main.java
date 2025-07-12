@@ -9,14 +9,12 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Pixel Adventure Quest");
-
         window.setLocationRelativeTo(null);
-        window.setVisible(true);
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
         window.pack();
-
+        window.setVisible(true);
         gamePanel.startGameLoop();
     }
 }

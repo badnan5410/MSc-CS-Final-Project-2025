@@ -16,13 +16,24 @@ public class GamePanel extends JPanel implements Runnable {
     final int SCREEN_WIDTH = TRUE_TILE_SIZE * MAX_COL; // 16x48 = 768 pixels
     final int SCREEN_HEIGHT = TRUE_TILE_SIZE * MAX_ROW; // 12x48 = 576 pixels
 
+    final int FPS = 60;
+
+    KeyHandler keyHandler = new KeyHandler();
     Thread gameLoop;
+
+    // Player character default position
+    int playerX = 100;
+    int playerY = 100;
+    int player_speed = 4;
 
     // Class constructor
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
+        this.requestFocusInWindow();
     }
 
     public void startGameLoop() {
@@ -33,21 +44,32 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         while (gameLoop != null) {
-            //System.out.println("Game loop is running...");
+            long currentTime = System.nanoTime();
+
             update();
+
             repaint();
+            
         }
     }
 
     public void update() {
-
+        if (keyHandler.upKey) {
+            playerY -= player_speed;
+        } else if (keyHandler.downKey) {
+            playerY += player_speed;
+        } else if (keyHandler.rightKey) {
+            playerX += player_speed;
+        } else if (keyHandler.leftKey) {
+            playerX -= player_speed;
+        }
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.white);
-        g2.fillRect(100, 100, TRUE_TILE_SIZE, TRUE_TILE_SIZE);
+        g2.fillRect(playerX, playerY, TRUE_TILE_SIZE, TRUE_TILE_SIZE);
         g2.dispose();
     }
 }
