@@ -32,16 +32,16 @@ public class KeyHandler implements KeyListener {
         int keyCode = e.getKeyCode();
 
         if (keyCode == KeyEvent.VK_W) {
-            upKey = true;
+            upKey = false;
         }
         if (keyCode == KeyEvent.VK_A) {
-            leftKey = true;
+            leftKey = false;
         }
         if (keyCode == KeyEvent.VK_S) {
-            downKey = true;
+            downKey = false;
         }
         if (keyCode == KeyEvent.VK_D) {
-            rightKey = true;
+            rightKey = false;
         }
     }
 }

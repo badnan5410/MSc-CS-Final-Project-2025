@@ -43,24 +43,36 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        double time_per_frame = (double) 1000000000 /FPS;
+        double frame_tracker = 0;
+        long previousTime = System.nanoTime();
+        long currentTime;
+
         while (gameLoop != null) {
-            long currentTime = System.nanoTime();
+            currentTime = System.nanoTime();
+            frame_tracker += (currentTime-previousTime) / time_per_frame;
+            previousTime = currentTime;
 
-            update();
+            if (frame_tracker >= 1) {
+                update();
+                repaint();
+                frame_tracker--;
+            }
 
-            repaint();
-            
         }
     }
 
     public void update() {
         if (keyHandler.upKey) {
             playerY -= player_speed;
-        } else if (keyHandler.downKey) {
+        }
+        if (keyHandler.downKey) {
             playerY += player_speed;
-        } else if (keyHandler.rightKey) {
+        }
+        if (keyHandler.rightKey) {
             playerX += player_speed;
-        } else if (keyHandler.leftKey) {
+        }
+        if (keyHandler.leftKey) {
             playerX -= player_speed;
         }
     }
