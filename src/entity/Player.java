@@ -23,7 +23,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         x = 100;
         y = 100;
-        speed = 4;
+        speed = 3;
         direction = "down";
     }
 
@@ -43,6 +43,19 @@ public class Player extends Entity {
     }
 
     public void update() {
+        if (keyHandler.upKey || keyHandler.downKey || keyHandler.rightKey || keyHandler.leftKey) {
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                }
+                else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
+        }
+
         if (keyHandler.upKey) {
             direction = "up";
             y -= speed;
@@ -64,18 +77,41 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
         BufferedImage bufferedImage = null;
 
-        if (direction.equals("up")) {
-            bufferedImage = up1;
+        switch (direction) {
+            case "up":
+                if (spriteNum == 1) {
+                    bufferedImage = up1;
+                }
+                if (spriteNum == 2) {
+                    bufferedImage = up2;
+                }
+                break;
+            case "down":
+                if (spriteNum == 1) {
+                    bufferedImage = down1;
+                }
+                if (spriteNum == 2) {
+                    bufferedImage = down2;
+                }
+                break;
+            case "right":
+                if (spriteNum == 1) {
+                    bufferedImage = right1;
+                }
+                if (spriteNum == 2) {
+                    bufferedImage = right2;
+                }
+                break;
+            case "left":
+                if (spriteNum == 1) {
+                    bufferedImage = left1;
+                }
+                if (spriteNum == 2) {
+                    bufferedImage = left2;
+                }
+                break;
         }
-        else if (direction.equals("down")) {
-            bufferedImage = down1;
-        }
-        else if (direction.equals("right")) {
-            bufferedImage = right1;
-        }
-        else if (direction.equals("left")) {
-            bufferedImage = left1;
-        }
+
         g2.drawImage(bufferedImage, x, y, gamePanel.TRUE_TILE_SIZE, gamePanel.TRUE_TILE_SIZE, null);
     }
 }
