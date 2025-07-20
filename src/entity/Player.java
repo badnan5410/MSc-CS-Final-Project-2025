@@ -22,6 +22,8 @@ public class Player extends Entity {
         screenX = (gamePanel.SCREEN_WIDTH/2) - (gamePanel.TRUE_TILE_SIZE/2);
         screenY = (gamePanel.SCREEN_HEIGHT/2) - (gamePanel.TRUE_TILE_SIZE/2);
 
+        rectangle = new Rectangle(15, 18, 24, 27);// 15, 18, 24, 27; (8,16,32,32)
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -50,6 +52,41 @@ public class Player extends Entity {
 
     public void update() {
         if (keyHandler.upKey || keyHandler.downKey || keyHandler.rightKey || keyHandler.leftKey) {
+            if (keyHandler.upKey) {
+                direction = "up";
+            }
+            else if (keyHandler.downKey) {
+                direction = "down";
+            }
+            else if (keyHandler.rightKey) {
+                direction = "right";
+            }
+            else if (keyHandler.leftKey) {
+                direction = "left";
+            }
+
+            // Check Tile Collision
+            checkCollision = false;
+            gamePanel.collisionHandler.checkTile(this);
+
+            // Player Moves When No Collision
+            if (!checkCollision) {
+                switch(direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                }
+            }
+
             spriteCounter++;
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {
@@ -60,23 +97,6 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
-        }
-
-        if (keyHandler.upKey) {
-            direction = "up";
-            worldY -= speed;
-        }
-        else if (keyHandler.downKey) {
-            direction = "down";
-            worldY += speed;
-        }
-        else if (keyHandler.rightKey) {
-            direction = "right";
-            worldX += speed;
-        }
-        else if (keyHandler.leftKey) {
-            direction = "left";
-            worldX -= speed;
         }
     }
 
