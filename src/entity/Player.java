@@ -22,7 +22,7 @@ public class Player extends Entity {
         screenX = (gamePanel.SCREEN_WIDTH/2) - (gamePanel.TRUE_TILE_SIZE/2);
         screenY = (gamePanel.SCREEN_HEIGHT/2) - (gamePanel.TRUE_TILE_SIZE/2);
 
-        rectangle = new Rectangle(15, 18, 24, 27);// 15, 18, 24, 27; (8,16,32,32)
+        rectangle = new Rectangle(15, 18, 24, 27);
 
         setDefaultValues();
         getPlayerImage();
