@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import object.ParentObject;
 import tile.TileManager;
 
 import java.awt.*;
@@ -32,7 +33,9 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Thread gameLoop;
     public CollisionHandler collisionHandler = new CollisionHandler(this);
+    public ObjectHandler objectHandler = new ObjectHandler(this);
     public Player player = new Player(this, keyHandler);
+    public ParentObject[] parentObject = new ParentObject[10];
 
     // Class constructor
     public GamePanel() {
@@ -42,6 +45,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         this.requestFocusInWindow();
+    }
+
+    public void gameSetup() {
+        objectHandler.setObject();
     }
 
     public void startGameLoop() {
@@ -77,8 +84,17 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-
+        // Tile
         tileManager.draw(g2);
+
+        // Object
+        for (ParentObject object : parentObject) {
+            if (object != null) {
+                object.draw(g2, this);
+            }
+        }
+
+        // Player
         player.draw(g2);
         g2.dispose();
     }
