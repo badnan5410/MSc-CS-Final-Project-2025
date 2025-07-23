@@ -97,7 +97,7 @@ public class CollisionHandler {
                             }
 
                             if (isPlayer) {
-                                index = i; // NPCs cannot pick up objects
+                                index = i;
                             }
                         }
                         break;
@@ -110,7 +110,7 @@ public class CollisionHandler {
                             }
 
                             if (isPlayer) {
-                                index = i; // NPCs cannot pick up objects
+                                index = i;
                             }
                         }
                         break;
@@ -123,7 +123,7 @@ public class CollisionHandler {
                             }
 
                             if (isPlayer) {
-                                index = i; // NPCs cannot pick up objects
+                                index = i;
                             }
                         }
                         break;
