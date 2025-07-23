@@ -67,11 +67,10 @@ public class CollisionHandler {
 
         for (int i = 0; i < gamePanel.parentObject.length; i++) {
             if (gamePanel.parentObject[i] != null) {
-                // 1. get entity position
+
                 entity.rectangle.x = entity.worldX + entity.rectangle.x;
                 entity.rectangle.y = entity.worldY + entity.rectangle.y;
 
-                // 2. get objects position
                 gamePanel.parentObject[i].rectangle.x = gamePanel.parentObject[i].worldX + gamePanel.parentObject[i].rectangle.x;
                 gamePanel.parentObject[i].rectangle.y = gamePanel.parentObject[i].worldY + gamePanel.parentObject[i].rectangle.y;
 
