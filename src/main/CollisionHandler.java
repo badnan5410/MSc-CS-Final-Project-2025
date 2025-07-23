@@ -63,7 +63,7 @@ public class CollisionHandler {
     }
 
     public int checkObject(Entity entity, boolean isPlayer) {
-        int index = 999;
+        int index = -1;
 
         for (int i = 0; i < gamePanel.parentObject.length; i++) {
             if (gamePanel.parentObject[i] != null) {
