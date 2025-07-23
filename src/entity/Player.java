@@ -126,7 +126,6 @@ public class Player extends Entity {
                     }
                     System.out.println("Key:"+hasKey);
                     break;
-                case "Chest": break;
             }
         }
     }
