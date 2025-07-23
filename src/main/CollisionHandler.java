@@ -61,4 +61,82 @@ public class CollisionHandler {
                 break;
         }
     }
+
+    public int checkObject(Entity entity, boolean isPlayer) {
+        int index = 999;
+
+        for (int i = 0; i < gamePanel.parentObject.length; i++) {
+            if (gamePanel.parentObject[i] != null) {
+                // 1. get entity postion
+                entity.rectangle.x = entity.worldX + entity.rectangle.x;
+                entity.rectangle.y = entity.worldY + entity.rectangle.y;
+
+                // 2. get objects position
+                gamePanel.parentObject[i].rectangle.x = gamePanel.parentObject[i].worldX + gamePanel.parentObject[i].rectangle.x;
+                gamePanel.parentObject[i].rectangle.y = gamePanel.parentObject[i].worldY + gamePanel.parentObject[i].rectangle.y;
+
+                switch (entity.direction) {
+                    case "up":
+                        entity.rectangle.y -= entity.speed;
+
+                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
+                            if (gamePanel.parentObject[i].collision) {
+                                entity.checkCollision = true;
+                            }
+
+                            if (isPlayer) {
+                                index = i; // NPCs cannot pick up objects
+                            }
+                        }
+                        break;
+                    case "down":
+                        entity.rectangle.y += entity.speed;
+
+                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
+                            if (gamePanel.parentObject[i].collision) {
+                                entity.checkCollision = true;
+                            }
+
+                            if (isPlayer) {
+                                index = i; // NPCs cannot pick up objects
+                            }
+                        }
+                        break;
+                    case "right":
+                        entity.rectangle.x += entity.speed;
+
+                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
+                            if (gamePanel.parentObject[i].collision) {
+                                entity.checkCollision = true;
+                            }
+
+                            if (isPlayer) {
+                                index = i; // NPCs cannot pick up objects
+                            }
+                        }
+                        break;
+                    case "left":
+                        entity.rectangle.x -= entity.speed;
+
+                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
+                            if (gamePanel.parentObject[i].collision) {
+                                entity.checkCollision = true;
+                            }
+
+                            if (isPlayer) {
+                                index = i; // NPCs cannot pick up objects
+                            }
+                        }
+                        break;
+                }
+                entity.rectangle.x = entity.default_rectangleX;
+                entity.rectangle.y = entity.default_rectangleY;
+                gamePanel.parentObject[i].rectangle.x = gamePanel.parentObject[i].default_rectangleX;
+                gamePanel.parentObject[i].rectangle.y = gamePanel.parentObject[i].default_rectangleY;
+            }
+
+        }
+
+        return index;
+    }
 }

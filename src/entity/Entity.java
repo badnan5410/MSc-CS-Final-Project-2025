@@ -14,5 +14,6 @@ public class Entity {
     public int spriteNum = 1;
 
     public Rectangle rectangle;
+    public int default_rectangleX, default_rectangleY;
     public boolean checkCollision = false;
 }

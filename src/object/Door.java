@@ -11,5 +11,7 @@ public class Door extends ParentObject {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        collision = true;
     }
 }

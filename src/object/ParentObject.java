@@ -10,6 +10,9 @@ public class ParentObject {
     public String name;
     public boolean collision = false;
     public int worldX, worldY;
+    public Rectangle rectangle = new Rectangle(0,0,48,48);
+    public int default_rectangleX = 0;
+    public int default_rectangleY = 0;
 
     public void draw(Graphics2D g2, GamePanel gamePanel) {
         int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
