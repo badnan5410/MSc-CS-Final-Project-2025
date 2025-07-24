@@ -38,5 +38,9 @@ public class ObjectHandler {
         gamePanel.parentObject[6].worldX = 10 * gamePanel.TRUE_TILE_SIZE;
         gamePanel.parentObject[6].worldY = 7 * gamePanel.TRUE_TILE_SIZE;
 
+        gamePanel.parentObject[7] = new Boots();
+        gamePanel.parentObject[7].worldX = 35 * gamePanel.TRUE_TILE_SIZE;
+        gamePanel.parentObject[7].worldY = 41 * gamePanel.TRUE_TILE_SIZE;
+
     }
 }

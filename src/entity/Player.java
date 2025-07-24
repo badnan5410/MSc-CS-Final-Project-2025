@@ -109,23 +109,26 @@ public class Player extends Entity {
     }
 
     public void objectPickup(int i) {
-
         if (i != -1) {
             String objectName = gamePanel.parentObject[i].name;
 
             switch(objectName) {
                 case "Key":
+                    gamePanel.soundEffect(1);
                     hasKey++;
                     gamePanel.parentObject[i] = null;
-                    System.out.println("Key:"+hasKey);
                     break;
                 case "Door":
                     if (hasKey > 0) {
+                        gamePanel.soundEffect(3);
                         gamePanel.parentObject[i] = null;
                         hasKey--;
                     }
-                    System.out.println("Key:"+hasKey);
                     break;
+                case "Boots":
+                    gamePanel.soundEffect(2);
+                    speed += 2;
+                    gamePanel.parentObject[i] = null;
             }
         }
     }
