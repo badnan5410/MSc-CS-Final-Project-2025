@@ -11,12 +11,12 @@ public class ObjectHandler {
 
     public void setObject() {
         gamePanel.parentObject[0] = new Key();
-        gamePanel.parentObject[0].worldX = 23 * gamePanel.TRUE_TILE_SIZE;
+        gamePanel.parentObject[0].worldX = 20 * gamePanel.TRUE_TILE_SIZE;
         gamePanel.parentObject[0].worldY = 7 * gamePanel.TRUE_TILE_SIZE;
 
         gamePanel.parentObject[1] = new Key();
-        gamePanel.parentObject[1].worldX = 23 * gamePanel.TRUE_TILE_SIZE;
-        gamePanel.parentObject[1].worldY = 40 * gamePanel.TRUE_TILE_SIZE;
+        gamePanel.parentObject[1].worldX = 13 * gamePanel.TRUE_TILE_SIZE;
+        gamePanel.parentObject[1].worldY = 41 * gamePanel.TRUE_TILE_SIZE;
 
         gamePanel.parentObject[2] = new Key();
         gamePanel.parentObject[2].worldX = 37 * gamePanel.TRUE_TILE_SIZE;

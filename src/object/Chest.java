@@ -11,5 +11,6 @@ public class Chest extends ParentObject {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        collision = true;
     }
 }
