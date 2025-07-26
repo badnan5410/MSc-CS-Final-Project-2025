@@ -1,9 +1,13 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -21,29 +25,25 @@ public class TileManager {
     }
 
     public void getTileImage() {
+        setup(0, "grass1", false);
+        setup(1, "wall", true);
+        setup(2, "water", true);
+        setup(3, "earth", false);
+        setup(4, "tree", true);
+        setup(5, "sand", false);
+        setup(6, "grass2", false);
+    }
+
+    public void setup(int i, String imageName, boolean collision) {
+        UtilityTool uTool = new UtilityTool();
+
         try {
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
-
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
-            tile[1].collision = true;
-
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
-            tile[2].collision = true;
-
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
-
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
-            tile[4].collision = true;
-
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            tile[i] = new Tile();
+            tile[i].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+            tile[i].image = uTool.scaleImage(tile[i].image, gp.TILE_SIZE, gp.TILE_SIZE);
+            tile[i].collision = collision;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -72,8 +72,8 @@ public class TileManager {
             }
 
             br.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -93,7 +93,7 @@ public class TileManager {
                     worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY &&
                     worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
 
-                g2.drawImage(tile[currentTile].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                g2.drawImage(tile[currentTile].image, screenX, screenY, null);
             }
 
             col++;
