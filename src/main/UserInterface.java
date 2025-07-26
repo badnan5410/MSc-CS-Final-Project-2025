@@ -68,7 +68,7 @@ public class UserInterface {
 
             // Time
             playTime += (double)1/60;
-            g2.drawString("Time:" + decimalFormat.format(playTime), gamePanel.TRUE_TILE_SIZE*12, 65);
+            g2.drawString("Time:" + decimalFormat.format(playTime), gamePanel.TRUE_TILE_SIZE*11, 65);
 
             // Message
             if (checkMessage) {
