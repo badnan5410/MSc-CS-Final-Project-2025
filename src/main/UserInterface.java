@@ -37,15 +37,10 @@ public class UserInterface {
             g2.setFont(arial_40);
             g2.setColor(Color.white);
 
-            String endMessage;
-            int endMessageLength;
-            int x;
-            int y;
-
-            endMessage = "You found the treasure!";
-            endMessageLength = (int)g2.getFontMetrics().getStringBounds(endMessage, g2).getWidth();
-            x = gamePanel.SCREEN_WIDTH/2 - endMessageLength/2;
-            y = gamePanel.SCREEN_HEIGHT/2 - (gamePanel.TRUE_TILE_SIZE*3);
+            String endMessage = "You found the treasure!";
+            int endMessageLength = (int)g2.getFontMetrics().getStringBounds(endMessage, g2).getWidth();
+            int x = gamePanel.SCREEN_WIDTH/2 - endMessageLength/2;
+            int y = gamePanel.SCREEN_HEIGHT/2 - (gamePanel.TRUE_TILE_SIZE*3);
             g2.drawString(endMessage, x, y);
 
             endMessage = "Time taken: " +decimalFormat.format(playTime) + "s!";
