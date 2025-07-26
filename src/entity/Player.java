@@ -145,43 +145,43 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        BufferedImage bufferedImage = null;
+        BufferedImage image = null;
 
         switch (direction) {
             case "up":
                 if (spriteNum == 1) {
-                    bufferedImage = up1;
+                    image = up1;
                 }
                 if (spriteNum == 2) {
-                    bufferedImage = up2;
+                    image = up2;
                 }
                 break;
             case "down":
                 if (spriteNum == 1) {
-                    bufferedImage = down1;
+                    image = down1;
                 }
                 if (spriteNum == 2) {
-                    bufferedImage = down2;
+                    image = down2;
                 }
                 break;
             case "right":
                 if (spriteNum == 1) {
-                    bufferedImage = right1;
+                    image = right1;
                 }
                 if (spriteNum == 2) {
-                    bufferedImage = right2;
+                    image = right2;
                 }
                 break;
             case "left":
                 if (spriteNum == 1) {
-                    bufferedImage = left1;
+                    image = left1;
                 }
                 if (spriteNum == 2) {
-                    bufferedImage = left2;
+                    image = left2;
                 }
                 break;
         }
 
-        g2.drawImage(bufferedImage, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
     }
 }
