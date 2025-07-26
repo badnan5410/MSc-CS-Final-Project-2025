@@ -82,7 +82,7 @@ public class UserInterface {
 
                 messageTimer++;
 
-                if (messageTimer > 180) {
+                if (messageTimer > 120) {
                     messageTimer = 0;
                     checkMessage = false;
                 }
