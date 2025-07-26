@@ -3,59 +3,59 @@ package main;
 import entity.Entity;
 
 public class CollisionHandler {
-    GamePanel gamePanel;
+    GamePanel gp;
 
-    public CollisionHandler(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public CollisionHandler(GamePanel gp) {
+        this.gp = gp;
     }
 
     public void checkTile(Entity entity) {
-        int left_worldX = entity.worldX + entity.rectangle.x;
-        int right_worldX = entity.worldX + entity.rectangle.x + entity.rectangle.width;
-        int top_worldY = entity.worldY + entity.rectangle.y;
-        int bottom_worldY = entity.worldY + entity.rectangle.y + entity.rectangle.height;
+        int left_worldX = entity.worldX + entity.rect.x;
+        int right_worldX = entity.worldX + entity.rect.x + entity.rect.width;
+        int top_worldY = entity.worldY + entity.rect.y;
+        int bottom_worldY = entity.worldY + entity.rect.y + entity.rect.height;
 
-        int leftCol = left_worldX/gamePanel.TRUE_TILE_SIZE;
-        int rightCol = right_worldX/gamePanel.TRUE_TILE_SIZE;
-        int topRow = top_worldY/gamePanel.TRUE_TILE_SIZE;
-        int bottomRow = bottom_worldY/gamePanel.TRUE_TILE_SIZE;
+        int leftCol = left_worldX/gp.TILE_SIZE;
+        int rightCol = right_worldX/gp.TILE_SIZE;
+        int topRow = top_worldY/gp.TILE_SIZE;
+        int bottomRow = bottom_worldY/gp.TILE_SIZE;
 
         int tileNum1, tileNum2;
 
         switch (entity.direction) {
             case "up":
-                topRow = (top_worldY - entity.speed)/ gamePanel.TRUE_TILE_SIZE;
-                tileNum1 = gamePanel.tileManager.mapArray[leftCol][topRow];
-                tileNum2 = gamePanel.tileManager.mapArray[rightCol][topRow];
+                topRow = (top_worldY - entity.speed)/ gp.TILE_SIZE;
+                tileNum1 = gp.tm.mapArray[leftCol][topRow];
+                tileNum2 = gp.tm.mapArray[rightCol][topRow];
 
-                if (gamePanel.tileManager.tile[tileNum1].collision || gamePanel.tileManager.tile[tileNum2].collision) {
+                if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
                 break;
             case "down":
-                bottomRow = (bottom_worldY + entity.speed)/ gamePanel.TRUE_TILE_SIZE;
-                tileNum1 = gamePanel.tileManager.mapArray[leftCol][bottomRow];
-                tileNum2 = gamePanel.tileManager.mapArray[rightCol][bottomRow];
+                bottomRow = (bottom_worldY + entity.speed)/ gp.TILE_SIZE;
+                tileNum1 = gp.tm.mapArray[leftCol][bottomRow];
+                tileNum2 = gp.tm.mapArray[rightCol][bottomRow];
 
-                if (gamePanel.tileManager.tile[tileNum1].collision || gamePanel.tileManager.tile[tileNum2].collision) {
+                if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
                 break;
             case "right":
-                rightCol = (right_worldX + entity.speed)/ gamePanel.TRUE_TILE_SIZE;
-                tileNum1 = gamePanel.tileManager.mapArray[rightCol][topRow];
-                tileNum2 = gamePanel.tileManager.mapArray[rightCol][bottomRow];
+                rightCol = (right_worldX + entity.speed)/ gp.TILE_SIZE;
+                tileNum1 = gp.tm.mapArray[rightCol][topRow];
+                tileNum2 = gp.tm.mapArray[rightCol][bottomRow];
 
-                if (gamePanel.tileManager.tile[tileNum1].collision || gamePanel.tileManager.tile[tileNum2].collision) {
+                if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
                 break;
             case "left":
-                leftCol = (left_worldX - entity.speed)/ gamePanel.TRUE_TILE_SIZE;
-                tileNum1 = gamePanel.tileManager.mapArray[leftCol][topRow];
-                tileNum2 = gamePanel.tileManager.mapArray[leftCol][bottomRow];
+                leftCol = (left_worldX - entity.speed)/ gp.TILE_SIZE;
+                tileNum1 = gp.tm.mapArray[leftCol][topRow];
+                tileNum2 = gp.tm.mapArray[leftCol][bottomRow];
 
-                if (gamePanel.tileManager.tile[tileNum1].collision || gamePanel.tileManager.tile[tileNum2].collision) {
+                if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
                 break;
@@ -65,21 +65,21 @@ public class CollisionHandler {
     public int checkObject(Entity entity, boolean isPlayer) {
         int index = -1;
 
-        for (int i = 0; i < gamePanel.parentObject.length; i++) {
-            if (gamePanel.parentObject[i] != null) {
+        for (int i = 0; i < gp.obj.length; i++) {
+            if (gp.obj[i] != null) {
 
-                entity.rectangle.x = entity.worldX + entity.rectangle.x;
-                entity.rectangle.y = entity.worldY + entity.rectangle.y;
+                entity.rect.x = entity.worldX + entity.rect.x;
+                entity.rect.y = entity.worldY + entity.rect.y;
 
-                gamePanel.parentObject[i].rectangle.x = gamePanel.parentObject[i].worldX + gamePanel.parentObject[i].rectangle.x;
-                gamePanel.parentObject[i].rectangle.y = gamePanel.parentObject[i].worldY + gamePanel.parentObject[i].rectangle.y;
+                gp.obj[i].rect.x = gp.obj[i].worldX + gp.obj[i].rect.x;
+                gp.obj[i].rect.y = gp.obj[i].worldY + gp.obj[i].rect.y;
 
                 switch (entity.direction) {
                     case "up":
-                        entity.rectangle.y -= entity.speed;
+                        entity.rect.y -= entity.speed;
 
-                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
-                            if (gamePanel.parentObject[i].collision) {
+                        if (entity.rect.intersects(gp.obj[i].rect)) {
+                            if (gp.obj[i].collision) {
                                 entity.checkCollision = true;
                             }
 
@@ -89,10 +89,10 @@ public class CollisionHandler {
                         }
                         break;
                     case "down":
-                        entity.rectangle.y += entity.speed;
+                        entity.rect.y += entity.speed;
 
-                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
-                            if (gamePanel.parentObject[i].collision) {
+                        if (entity.rect.intersects(gp.obj[i].rect)) {
+                            if (gp.obj[i].collision) {
                                 entity.checkCollision = true;
                             }
 
@@ -102,10 +102,10 @@ public class CollisionHandler {
                         }
                         break;
                     case "right":
-                        entity.rectangle.x += entity.speed;
+                        entity.rect.x += entity.speed;
 
-                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
-                            if (gamePanel.parentObject[i].collision) {
+                        if (entity.rect.intersects(gp.obj[i].rect)) {
+                            if (gp.obj[i].collision) {
                                 entity.checkCollision = true;
                             }
 
@@ -115,10 +115,10 @@ public class CollisionHandler {
                         }
                         break;
                     case "left":
-                        entity.rectangle.x -= entity.speed;
+                        entity.rect.x -= entity.speed;
 
-                        if (entity.rectangle.intersects(gamePanel.parentObject[i].rectangle)) {
-                            if (gamePanel.parentObject[i].collision) {
+                        if (entity.rect.intersects(gp.obj[i].rect)) {
+                            if (gp.obj[i].collision) {
                                 entity.checkCollision = true;
                             }
 
@@ -128,10 +128,10 @@ public class CollisionHandler {
                         }
                         break;
                 }
-                entity.rectangle.x = entity.default_rectangleX;
-                entity.rectangle.y = entity.default_rectangleY;
-                gamePanel.parentObject[i].rectangle.x = gamePanel.parentObject[i].default_rectangleX;
-                gamePanel.parentObject[i].rectangle.y = gamePanel.parentObject[i].default_rectangleY;
+                entity.rect.x = entity.default_rectX;
+                entity.rect.y = entity.default_rectY;
+                gp.obj[i].rect.x = gp.obj[i].default_rectX;
+                gp.obj[i].rect.y = gp.obj[i].default_rectY;
             }
 
         }

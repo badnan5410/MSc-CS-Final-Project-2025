@@ -13,7 +13,7 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
-    public Rectangle rectangle;
-    public int default_rectangleX, default_rectangleY;
+    public Rectangle rect;
+    public int default_rectX, default_rectY;
     public boolean checkCollision = false;
 }

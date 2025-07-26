@@ -9,32 +9,32 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity {
-    GamePanel gamePanel;
-    KeyHandler keyHandler;
+    GamePanel gp;
+    KeyHandler kHandler;
 
     public final int screenX;
     public final int screenY;
 
     public int hasKey = 0;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
-        this.gamePanel = gamePanel;
-        this.keyHandler = keyHandler;
+    public Player(GamePanel gp, KeyHandler kHandler) {
+        this.gp = gp;
+        this.kHandler = kHandler;
 
-        screenX = (gamePanel.SCREEN_WIDTH/2) - (gamePanel.TRUE_TILE_SIZE/2);
-        screenY = (gamePanel.SCREEN_HEIGHT/2) - (gamePanel.TRUE_TILE_SIZE/2);
+        screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE /2);
+        screenY = (gp.SCREEN_HEIGHT/2) - (gp.TILE_SIZE /2);
 
-        rectangle = new Rectangle(15, 18, 24, 27);
-        default_rectangleX = rectangle.x;
-        default_rectangleY = rectangle.y;
+        rect = new Rectangle(16, 19, 22, 25);
+        default_rectX = rect.x;
+        default_rectY = rect.y;
 
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        worldX = gamePanel.TRUE_TILE_SIZE * 23;
-        worldY = gamePanel.TRUE_TILE_SIZE * 21;
+        worldX = gp.TILE_SIZE * 23;
+        worldY = gp.TILE_SIZE * 21;
         speed = 3;
         direction = "down";
     }
@@ -55,26 +55,26 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyHandler.upKey || keyHandler.downKey || keyHandler.rightKey || keyHandler.leftKey) {
-            if (keyHandler.upKey) {
+        if (kHandler.upKey || kHandler.downKey || kHandler.rightKey || kHandler.leftKey) {
+            if (kHandler.upKey) {
                 direction = "up";
             }
-            else if (keyHandler.downKey) {
+            else if (kHandler.downKey) {
                 direction = "down";
             }
-            else if (keyHandler.rightKey) {
+            else if (kHandler.rightKey) {
                 direction = "right";
             }
-            else if (keyHandler.leftKey) {
+            else if (kHandler.leftKey) {
                 direction = "left";
             }
 
             // Check Tile Collision
             checkCollision = false;
-            gamePanel.collisionHandler.checkTile(this);
+            gp.cHandler.checkTile(this);
 
             // Check Object Collision
-            int objectIndex = gamePanel.collisionHandler.checkObject(this, true);
+            int objectIndex = gp.cHandler.checkObject(this, true);
             objectPickup(objectIndex);
 
             // Player Moves When No Collision
@@ -110,35 +110,35 @@ public class Player extends Entity {
 
     public void objectPickup(int i) {
         if (i != -1) {
-            String objectName = gamePanel.parentObject[i].name;
+            String objectName = gp.obj[i].name;
 
             switch(objectName) {
                 case "Key":
-                    gamePanel.soundEffect(1);
+                    gp.soundEffect(1);
                     hasKey++;
-                    gamePanel.parentObject[i] = null;
-                    gamePanel.userInterface.displayMessage("You've got a key!");
+                    gp.obj[i] = null;
+                    gp.ui.displayMessage("You've got a key!");
                     break;
                 case "Door":
                     if (hasKey > 0) {
-                        gamePanel.soundEffect(3);
-                        gamePanel.parentObject[i] = null;
+                        gp.soundEffect(3);
+                        gp.obj[i] = null;
                         hasKey--;
-                        gamePanel.userInterface.displayMessage("You unlocked the door!");
+                        gp.ui.displayMessage("You unlocked the door!");
                     } else {
-                        gamePanel.userInterface.displayMessage("Door is locked. Find a key.");
+                        gp.ui.displayMessage("Door is locked. Find a key.");
                     }
                     break;
                 case "Boots":
-                    gamePanel.soundEffect(2);
+                    gp.soundEffect(2);
                     speed += 2;
-                    gamePanel.parentObject[i] = null;
-                    gamePanel.userInterface.displayMessage("You got a speed boost!");
+                    gp.obj[i] = null;
+                    gp.ui.displayMessage("You got a speed boost!");
                     break;
                 case "Chest":
-                    gamePanel.userInterface.isFinished = true;
-                    gamePanel.stopMusic();
-                    gamePanel.soundEffect(4);
+                    gp.ui.isFinished = true;
+                    gp.stopMusic();
+                    gp.soundEffect(4);
                     break;
             }
         }
@@ -182,6 +182,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(bufferedImage, screenX, screenY, gamePanel.TRUE_TILE_SIZE, gamePanel.TRUE_TILE_SIZE, null);
+        g2.drawImage(bufferedImage, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
     }
 }

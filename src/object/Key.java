@@ -7,7 +7,7 @@ public class Key extends ParentObject {
     public Key() {
         name = "Key";
         try {
-            bufferedImage = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

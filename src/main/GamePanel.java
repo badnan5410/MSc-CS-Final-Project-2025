@@ -10,15 +10,15 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable {
 
     // Custom Screen Settings
-    final int GAME_TILE = 16; // 16X16 tile
+    final int TILE = 16; // 16X16 tile
     final int SCALE = 3; // 16X3 = 48
 
-    public final int TRUE_TILE_SIZE = GAME_TILE * SCALE; // 48X48 tile
+    public final int TILE_SIZE = TILE * SCALE; // 48X48 tile
     public final int MAX_COL = 16;
     public final int MAX_ROW = 12; // col:row = 16:12 or 4:3
 
-    public final int SCREEN_WIDTH = TRUE_TILE_SIZE * MAX_COL; // 16x48 = 768 pixels
-    public final int SCREEN_HEIGHT = TRUE_TILE_SIZE * MAX_ROW; // 12x48 = 576 pixels
+    public final int SCREEN_WIDTH = TILE_SIZE * MAX_COL; // 16x48 = 768 pixels
+    public final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW; // 12x48 = 576 pixels
 
     // World Settings
     public final int MAX_WORLD_COL = 50;
@@ -27,29 +27,29 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     final int FPS = 60;
 
-    TileManager tileManager = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler();
-    Sound soundEffect = new Sound();
+    TileManager tm = new TileManager(this);
+    KeyHandler kHandler = new KeyHandler();
+    Sound se = new Sound();
     Sound music = new Sound();
-    public CollisionHandler collisionHandler = new CollisionHandler(this);
-    public ObjectHandler objectHandler = new ObjectHandler(this);
-    public UserInterface userInterface = new UserInterface(this);
+    public CollisionHandler cHandler = new CollisionHandler(this);
+    public ObjectHandler oHandler = new ObjectHandler(this);
+    public UserInterface ui = new UserInterface(this);
     Thread gameLoop;
-    public Player player = new Player(this, keyHandler);
-    public ParentObject[] parentObject = new ParentObject[10];
+    public Player player = new Player(this, kHandler);
+    public ParentObject[] obj = new ParentObject[10];
 
     // Class constructor
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyHandler);
+        this.addKeyListener(kHandler);
         this.setFocusable(true);
         this.requestFocusInWindow();
     }
 
     public void gameSetup() {
-        objectHandler.setObject();
+        oHandler.setObject();
         playMusic(0);
     }
 
@@ -87,10 +87,10 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         // Tile
-        tileManager.draw(g2);
+        tm.draw(g2);
 
         // Object
-        for (ParentObject object : parentObject) {
+        for (ParentObject object : obj) {
             if (object != null) {
                 object.draw(g2, this);
             }
@@ -100,7 +100,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
         // User Interface
-        userInterface.draw(g2);
+        ui.draw(g2);
 
         g2.dispose();
     }
@@ -116,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void soundEffect(int i) {
-        soundEffect.fileSetter(i);
-        soundEffect.playAudio();
+        se.fileSetter(i);
+        se.playAudio();
     }
 }
