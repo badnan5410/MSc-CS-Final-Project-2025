@@ -8,7 +8,8 @@ import java.text.DecimalFormat;
 
 public class UserInterface {
     GamePanel gamePanel;
-    Font arial_40, arial_80B;
+    Font arial_40;
+    Font arial_80B;
     BufferedImage keyImage;
     public boolean checkMessage = false;
     public String message = "";
