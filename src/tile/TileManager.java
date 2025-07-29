@@ -18,20 +18,67 @@ public class TileManager {
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[10];
+        tile = new Tile[50];
         mapArray = new int[gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         getTileImage();
-        mapLoader("/maps/world_01.txt");
+        mapLoader("/maps/world_02.txt");
     }
 
     public void getTileImage() {
-        setup(0, "grass1", false);
-        setup(1, "wall", true);
-        setup(2, "water", true);
-        setup(3, "earth", false);
-        setup(4, "tree", true);
-        setup(5, "sand", false);
-        setup(6, "grass2", false);
+
+        // Placeholder Tiles
+        setup(0, "grass/grass00", false);
+        setup(1, "grass/grass00", false);
+        setup(2, "grass/grass00", false);
+        setup(3, "grass/grass00", false);
+        setup(4, "grass/grass00", false);
+        setup(5, "grass/grass00", false);
+        setup(6, "grass/grass00", false);
+        setup(7, "grass/grass00", false);
+        setup(8, "grass/grass00", false);
+        setup(9, "grass/grass00", false);
+
+        // Grass Tiles
+        setup(10, "grass/grass00", false);
+        setup(11, "grass/grass01", false);
+
+        // Water Tiles
+        setup(12, "water/water00", true);
+        setup(13, "water/water01", true);
+        setup(14, "water/water02", true);
+        setup(15, "water/water03", true);
+        setup(16, "water/water04", true);
+        setup(17, "water/water05", true);
+        setup(18, "water/water06", true);
+        setup(19, "water/water07", true);
+        setup(20, "water/water08", true);
+        setup(21, "water/water09", true);
+        setup(22, "water/water10", true);
+        setup(23, "water/water11", true);
+        setup(24, "water/water12", true);
+        setup(25, "water/water13", true);
+
+        // Road Tiles
+        setup(26, "road/road00", false);
+        setup(27, "road/road01", false);
+        setup(28, "road/road02", false);
+        setup(29, "road/road03", false);
+        setup(30, "road/road04", false);
+        setup(31, "road/road05", false);
+        setup(32, "road/road06", false);
+        setup(33, "road/road07", false);
+        setup(34, "road/road08", false);
+        setup(35, "road/road09", false);
+        setup(36, "road/road10", false);
+        setup(37, "road/road11", false);
+        setup(38, "road/road12", false);
+
+        // Earth Tiles
+        setup(39, "earth/earth", false);
+        setup(40, "wall/wall", true);
+        setup(41, "tree/tree", true);
+
+
     }
 
     public void setup(int i, String imageName, boolean collision) {
