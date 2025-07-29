@@ -10,9 +10,6 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable {
 
     // Custom Screen Settings
-    //final int TILE = 16; // 16X16 tile
-    //final int SCALE = 3; // 16X3 = 48
-
     public final int TILE_SIZE = 48; // 48X48 tile
     public final int MAX_COL = 16;
     public final int MAX_ROW = 12; // col:row = 16:12 or 4:3
@@ -27,16 +24,24 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     final int FPS = 60;
 
+    // System
     TileManager tm = new TileManager(this);
-    KeyHandler kHandler = new KeyHandler();
+    KeyHandler kHandler = new KeyHandler(this);
     Sound se = new Sound();
     Sound music = new Sound();
     public CollisionHandler cHandler = new CollisionHandler(this);
     public ObjectHandler oHandler = new ObjectHandler(this);
     public UserInterface ui = new UserInterface(this);
     Thread gameLoop;
+
+    // Entity and Object
     public Player player = new Player(this, kHandler);
     public ParentObject[] obj = new ParentObject[10];
+
+    // Game State
+    public int gameState;
+    public final int GS_PLAY = 0;
+    public final int GS_PAUSE = 1;
 
     // Class constructor
     public GamePanel() {
@@ -50,12 +55,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void gameSetup() {
         oHandler.setObject();
-        playMusic(0);
+        //playMusic(0);
+        gameState = GS_PLAY;
     }
 
     public void startGameLoop() {
         gameLoop = new Thread(this);
-        gameLoop.start(); // calls the run() method below
+        gameLoop.start();
     }
 
     @Override
@@ -80,7 +86,13 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+        if (gameState == GS_PLAY) {
+            player.update();
+        }
+        if (gameState == GS_PAUSE) {
+            // don't update player information while
+            // game is paused, sprite cannot move
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -92,7 +104,6 @@ public class GamePanel extends JPanel implements Runnable {
         if (kHandler.checkDrawTime) {
             drawStart = System.nanoTime();
         }
-
 
         // Tile
         tm.draw(g2);

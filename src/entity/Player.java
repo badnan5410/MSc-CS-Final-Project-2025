@@ -16,8 +16,6 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    public int hasKey = 0;
-
     public Player(GamePanel gp, KeyHandler kHandler) {
         this.gp = gp;
         this.kHandler = kHandler;
@@ -120,39 +118,7 @@ public class Player extends Entity {
     }
 
     public void objectPickup(int i) {
-        if (i != -1) {
-            String objectName = gp.obj[i].name;
-
-            switch(objectName) {
-                case "Key":
-                    gp.soundEffect(1);
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.displayMessage("You've got a key!");
-                    break;
-                case "Door":
-                    if (hasKey > 0) {
-                        gp.soundEffect(3);
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.displayMessage("You unlocked the door!");
-                    } else {
-                        gp.ui.displayMessage("Door is locked. Find a key.");
-                    }
-                    break;
-                case "Boots":
-                    gp.soundEffect(2);
-                    speed += 2;
-                    gp.obj[i] = null;
-                    gp.ui.displayMessage("You got a speed boost!");
-                    break;
-                case "Chest":
-                    gp.ui.isFinished = true;
-                    gp.stopMusic();
-                    gp.soundEffect(4);
-                    break;
-            }
-        }
+        if (i != -1) {}
     }
 
     public void draw(Graphics2D g2) {

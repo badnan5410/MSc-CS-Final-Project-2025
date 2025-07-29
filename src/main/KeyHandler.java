@@ -4,10 +4,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
+    GamePanel gp;
+
     public boolean upKey, downKey, leftKey, rightKey;
 
     // Debug
     boolean checkDrawTime = false;
+
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -27,6 +33,16 @@ public class KeyHandler implements KeyListener {
         }
         if (keyCode == KeyEvent.VK_D) {
             rightKey = true;
+        }
+
+        // Pause Game
+        if (keyCode == KeyEvent.VK_P) {
+            if (gp.gameState == gp.GS_PLAY) {
+                gp.gameState = gp.GS_PAUSE;
+            }
+            else if (gp.gameState == gp.GS_PAUSE) {
+                gp.gameState = gp.GS_PLAY;
+            }
         }
 
         // Debug
