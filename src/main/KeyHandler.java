@@ -51,9 +51,6 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-
-
-
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
