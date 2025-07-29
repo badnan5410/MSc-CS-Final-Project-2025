@@ -135,7 +135,107 @@ public class CollisionHandler {
             }
 
         }
-
         return index;
+    }
+
+    // Check NPC or Monster Collision
+    public int checkEntity(Entity entity, Entity[] target) {
+        int index = -1;
+
+        for (int i = 0; i < target.length; i++) {
+            if (target[i] != null) {
+
+                entity.rect.x = entity.worldX + entity.rect.x;
+                entity.rect.y = entity.worldY + entity.rect.y;
+
+                target[i].rect.x = target[i].worldX + target[i].rect.x;
+                target[i].rect.y = target[i].worldY + target[i].rect.y;
+
+                switch (entity.direction) {
+                    case "up":
+                        entity.rect.y -= entity.speed;
+
+                        if (entity.rect.intersects(target[i].rect)) {
+                            entity.checkCollision = true;
+                            index = i;
+                        }
+                        break;
+                    case "down":
+                        entity.rect.y += entity.speed;
+
+                        if (entity.rect.intersects(target[i].rect)) {
+                            entity.checkCollision = true;
+                            index = i;
+                        }
+                        break;
+                    case "right":
+                        entity.rect.x += entity.speed;
+
+                        if (entity.rect.intersects(target[i].rect)) {
+                            entity.checkCollision = true;
+                            index = i;
+                        }
+                        break;
+                    case "left":
+                        entity.rect.x -= entity.speed;
+
+                        if (entity.rect.intersects(target[i].rect)) {
+                            entity.checkCollision = true;
+                            index = i;
+                        }
+                        break;
+                }
+                entity.rect.x = entity.default_rectX;
+                entity.rect.y = entity.default_rectY;
+                target[i].rect.x = target[i].default_rectX;
+                target[i].rect.y = target[i].default_rectY;
+            }
+
+        }
+        return index;
+    }
+
+    // Check player to NPC Collision
+    public void checkPlayer(Entity entity) {
+        entity.rect.x = entity.worldX + entity.rect.x;
+        entity.rect.y = entity.worldY + entity.rect.y;
+
+        gp.player.rect.x = gp.player.worldX + gp.player.rect.x;
+        gp.player.rect.y = gp.player.worldY + gp.player.rect.y;
+
+        switch (entity.direction) {
+            case "up":
+                entity.rect.y -= entity.speed;
+
+                if (entity.rect.intersects(gp.player.rect)) {
+                    entity.checkCollision = true;
+                }
+                break;
+            case "down":
+                entity.rect.y += entity.speed;
+
+                if (entity.rect.intersects(gp.player.rect)) {
+                    entity.checkCollision = true;
+                }
+                break;
+            case "right":
+                entity.rect.x += entity.speed;
+
+                if (entity.rect.intersects(gp.player.rect)) {
+                    entity.checkCollision = true;
+                }
+                break;
+            case "left":
+                entity.rect.x -= entity.speed;
+
+                if (entity.rect.intersects(gp.player.rect)) {
+                    entity.checkCollision = true;
+                }
+                break;
+        }
+        entity.rect.x = entity.default_rectX;
+        entity.rect.y = entity.default_rectY;
+        gp.player.rect.x = gp.player.default_rectX;
+        gp.player.rect.y = gp.player.default_rectY;
     }
 }

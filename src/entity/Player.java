@@ -10,14 +10,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler kHandler;
 
     public final int screenX;
     public final int screenY;
 
     public Player(GamePanel gp, KeyHandler kHandler) {
-        this.gp = gp;
+        super(gp);
         this.kHandler = kHandler;
 
         screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE /2);
@@ -39,28 +38,14 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setup("player_up_1");
-        up2 = setup("player_up_2");
-        down1 = setup("player_down_1");
-        down2 = setup("player_down_2");
-        right1 = setup("player_right_1");
-        right2 = setup("player_right_2");
-        left1 = setup("player_left_1");
-        left2 = setup("player_left_2");
-    }
-
-    public BufferedImage setup(String imageName) {
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-            image = uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
-
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-        return image;
+        up1 = setup("/player/player_up_1");
+        up2 = setup("/player/player_up_2");
+        down1 = setup("/player/player_down_1");
+        down2 = setup("/player/player_down_2");
+        right1 = setup("/player/player_right_1");
+        right2 = setup("/player/player_right_2");
+        left1 = setup("/player/player_left_1");
+        left2 = setup("/player/player_left_2");
     }
 
     public void update() {
@@ -85,6 +70,10 @@ public class Player extends Entity {
             // Check Object Collision
             int objectIndex = gp.cHandler.checkObject(this, true);
             objectPickup(objectIndex);
+
+            // Check NPC Collision
+            int npcIndex = gp.cHandler.checkEntity(this, gp.npc);
+            npcInteraction(npcIndex);
 
             // Player Moves When No Collision
             if (!checkCollision) {
@@ -119,6 +108,12 @@ public class Player extends Entity {
 
     public void objectPickup(int i) {
         if (i != -1) {}
+    }
+
+    public void npcInteraction(int i) {
+        if (i != -1) {
+            System.out.println("you're hitting an npc!");
+        }
     }
 
     public void draw(Graphics2D g2) {
