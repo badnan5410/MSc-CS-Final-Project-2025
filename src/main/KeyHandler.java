@@ -35,7 +35,7 @@ public class KeyHandler implements KeyListener {
             rightKey = true;
         }
 
-        // Pause Game
+        // Pause/Play Game
         if (keyCode == KeyEvent.VK_P) {
             if (gp.gameState == gp.GS_PLAY) {
                 gp.gameState = gp.GS_PAUSE;
