@@ -10,7 +10,6 @@ public class NPC_Wizard extends Entity {
         super(gp);
         direction = "down";
         speed = 1;
-
         getImage();
     }
 
