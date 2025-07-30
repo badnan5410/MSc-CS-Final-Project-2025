@@ -42,7 +42,7 @@ public class NPC_Wizard extends Entity {
                 direction = "right";
             }
             if (i > 75 && i <= 100) {
-                direction = "right";
+                direction = "left";
             }
 
             movementCounter = 0;
