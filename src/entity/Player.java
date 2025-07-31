@@ -116,7 +116,6 @@ public class Player extends Entity {
                 gp.gameState = gp.GS_DIALOGUE;
                 gp.npc[i].speak();
             }
-
         }
         gp.kHandler.enterPressed = false;
     }

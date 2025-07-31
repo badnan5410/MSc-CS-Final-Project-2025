@@ -70,7 +70,6 @@ public class UserInterface {
             g2.drawString(line, x, y);
             y += 40;
         }
-
     }
 
     public void drawMiniWindow(int x, int y, int width, int height) {
