@@ -62,6 +62,7 @@ public class UserInterface {
         int height = gp.TILE_SIZE * 4;
         drawMiniWindow(x, y, width, height);
 
+        g2.setColor(new Color(250, 198, 15, 255));
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28));
         x += gp.TILE_SIZE;
         y += gp.TILE_SIZE;
