@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // System
     TileManager tm = new TileManager(this);
-    KeyHandler kHandler = new KeyHandler(this);
+    public KeyHandler kHandler = new KeyHandler(this);
     Sound se = new Sound();
     Sound music = new Sound();
     public CollisionHandler cHandler = new CollisionHandler(this);
@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     public final int GS_PLAY = 0;
     public final int GS_PAUSE = 1;
+    public final int GS_DIALOGUE = 2;
 
     // Class constructor
     public GamePanel() {

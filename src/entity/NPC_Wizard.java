@@ -11,6 +11,7 @@ public class NPC_Wizard extends Entity {
         direction = "down";
         speed = 1;
         getImage();
+        setDialogue();
     }
 
     public void getImage() {
@@ -22,6 +23,13 @@ public class NPC_Wizard extends Entity {
         right2 = setup("/npc/wizard/wizard_right_2");
         left1 = setup("/npc/wizard/wizard_left_1");
         left2 = setup("/npc/wizard/wizard_left_2");
+    }
+
+    public void setDialogue() {
+        dialogues[0] = "Hello there!";
+        dialogues[1] = "So you've come to this island to \nfind treasure?";
+        dialogues[2] = "I used to be a great wizard but now... \nI'm a bit too old for an adventure.";
+        dialogues[3] = "Well, good luck to you!";
     }
 
     @Override
@@ -47,5 +55,10 @@ public class NPC_Wizard extends Entity {
 
             movementCounter = 0;
         }
+    }
+
+    @Override
+    public void speak() {
+        super.speak();
     }
 }

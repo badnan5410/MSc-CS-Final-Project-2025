@@ -112,8 +112,13 @@ public class Player extends Entity {
 
     public void npcInteraction(int i) {
         if (i != -1) {
-            System.out.println("you're hitting an npc!");
+            if (gp.kHandler.enterPressed) {
+                gp.gameState = gp.GS_DIALOGUE;
+                gp.npc[i].speak();
+            }
+
         }
+        gp.kHandler.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
