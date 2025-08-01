@@ -22,6 +22,69 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
+        if (gp.gameState == gp.GS_TITLE_SCREEN) {
+
+            // Title State 1
+            if (gp.ui.titleScreenState == 0) {
+                if (keyCode == KeyEvent.VK_W) {
+                    gp.ui.cNum--;
+                    if (gp.ui.cNum < 0) {
+                        gp.ui.cNum = 2;
+                    }
+                }
+                if (keyCode == KeyEvent.VK_S) {
+                    gp.ui.cNum++;
+                    if (gp.ui.cNum > 2) {
+                        gp.ui.cNum = 0;
+                    }
+                }
+                if (keyCode == KeyEvent.VK_ENTER) {
+                    if (gp.ui.cNum == 0) {
+                        gp.ui.titleScreenState = 1;
+                    }
+                    if (gp.ui.cNum == 1) {
+                        // load game
+                    }
+                    if (gp.ui.cNum == 2) {
+                        System.exit(0);
+                    }
+                }
+            }
+            else if (gp.ui.titleScreenState == 1) {
+                if (keyCode == KeyEvent.VK_W) {
+                    gp.ui.cNum--;
+                    if (gp.ui.cNum < 0) {
+                        gp.ui.cNum = 3;
+                    }
+                }
+                if (keyCode == KeyEvent.VK_S) {
+                    gp.ui.cNum++;
+                    if (gp.ui.cNum > 3) {
+                        gp.ui.cNum = 0;
+                    }
+                }
+                if (keyCode == KeyEvent.VK_ENTER) {
+                    if (gp.ui.cNum == 0) {
+                        gp.player.playerClass = "Fighter";
+                        gp.gameState = gp.GS_PLAY;
+                    }
+                    if (gp.ui.cNum == 1) {
+                        gp.player.playerClass = "Thief";
+                        gp.gameState = gp.GS_PLAY;
+                    }
+                    if (gp.ui.cNum == 2) {
+                        gp.player.playerClass = "Magician";
+                        gp.gameState = gp.GS_PLAY;
+                    }
+                    if (gp.ui.cNum == 3) {
+                        gp.ui.titleScreenState = 0;
+                        gp.ui.cNum = 0;
+                    }
+                }
+            }
+
+        }
+
         // Play State
         if (gp.gameState == gp.GS_PLAY) {
             if (keyCode == KeyEvent.VK_W) {

@@ -1,26 +1,32 @@
 package main;
 
-import object.Key;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UserInterface {
     GamePanel gp;
     Graphics2D g2;
-    Font arial_40;
-    Font arial_80B;
+    Font maruMonica;
     public boolean checkMessage = false;
     public String message = "";
     int messageTimer = 0;
     public boolean isFinished = false;
     public String currentDialogue = "";
+    public int cNum = 0;
+    public int titleScreenState = 0;
 
     public UserInterface(GamePanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80B = new Font("Arial", Font.BOLD, 80);
+        try {
+            InputStream is = getClass().getResourceAsStream("/font/MaruMonica.ttf");
+            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void displayMessage(String text) {
@@ -31,9 +37,13 @@ public class UserInterface {
     public void draw(Graphics2D g2) {
         this.g2 = g2;
 
-        g2.setFont(arial_40);
+        g2.setFont(maruMonica);
         g2.setColor(Color.white);
 
+        // Title Screen
+        if (gp.gameState == gp.GS_TITLE_SCREEN) {
+            drawTitleScreen();
+        }
         if (gp.gameState == gp.GS_PLAY) {
             // normal user interface stuff
         }
@@ -43,6 +53,109 @@ public class UserInterface {
         if (gp.gameState == gp.GS_DIALOGUE) {
             drawDialogueScreen();
         }
+    }
+
+    public void drawTitleScreen() {
+        // Check titleScreenState
+        if (titleScreenState == 0) {
+            // Background Colour
+            g2.setColor(Color.black);
+            g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+            // Title Name
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 88F));
+            String text = "Pixel Adventure Quest";
+            int x = centerX(text);
+            int y = gp.TILE_SIZE*3;
+
+            // Shadow Colour
+            g2.setColor(Color.black);
+            g2.drawString(text, x+5, y+5);
+
+            // Main Colour
+            g2.setColor(Color.white);
+            g2.drawString(text, x, y);
+
+            // Player Image
+            x = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE*2)/2;
+            y += gp.TILE_SIZE*2;
+            g2.drawImage(gp.player.down1, x, y, gp.TILE_SIZE*2, gp.TILE_SIZE*2, null);
+
+            // Menu
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            text = "NEW GAME";
+            x = centerX(text);
+            y += gp.TILE_SIZE*3.5;
+            g2.drawString(text, x, y);
+            if (cNum == 0) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            text = "LOAD GAME";
+            x = centerX(text);
+            y += gp.TILE_SIZE;
+            g2.drawString(text, x, y);
+            if (cNum == 1) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+            text = "QUIT";
+            x = centerX(text);
+            y += gp.TILE_SIZE;
+            g2.drawString(text, x, y);
+            if (cNum == 2) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+        }
+        else if (titleScreenState == 1) {
+            g2.setColor(Color.black);
+            g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+
+            g2.setColor(Color.white);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
+
+            String text = "Select your class!";
+            int x = centerX(text);
+            int y = gp.TILE_SIZE*3;
+            g2.drawString(text, x, y);
+
+
+            text = "Fighter";
+            x = centerX(text);
+            y += gp.TILE_SIZE*3;
+            g2.drawString(text, x, y);
+            if (cNum == 0) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+
+            text = "Thief";
+            x = centerX(text);
+            y += gp.TILE_SIZE;
+            g2.drawString(text, x, y);
+            if (cNum == 1) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+
+            text = "Magician";
+            x = centerX(text);
+            y += gp.TILE_SIZE;
+            g2.drawString(text, x, y);
+            if (cNum == 2) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+
+            text = "Go Back";
+            x = centerX(text);
+            y += gp.TILE_SIZE*3;
+            g2.drawString(text, x, y);
+            if (cNum == 3) {
+                g2.drawString("->", x-gp.TILE_SIZE, y);
+            }
+
+        }
+
     }
 
     public void drawPauseScreen() {
@@ -62,8 +175,8 @@ public class UserInterface {
         int height = gp.TILE_SIZE * 4;
         drawMiniWindow(x, y, width, height);
 
-        g2.setColor(new Color(250, 198, 15, 255));
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28));
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.TILE_SIZE;
         y += gp.TILE_SIZE;
 

@@ -6,7 +6,7 @@ import object.ParentObject;
 import tile.TileManager;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -40,11 +40,12 @@ public class GamePanel extends JPanel implements Runnable {
     public ParentObject[] obj = new ParentObject[10];
     public Entity npc[] = new Entity[10];
 
-    // Game State
+    // Game States
     public int gameState;
     public final int GS_PLAY = 0;
     public final int GS_PAUSE = 1;
     public final int GS_DIALOGUE = 2;
+    public final int GS_TITLE_SCREEN = 3;
 
     // Class constructor
     public GamePanel() {
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(kHandler);
         this.setFocusable(true);
         this.requestFocusInWindow();
+        gameState = GS_TITLE_SCREEN;
     }
 
     // Game Setup
@@ -61,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
         oHandler.setObject();
         oHandler.setNPC();
         //playMusic(0);
-        gameState = GS_PLAY;
+        //gameState = GS_TITLE_SCREEN;
     }
 
     public void startGameLoop() {
@@ -116,28 +118,34 @@ public class GamePanel extends JPanel implements Runnable {
             drawStart = System.nanoTime();
         }
 
-        // Tile
-        tm.draw(g2);
-
-        // Object
-        for (ParentObject object : obj) {
-            if (object != null) {
-                object.draw(g2, this);
-            }
+        // Title Screen
+        if (gameState == GS_TITLE_SCREEN) {
+            ui.draw(g2);
         }
+        else {
+            // Tile
+            tm.draw(g2);
 
-        // NPC
-        for (int i = 0; i < npc.length; i++) {
-            if (npc[i] != null) {
-                npc[i].draw(g2);
+            // Object
+            for (ParentObject object : obj) {
+                if (object != null) {
+                    object.draw(g2, this);
+                }
             }
+
+            // NPC
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2);
+                }
+            }
+
+            // Player
+            player.draw(g2);
+
+            // User Interface
+            ui.draw(g2);
         }
-
-        // Player
-        player.draw(g2);
-
-        // User Interface
-        ui.draw(g2);
 
         // Debug
         if (kHandler.checkDrawTime) {

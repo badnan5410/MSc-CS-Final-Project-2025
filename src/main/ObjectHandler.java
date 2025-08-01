@@ -16,5 +16,9 @@ public class ObjectHandler {
         gp.npc[0].worldX = gp.TILE_SIZE*21;
         gp.npc[0].worldY = gp.TILE_SIZE*21;
     }
+
+    public void setIcon() {
+        
+    }
 }
 

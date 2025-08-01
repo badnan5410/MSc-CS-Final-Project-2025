@@ -15,6 +15,8 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    public String playerClass;
+
     public Player(GamePanel gp, KeyHandler kHandler) {
         super(gp);
         this.kHandler = kHandler;
