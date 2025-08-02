@@ -61,7 +61,9 @@ public class UserInterface {
             drawTitleScreen();
         }
         if (gp.gameState == gp.GS_PLAY) {
-            // normal user interface stuff
+            if (gp.player.playerClass == "Thief") {
+                gp.player.speed = 5;
+            }
         }
         if (gp.gameState == gp.GS_PAUSE) {
             drawPauseScreen();
