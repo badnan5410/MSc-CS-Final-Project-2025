@@ -40,6 +40,9 @@ public class GamePanel extends JPanel implements Runnable {
     public ParentObject[] obj = new ParentObject[10];
     public Entity npc[] = new Entity[10];
 
+    // Icons
+    public Icon[] icons = new Icon[5];
+
     // Game States
     public int gameState;
     public final int GS_PLAY = 0;

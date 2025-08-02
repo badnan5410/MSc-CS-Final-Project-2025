@@ -1,5 +1,9 @@
 package main;
 
+import icons.Icon_Fighter;
+import icons.Icon_Magician;
+import icons.Icon_Thief;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -16,9 +20,21 @@ public class UserInterface {
     public String currentDialogue = "";
     public int cNum = 0;
     public int titleScreenState = 0;
+    BufferedImage fighterIcon, thiefIcon, magicianIcon;
 
     public UserInterface(GamePanel gp) {
         this.gp = gp;
+
+        // Instantiate icons
+        Icon_Fighter fighter = new Icon_Fighter(gp);
+        fighterIcon = fighter.image;
+
+        Icon_Thief thief = new Icon_Thief(gp);
+        thiefIcon = thief.image;
+
+        Icon_Magician magician = new Icon_Magician(gp);
+        magicianIcon = magician.image;
+
         try {
             InputStream is = getClass().getResourceAsStream("/font/MaruMonica.ttf");
             maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -128,6 +144,7 @@ public class UserInterface {
             g2.drawString(text, x, y);
             if (cNum == 0) {
                 g2.drawString("->", x-gp.TILE_SIZE, y);
+                g2.drawImage(fighterIcon, x+(gp.TILE_SIZE*3), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 
             text = "Thief";
@@ -136,6 +153,7 @@ public class UserInterface {
             g2.drawString(text, x, y);
             if (cNum == 1) {
                 g2.drawString("->", x-gp.TILE_SIZE, y);
+                g2.drawImage(thiefIcon, x+(gp.TILE_SIZE*3), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 
             text = "Magician";
@@ -144,6 +162,7 @@ public class UserInterface {
             g2.drawString(text, x, y);
             if (cNum == 2) {
                 g2.drawString("->", x-gp.TILE_SIZE, y);
+                g2.drawImage(magicianIcon, x+(gp.TILE_SIZE*4), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 
             text = "Go Back";

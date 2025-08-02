@@ -3,6 +3,7 @@ package object;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
+import java.io.IOException;
 
 public class Key extends ParentObject {
     GamePanel gp;
@@ -13,8 +14,8 @@ public class Key extends ParentObject {
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
             uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
