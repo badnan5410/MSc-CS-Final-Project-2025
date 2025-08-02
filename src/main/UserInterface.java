@@ -88,7 +88,7 @@ public class UserInterface {
             int y = gp.TILE_SIZE*3;
 
             // Shadow Colour
-            g2.setColor(Color.black);
+            g2.setColor(Color.gray);
             g2.drawString(text, x+5, y+5);
 
             // Main Colour
