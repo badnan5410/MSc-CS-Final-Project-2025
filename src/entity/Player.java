@@ -35,7 +35,11 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
-        speed = 3;
+        if (playerClass == "Thief") {
+            speed = 4;
+        } else {
+            speed = 3;
+        }
         direction = "down";
     }
 
