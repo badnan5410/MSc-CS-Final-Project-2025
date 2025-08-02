@@ -35,6 +35,7 @@ public class UserInterface {
         Icon_Magician magician = new Icon_Magician(gp);
         magicianIcon = magician.image;
 
+        // Instantiate custom font
         try {
             InputStream is = getClass().getResourceAsStream("/font/MaruMonica.ttf");
             maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
