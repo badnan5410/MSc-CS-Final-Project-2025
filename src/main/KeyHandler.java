@@ -69,11 +69,11 @@ public class KeyHandler implements KeyListener {
                         gp.gameState = gp.GS_PLAY;
                     }
                     if (gp.ui.cNum == 1) {
-                        gp.player.playerClass = "Thief";
+                        gp.player.playerClass = "Magician";
                         gp.gameState = gp.GS_PLAY;
                     }
                     if (gp.ui.cNum == 2) {
-                        gp.player.playerClass = "Magician";
+                        gp.player.playerClass = "Thief";
                         gp.gameState = gp.GS_PLAY;
                     }
                     if (gp.ui.cNum == 3) {

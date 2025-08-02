@@ -150,22 +150,22 @@ public class UserInterface {
                 g2.drawImage(fighterIcon, x+(gp.TILE_SIZE*3), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 
-            text = "Thief";
+            text = "Magician";
             x = centerX(text);
             y += gp.TILE_SIZE;
             g2.drawString(text, x, y);
             if (cNum == 1) {
                 g2.drawString("->", x-gp.TILE_SIZE, y);
-                g2.drawImage(thiefIcon, x+(gp.TILE_SIZE*3), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                g2.drawImage(magicianIcon, x+(gp.TILE_SIZE*4), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 
-            text = "Magician";
+            text = "Thief";
             x = centerX(text);
             y += gp.TILE_SIZE;
             g2.drawString(text, x, y);
             if (cNum == 2) {
                 g2.drawString("->", x-gp.TILE_SIZE, y);
-                g2.drawImage(magicianIcon, x+(gp.TILE_SIZE*4), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
+                g2.drawImage(thiefIcon, x+(gp.TILE_SIZE*3), y-gp.TILE_SIZE+5, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 
             text = "Go Back";
