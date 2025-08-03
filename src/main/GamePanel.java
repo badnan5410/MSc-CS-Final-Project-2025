@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity npc[] = new Entity[10];
 
     // Icons
-    public Icon[] icons = new Icon[5];
+    public Icon[] icons = new Icon[3];
 
     // Game States
     public int gameState;
