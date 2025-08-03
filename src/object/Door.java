@@ -11,8 +11,8 @@ public class Door extends ParentObject {
         this.gp = gp;
         name = "Door";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
-            uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
+            uTool.scaleImage(image1, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

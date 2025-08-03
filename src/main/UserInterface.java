@@ -3,6 +3,8 @@ package main;
 import icons.Icon_Fighter;
 import icons.Icon_Magician;
 import icons.Icon_Thief;
+import object.Heart;
+import object.ParentObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,6 +23,7 @@ public class UserInterface {
     public int cNum = 0;
     public int titleScreenState = 0;
     BufferedImage fighterIcon, magicianIcon, thiefIcon;
+    BufferedImage heartFull, heartHalf, heartEmpty;
 
     public UserInterface(GamePanel gp) {
         this.gp = gp;
@@ -44,6 +47,11 @@ public class UserInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ParentObject heart = new Heart(gp);
+        heartFull = heart.image1;
+        heartHalf = heart.image2;
+        heartEmpty = heart.image3;
     }
 
     public void displayMessage(String text) {
@@ -65,12 +73,48 @@ public class UserInterface {
             if (gp.player.playerClass == "Thief") {
                 gp.player.speed = 5;
             }
+            if (gp.player.playerClass == "Magician") {
+                gp.player.maxLife = 8;
+                gp.player.life = gp.player.maxLife;
+            }
+
+            drawPlayerLife();
         }
         if (gp.gameState == gp.GS_PAUSE) {
             drawPauseScreen();
+            drawPlayerLife();
         }
         if (gp.gameState == gp.GS_DIALOGUE) {
             drawDialogueScreen();
+        }
+    }
+
+    public void drawPlayerLife() {
+        int x = gp.TILE_SIZE/2;
+        int y = gp.TILE_SIZE/2;
+        int i = 0;
+
+        // draw max life
+        while (i < gp.player.maxLife/2) {
+            g2.drawImage(heartEmpty, x, y, null);
+            i++;
+            x += gp.TILE_SIZE;
+        }
+
+        // reset values
+        x = gp.TILE_SIZE/2;
+        y = gp.TILE_SIZE/2;
+        i = 0;
+
+        // draw current life
+        while (i < gp.player.life) {
+            g2.drawImage(heartHalf, x, y, null);
+            i++;
+            if (i < gp.player.life) {
+                g2.drawImage(heartFull, x, y, null);
+            }
+            i++;
+            x += gp.TILE_SIZE;
         }
     }
 

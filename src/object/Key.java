@@ -12,8 +12,8 @@ public class Key extends ParentObject {
         this.gp = gp;
         name = "Key";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
-            uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
+            uTool.scaleImage(image1, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (IOException e) {
             e.printStackTrace();
         }

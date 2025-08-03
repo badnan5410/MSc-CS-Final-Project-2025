@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ParentObject {
-    public BufferedImage image;
+    public BufferedImage image1, image2, image3;
     public String name;
     public boolean collision = false;
     public int worldX, worldY;
@@ -22,7 +22,7 @@ public class ParentObject {
 
         if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX && worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX && worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY && worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
 
-            g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+            g2.drawImage(image1, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
         }
     }
 }

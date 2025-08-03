@@ -11,8 +11,8 @@ public class Chest extends ParentObject {
         this.gp = gp;
         name = "Chest";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/chest.png"));
-            uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/chest.png"));
+            uTool.scaleImage(image1, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

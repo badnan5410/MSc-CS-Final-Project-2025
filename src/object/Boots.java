@@ -11,8 +11,8 @@ public class Boots extends ParentObject {
         this.gp = gp;
         name = "Boots";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
-            uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
+            uTool.scaleImage(image1, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
