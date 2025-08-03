@@ -20,7 +20,7 @@ public class UserInterface {
     public String currentDialogue = "";
     public int cNum = 0;
     public int titleScreenState = 0;
-    BufferedImage fighterIcon, thiefIcon, magicianIcon;
+    BufferedImage fighterIcon, magicianIcon, thiefIcon;
 
     public UserInterface(GamePanel gp) {
         this.gp = gp;
@@ -29,11 +29,11 @@ public class UserInterface {
         Icon_Fighter fighter = new Icon_Fighter(gp);
         fighterIcon = fighter.image;
 
-        Icon_Thief thief = new Icon_Thief(gp);
-        thiefIcon = thief.image;
-
         Icon_Magician magician = new Icon_Magician(gp);
         magicianIcon = magician.image;
+
+        Icon_Thief thief = new Icon_Thief(gp);
+        thiefIcon = thief.image;
 
         // Instantiate custom font
         try {
