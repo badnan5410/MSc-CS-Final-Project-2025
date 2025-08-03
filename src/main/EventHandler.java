@@ -4,38 +4,71 @@ import java.awt.*;
 
 public class EventHandler {
     GamePanel gp;
-    Rectangle eventRect;
-    int eventRectDefaultX, eventRectDefaultY;
+    EventRect eventRect[][];
+
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp) {
         this.gp = gp;
-        eventRect = new Rectangle(23, 23, 2, 2);
-        eventRectDefaultX = eventRect.x;
-        eventRectDefaultY = eventRect.y;
+        eventRect = new EventRect[gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
+
+        int col = 0;
+        int row = 0;
+
+        while (col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
+            eventRect[col][row] = new EventRect();
+            eventRect[col][row].x = 23;
+            eventRect[col][row].y = 23;
+            eventRect[col][row].width = 2;
+            eventRect[col][row].height = 2;
+            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+
+            col++;
+            if (col == gp.MAX_WORLD_COL) {
+                col = 0;
+                row++;
+            }
+        }
     }
 
     public void checkEvent() {
-        //if (hit(27, 16, "right")) {damagePit(gp.GS_DIALOGUE);}
-        if (hit(27, 16, "right")) {teleport(gp.GS_DIALOGUE);}
-        if (hit(23, 12, "up")) {healingPool(gp.GS_DIALOGUE);}
+        // Check if playe ris 1 tile away from previous event
+        int distanceX = Math.abs(gp.player.worldX - previousEventX);
+        int distanceY = Math.abs(gp.player.worldY - previousEventY);
+        int distance = Math.max(distanceX, distanceY);
+        if (distance > gp.TILE_SIZE) {
+            canTouchEvent = true;
+        }
+
+        if (canTouchEvent) {
+            if (hit(27, 16, "right")) {damagePit(27, 16, gp.GS_DIALOGUE);}
+            if (hit(23, 19, "any")) {damagePit(23, 19, gp.GS_DIALOGUE);}
+            //if (hit(27, 16, "right")) {teleport(gp.GS_DIALOGUE);}
+            if (hit(23, 12, "up")) {healingPool(gp.GS_DIALOGUE);}
+        }
+
     }
 
-    public boolean hit(int eventCol, int eventRow, String reqDirection) {
+    public boolean hit(int col, int row, String reqDirection) {
         boolean hit = false;
         gp.player.rect.x = gp.player.worldX + gp.player.rect.x;
         gp.player.rect.y = gp.player.worldY + gp.player.rect.y;
-        eventRect.x = eventCol*gp.TILE_SIZE + eventRect.x;
-        eventRect.y = eventRow*gp.TILE_SIZE + eventRect.y;
+        eventRect[col][row].x = col*gp.TILE_SIZE + eventRect[col][row].x;
+        eventRect[col][row].y = row*gp.TILE_SIZE + eventRect[col][row].y;
 
-        if (gp.player.rect.intersects(eventRect)) {
+        if (gp.player.rect.intersects(eventRect[col][row]) && !eventRect[col][row].eventDone) {
             if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
                 hit = true;
+                previousEventX = gp.player.worldX;
+                previousEventY = gp.player.worldY;
             }
         }
         gp.player.rect.x = gp.player.default_rectX;
         gp.player.rect.y = gp.player.default_rectY;
-        eventRect.x = eventRectDefaultX;
-        eventRect.y = eventRectDefaultY;
+        eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
+        eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
 
         return hit;
     }
@@ -48,10 +81,13 @@ public class EventHandler {
         gp.player.direction = "down";
     }
 
-    public void damagePit(int gameState) {
+    public void damagePit(int col, int row, int gameState) {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit. \n You take damage.";
         gp.player.life --;
+
+        //eventRect[col][row].eventDone = true;
+        canTouchEvent = false;
     }
 
     public void healingPool(int gameState) {
