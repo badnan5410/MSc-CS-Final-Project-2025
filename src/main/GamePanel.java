@@ -33,15 +33,13 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionHandler cHandler = new CollisionHandler(this);
     public ObjectHandler oHandler = new ObjectHandler(this);
     public UserInterface ui = new UserInterface(this);
+    public EventHandler eHandler = new EventHandler(this);
     Thread gameLoop;
 
     // Entity and Object
     public Player player = new Player(this, kHandler);
     public ParentObject[] obj = new ParentObject[10];
     public Entity npc[] = new Entity[10];
-
-    // Icons
-    public Icon[] icons = new Icon[3];
 
     // Game States
     public int gameState;

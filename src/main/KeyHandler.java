@@ -66,14 +66,17 @@ public class KeyHandler implements KeyListener {
                 if (keyCode == KeyEvent.VK_ENTER) {
                     if (gp.ui.cNum == 0) {
                         gp.player.playerClass = "Fighter";
+                        gp.player.classBonus(gp.player.playerClass);
                         gp.gameState = gp.GS_PLAY;
                     }
                     if (gp.ui.cNum == 1) {
                         gp.player.playerClass = "Magician";
+                        gp.player.classBonus(gp.player.playerClass);
                         gp.gameState = gp.GS_PLAY;
                     }
                     if (gp.ui.cNum == 2) {
                         gp.player.playerClass = "Thief";
+                        gp.player.classBonus(gp.player.playerClass);
                         gp.gameState = gp.GS_PLAY;
                     }
                     if (gp.ui.cNum == 3) {

@@ -1,8 +1,8 @@
 package main;
 
-import icons.Icon_Fighter;
-import icons.Icon_Magician;
-import icons.Icon_Thief;
+import object.Icon_Fighter;
+import object.Icon_Magician;
+import object.Icon_Thief;
 import object.Heart;
 import object.ParentObject;
 
@@ -30,13 +30,13 @@ public class UserInterface {
 
         // Instantiate icons
         Icon_Fighter fighter = new Icon_Fighter(gp);
-        fighterIcon = fighter.image;
+        fighterIcon = fighter.image1;
 
         Icon_Magician magician = new Icon_Magician(gp);
-        magicianIcon = magician.image;
+        magicianIcon = magician.image1;
 
         Icon_Thief thief = new Icon_Thief(gp);
-        thiefIcon = thief.image;
+        thiefIcon = thief.image1;
 
         // Instantiate custom font
         try {
@@ -70,14 +70,6 @@ public class UserInterface {
             drawTitleScreen();
         }
         if (gp.gameState == gp.GS_PLAY) {
-            if (gp.player.playerClass == "Thief") {
-                gp.player.speed = 5;
-            }
-            if (gp.player.playerClass == "Magician") {
-                gp.player.maxLife = 8;
-                gp.player.life = gp.player.maxLife;
-            }
-
             drawPlayerLife();
         }
         if (gp.gameState == gp.GS_PAUSE) {

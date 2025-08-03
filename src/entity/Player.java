@@ -32,6 +32,21 @@ public class Player extends Entity {
         getPlayerImage();
     }
 
+    public void classBonus(String playerClass) {
+        switch (playerClass) {
+            case "Fighter":
+                // TODO
+                break;
+            case "Magician":
+                maxLife = 8;
+                life = maxLife;
+                break;
+            case "Thief":
+                speed = 5;
+                break;
+        }
+    }
+
     public void setDefaultValues() {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
@@ -81,6 +96,11 @@ public class Player extends Entity {
             int npcIndex = gp.cHandler.checkEntity(this, gp.npc);
             npcInteraction(npcIndex);
 
+            // Check Events
+            gp.eHandler.checkEvent();
+
+            gp.kHandler.enterPressed = false;
+
             // Player Moves When No Collision
             if (!checkCollision) {
                 switch(direction) {
@@ -123,7 +143,6 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
         }
-        gp.kHandler.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
