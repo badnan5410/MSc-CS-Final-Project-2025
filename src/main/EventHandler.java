@@ -86,7 +86,6 @@ public class EventHandler {
         gp.ui.currentDialogue = "You fall into a pit. \n You take damage.";
         gp.player.life --;
 
-        //eventRect[col][row].eventDone = true;
         canTouchEvent = false;
     }
 
