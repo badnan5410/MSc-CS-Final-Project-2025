@@ -44,7 +44,7 @@ public class EventHandler {
 
         if (canTouchEvent) {
             if (hit(27, 16, "right")) {teleport(gp.GS_DIALOGUE);}
-            if (hit(23, 19, "any")) {damagePit(23, 19, gp.GS_DIALOGUE);}
+            if (hit(23, 19, "any")) {damagePit(gp.GS_DIALOGUE);}
             if (hit(23, 12, "up")) {healingPool(gp.GS_DIALOGUE);}
         }
 
@@ -80,7 +80,7 @@ public class EventHandler {
         gp.player.direction = "right";
     }
 
-    public void damagePit(int col, int row, int gameState) {
+    public void damagePit(int gameState) {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit. \n You take damage.";
         gp.player.life --;
