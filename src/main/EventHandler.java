@@ -34,7 +34,7 @@ public class EventHandler {
     }
 
     public void checkEvent() {
-        // Check if playe ris 1 tile away from previous event
+        // Check if player is 1 tile away from previous event
         int distanceX = Math.abs(gp.player.worldX - previousEventX);
         int distanceY = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(distanceX, distanceY);
