@@ -1,20 +1,13 @@
 package object;
 
+import entity.Entity;
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-
-public class Icon_Fighter extends ParentObject {
-    GamePanel gp;
+public class Icon_Fighter extends Entity {
 
     public Icon_Fighter(GamePanel gp) {
-        this.gp = gp;
+        super(gp);
         name = "Fighter-Icon";
-        try {
-            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/fighter_icon.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        down1 = setup("/objects/fighter_icon");
     }
 }

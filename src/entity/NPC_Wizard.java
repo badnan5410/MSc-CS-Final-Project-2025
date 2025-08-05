@@ -12,6 +12,13 @@ public class NPC_Wizard extends Entity {
         speed = 1;
         getImage();
         setDialogue();
+
+        rect.x = 0;
+        rect.y = 16;
+        rect.width = 48;
+        rect.height = 32;
+        default_rectX = rect.x;
+        default_rectY = rect.y;
     }
 
     public void getImage() {

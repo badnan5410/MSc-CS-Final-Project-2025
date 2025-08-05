@@ -1,10 +1,10 @@
 package main;
 
+import entity.Entity;
 import object.Icon_Fighter;
 import object.Icon_Magician;
 import object.Icon_Thief;
 import object.Heart;
-import object.ParentObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -48,7 +48,7 @@ public class UserInterface {
             e.printStackTrace();
         }
 
-        ParentObject heart = new Heart(gp);
+        Entity heart = new Heart(gp);
         heartFull = heart.image1;
         heartHalf = heart.image2;
         heartEmpty = heart.image3;

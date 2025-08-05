@@ -1,20 +1,13 @@
 package object;
 
+import entity.Entity;
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-
-public class Icon_Thief extends ParentObject {
-    GamePanel gp;
+public class Icon_Thief extends Entity {
 
     public Icon_Thief(GamePanel gp) {
-        this.gp = gp;
+        super(gp);
         name = "Thief-Icon";
-        try {
-            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/thief_icon.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        down1 = setup("/objects/thief_icon");
     }
 }
