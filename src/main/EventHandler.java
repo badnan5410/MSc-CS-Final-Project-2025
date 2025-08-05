@@ -77,7 +77,6 @@ public class EventHandler {
         gp.ui.currentDialogue = "You have teleported!";
         gp.player.worldX = gp.TILE_SIZE*37;
         gp.player.worldY = gp.TILE_SIZE*10;
-        gp.player.direction = "right";
     }
 
     public void damagePit(int gameState) {
