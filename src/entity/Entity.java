@@ -26,12 +26,17 @@ public class Entity {
 
     public int movementCounter = 0;
 
+    public boolean invincible = false;
+    public int invincibleCounter = 0;
+
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
 
     public BufferedImage image1, image2, image3;
     public String name;
     public boolean collision = false;
+
+    public int type;
 
     // Character Status
     public int maxLife;
@@ -72,7 +77,16 @@ public class Entity {
         checkCollision = false;
         gp.cHandler.checkTile(this);
         gp.cHandler.checkObject(this, false);
-        gp.cHandler.checkPlayer(this);
+        gp.cHandler.checkEntity(this, gp.npc);
+        gp.cHandler.checkEntity(this, gp.monster);
+        boolean touchPlayer = gp.cHandler.checkPlayer(this);
+
+        if (this.type == 2 && touchPlayer) {
+            if (!gp.player.invincible) {
+                gp.player.life--;
+                gp.player.invincible = true;
+            }
+        }
 
         if (!checkCollision) {
             switch(direction) {

@@ -75,58 +75,20 @@ public class CollisionHandler {
                 gp.obj[i].rect.y = gp.obj[i].worldY + gp.obj[i].rect.y;
 
                 switch (entity.direction) {
-                    case "up":
-                        entity.rect.y -= entity.speed;
+                    case "up": entity.rect.y -= entity.speed; break;
+                    case "down": entity.rect.y += entity.speed; break;
+                    case "right": entity.rect.x += entity.speed; break;
+                    case "left": entity.rect.x -= entity.speed; break;
+                }
 
-                        if (entity.rect.intersects(gp.obj[i].rect)) {
-                            if (gp.obj[i].collision) {
-                                entity.checkCollision = true;
-                            }
+                if (entity.rect.intersects(gp.obj[i].rect)) {
+                    if (gp.obj[i].collision) {
+                        entity.checkCollision = true;
+                    }
 
-                            if (isPlayer) {
-                                index = i;
-                            }
-                        }
-                        break;
-                    case "down":
-                        entity.rect.y += entity.speed;
-
-                        if (entity.rect.intersects(gp.obj[i].rect)) {
-                            if (gp.obj[i].collision) {
-                                entity.checkCollision = true;
-                            }
-
-                            if (isPlayer) {
-                                index = i;
-                            }
-                        }
-                        break;
-                    case "right":
-                        entity.rect.x += entity.speed;
-
-                        if (entity.rect.intersects(gp.obj[i].rect)) {
-                            if (gp.obj[i].collision) {
-                                entity.checkCollision = true;
-                            }
-
-                            if (isPlayer) {
-                                index = i;
-                            }
-                        }
-                        break;
-                    case "left":
-                        entity.rect.x -= entity.speed;
-
-                        if (entity.rect.intersects(gp.obj[i].rect)) {
-                            if (gp.obj[i].collision) {
-                                entity.checkCollision = true;
-                            }
-
-                            if (isPlayer) {
-                                index = i;
-                            }
-                        }
-                        break;
+                    if (isPlayer) {
+                        index = i;
+                    }
                 }
                 entity.rect.x = entity.default_rectX;
                 entity.rect.y = entity.default_rectY;
@@ -152,38 +114,17 @@ public class CollisionHandler {
                 target[i].rect.y = target[i].worldY + target[i].rect.y;
 
                 switch (entity.direction) {
-                    case "up":
-                        entity.rect.y -= entity.speed;
+                    case "up": entity.rect.y -= entity.speed; break;
+                    case "down": entity.rect.y += entity.speed; break;
+                    case "right": entity.rect.x += entity.speed; break;
+                    case "left": entity.rect.x -= entity.speed; break;
+                }
 
-                        if (entity.rect.intersects(target[i].rect)) {
-                            entity.checkCollision = true;
-                            index = i;
-                        }
-                        break;
-                    case "down":
-                        entity.rect.y += entity.speed;
-
-                        if (entity.rect.intersects(target[i].rect)) {
-                            entity.checkCollision = true;
-                            index = i;
-                        }
-                        break;
-                    case "right":
-                        entity.rect.x += entity.speed;
-
-                        if (entity.rect.intersects(target[i].rect)) {
-                            entity.checkCollision = true;
-                            index = i;
-                        }
-                        break;
-                    case "left":
-                        entity.rect.x -= entity.speed;
-
-                        if (entity.rect.intersects(target[i].rect)) {
-                            entity.checkCollision = true;
-                            index = i;
-                        }
-                        break;
+                if (entity.rect.intersects(target[i].rect)) {
+                    if (target[i] != entity) {
+                        entity.checkCollision = true;
+                        index = i;
+                    }
                 }
                 entity.rect.x = entity.default_rectX;
                 entity.rect.y = entity.default_rectY;
@@ -196,7 +137,9 @@ public class CollisionHandler {
     }
 
     // Check player to NPC Collision
-    public void checkPlayer(Entity entity) {
+    public boolean checkPlayer(Entity entity) {
+        boolean touchPlayer = false;
+
         entity.rect.x = entity.worldX + entity.rect.x;
         entity.rect.y = entity.worldY + entity.rect.y;
 
@@ -204,38 +147,22 @@ public class CollisionHandler {
         gp.player.rect.y = gp.player.worldY + gp.player.rect.y;
 
         switch (entity.direction) {
-            case "up":
-                entity.rect.y -= entity.speed;
-
-                if (entity.rect.intersects(gp.player.rect)) {
-                    entity.checkCollision = true;
-                }
-                break;
-            case "down":
-                entity.rect.y += entity.speed;
-
-                if (entity.rect.intersects(gp.player.rect)) {
-                    entity.checkCollision = true;
-                }
-                break;
-            case "right":
-                entity.rect.x += entity.speed;
-
-                if (entity.rect.intersects(gp.player.rect)) {
-                    entity.checkCollision = true;
-                }
-                break;
-            case "left":
-                entity.rect.x -= entity.speed;
-
-                if (entity.rect.intersects(gp.player.rect)) {
-                    entity.checkCollision = true;
-                }
-                break;
+            case "up": entity.rect.y -= entity.speed; break;
+            case "down": entity.rect.y += entity.speed; break;
+            case "right": entity.rect.x += entity.speed; break;
+            case "left": entity.rect.x -= entity.speed; break;
         }
+
+        if (entity.rect.intersects(gp.player.rect)) {
+            entity.checkCollision = true;
+            touchPlayer = true;
+        }
+
         entity.rect.x = entity.default_rectX;
         entity.rect.y = entity.default_rectY;
         gp.player.rect.x = gp.player.default_rectX;
         gp.player.rect.y = gp.player.default_rectY;
+
+        return touchPlayer;
     }
 }
