@@ -65,6 +65,6 @@ public class MON_GreenSlime extends Entity {
 
     public void damageReaction() {
         movementCounter = 0;
-        direction = gp.player.direction;
+        direction = damageMovement(gp.player.direction);
     }
 }

@@ -175,7 +175,6 @@ public class Entity {
                 }
             }
 
-
             if (invincible) {
                 hpBarOn = true;
                 hpBarCounter = 0;
@@ -240,5 +239,17 @@ public class Entity {
             e.printStackTrace();
         }
         return image;
+    }
+
+    public String damageMovement(String direction) {
+        String monsterDirection = "";
+        switch (direction) {
+            case "up": monsterDirection = "down"; break;
+            case "down": monsterDirection = "up"; break;
+            case "right": monsterDirection = "left"; break;
+            case "left": monsterDirection = "right"; break;
+        }
+
+        return monsterDirection;
     }
 }
