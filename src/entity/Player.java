@@ -206,6 +206,7 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
             else {
+                gp.soundEffect(7);
                 attacking = true;
             }
         }
@@ -214,6 +215,7 @@ public class Player extends Entity {
     public void monsterInteraction(int i) {
         if (i != -1) {
             if (!invincible) {
+                gp.soundEffect(6);
                 life--;
                 invincible = true;
             }
@@ -223,11 +225,13 @@ public class Player extends Entity {
     public void damageMonster(int i) {
         if (i != -1) {
             if (!gp.monster[i].invincible) {
+                gp.soundEffect(5);
                 gp.monster[i].life--;
                 gp.monster[i].invincible = true;
+                gp.monster[i].damageReaction();
 
                 if (gp.monster[i].life <= 0) {
-                    gp.monster[i] = null;
+                    gp.monster[i].dying = true;
                 }
             }
         }
