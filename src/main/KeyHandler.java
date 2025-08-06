@@ -89,7 +89,7 @@ public class KeyHandler implements KeyListener {
         }
 
         // Play State
-        if (gp.gameState == gp.GS_PLAY) {
+        else if (gp.gameState == gp.GS_PLAY) {
             if (keyCode == KeyEvent.VK_W) {
                 upKey = true;
             }

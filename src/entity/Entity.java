@@ -10,35 +10,33 @@ import java.io.IOException;
 
 public class Entity {
     GamePanel gp;
-
-    public int worldX, worldY;
-    public int speed;
-
     public BufferedImage up1, up2, down1, down2, right1, right2, left1, left2;
-    public String direction = "down";
-
-    public int spriteCounter = 0;
-    public int spriteNum = 1;
-
+    public BufferedImage atk_up1, atk_up2, atk_down1, atk_down2, atk_right1, atk_right2, atk_left1, atk_left2;
+    public BufferedImage image1, image2, image3;
     public Rectangle rect = new Rectangle(0, 0, 48, 48);
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int default_rectX, default_rectY;
+    public boolean collision = false;
+    String[] dialogues = new String[20];
+
+    // State
+    public int worldX, worldY;
+    public String direction = "down";
+    public int spriteNum = 1;
+    int dialogueIndex = 0;
     public boolean checkCollision = false;
-
-    public int movementCounter = 0;
-
     public boolean invincible = false;
+    boolean attacking = false;
+
+    // Counters
+    public int spriteCounter = 0;
+    public int movementCounter = 0;
     public int invincibleCounter = 0;
 
-    String[] dialogues = new String[20];
-    int dialogueIndex = 0;
-
-    public BufferedImage image1, image2, image3;
-    public String name;
-    public boolean collision = false;
-
-    public int type;
-
     // Character Status
+    public int type;
+    public String name;
+    public int speed;
     public int maxLife;
     public int life;
 
@@ -115,6 +113,14 @@ public class Entity {
             }
             spriteCounter = 0;
         }
+
+        if (invincible) {
+            invincibleCounter++;
+            if (invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -127,40 +133,30 @@ public class Entity {
 
             switch (direction) {
                 case "up":
-                    if (spriteNum == 1) {
-                        image = up1;
-                    }
-                    if (spriteNum == 2) {
-                        image = up2;
-                    }
+                    if (spriteNum == 1) {image = up1;}
+                    if (spriteNum == 2) {image = up2;}
                     break;
                 case "down":
-                    if (spriteNum == 1) {
-                        image = down1;
-                    }
-                    if (spriteNum == 2) {
-                        image = down2;
-                    }
+                    if (spriteNum == 1) {image = down1;}
+                    if (spriteNum == 2) {image = down2;}
                     break;
                 case "right":
-                    if (spriteNum == 1) {
-                        image = right1;
-                    }
-                    if (spriteNum == 2) {
-                        image = right2;
-                    }
+                    if (spriteNum == 1) {image = right1;}
+                    if (spriteNum == 2) {image = right2;}
                     break;
                 case "left":
-                    if (spriteNum == 1) {
-                        image = left1;
-                    }
-                    if (spriteNum == 2) {
-                        image = left2;
-                    }
+                    if (spriteNum == 1) {image = left1;}
+                    if (spriteNum == 2) {image = left2;}
                     break;
             }
 
+            if (invincible) {
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+            }
+
             g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }
 
@@ -171,6 +167,20 @@ public class Entity {
         try {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
             image = uTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    public BufferedImage setup(String imagePath, int width, int height) {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+            image = uTool.scaleImage(image, width, height);
 
         }catch(IOException e) {
             e.printStackTrace();
