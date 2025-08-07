@@ -1,15 +1,14 @@
 package main;
 
 import entity.Entity;
-import object.Icon_Fighter;
-import object.Icon_Magician;
-import object.Icon_Thief;
-import object.Heart;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import object.Heart;
+import object.Icon_Fighter;
+import object.Icon_Magician;
+import object.Icon_Thief;
 
 public class UserInterface {
     GamePanel gp;
