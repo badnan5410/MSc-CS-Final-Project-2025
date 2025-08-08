@@ -88,22 +88,13 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (keyCode == KeyEvent.VK_ENTER) {
-                if (gp.ui.cNum == 0) {
-                    gp.player.playerClass = "Fighter";
+                String[] classes = {"Fighter", "Magician", "Thief"};
+
+                if (gp.ui.cNum >= 0 && gp.ui.cNum <= 2) {
+                    gp.player.playerClass = classes[gp.ui.cNum];
                     gp.player.classBonus(gp.player.playerClass);
                     gp.gameState = gp.GS_PLAY;
-                }
-                if (gp.ui.cNum == 1) {
-                    gp.player.playerClass = "Magician";
-                    gp.player.classBonus(gp.player.playerClass);
-                    gp.gameState = gp.GS_PLAY;
-                }
-                if (gp.ui.cNum == 2) {
-                    gp.player.playerClass = "Thief";
-                    gp.player.classBonus(gp.player.playerClass);
-                    gp.gameState = gp.GS_PLAY;
-                }
-                if (gp.ui.cNum == 3) {
+                } else if (gp.ui.cNum == 3) {
                     gp.ui.titleScreenState = 0;
                     gp.ui.cNum = 0;
                 }
