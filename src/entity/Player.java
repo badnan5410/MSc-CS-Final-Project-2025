@@ -2,10 +2,11 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.Shield_Wood;
+import object.Sword_Wood;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.sql.SQLOutput;
 
 public class Player extends Entity {
     KeyHandler kHandler;
@@ -38,14 +39,17 @@ public class Player extends Entity {
     public void classBonus(String playerClass) {
         switch (playerClass) {
             case "Fighter":
-                // TODO
+                strength = 3;
+                dexterity = 3;
                 break;
             case "Magician":
                 maxLife = 8;
                 life = maxLife;
+                nextLevelExp = 3;
                 break;
             case "Thief":
                 speed = 5;
+                gold = 3;
                 break;
         }
     }
@@ -57,8 +61,25 @@ public class Player extends Entity {
         direction = "down";
 
         // Player Status
+        level = 1;
         maxLife = 6;
         life = maxLife;
+        strength = 1; // More strength = more damage dealt
+        dexterity = 1; // More dexterity =  less damage received
+        exp = 0;
+        nextLevelExp = 5;
+        gold = 0;
+        currentWeapon = new Sword_Wood(gp);
+        currentShield = new Shield_Wood(gp);
+        attack = getAttackValue(); // Strength * weapon
+        defense = getDefenseValue(); // Dexterity * shield
+    }
+
+    public int getAttackValue() {
+        return attack = strength * currentWeapon.attackValue;
+    }
+    public int getDefenseValue() {
+        return defense = dexterity * currentShield.defenseValue;
     }
 
     public void getPlayerImage() {

@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_PAUSE = 1;
     public final int GS_DIALOGUE = 2;
     public final int GS_TITLE_SCREEN = 3;
+    public final int GS_CHARACTER_STATE = 4;
 
     // Class constructor
     public GamePanel() {
