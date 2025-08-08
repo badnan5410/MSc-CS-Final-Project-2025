@@ -83,7 +83,7 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.soundEffect(6);
         gp.ui.currentDialogue = "You fall into a pit. \n You take damage.";
-        gp.player.life --;
+        gp.player.life--;
 
         canTouchEvent = false;
     }

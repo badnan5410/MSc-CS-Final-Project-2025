@@ -36,24 +36,6 @@ public class Player extends Entity {
         getPlayerAttackImage();
     }
 
-    public void classBonus(String playerClass) {
-        switch (playerClass) {
-            case "Fighter":
-                strength = 3;
-                dexterity = 3;
-                break;
-            case "Magician":
-                maxLife = 8;
-                life = maxLife;
-                nextLevelExp = 3;
-                break;
-            case "Thief":
-                speed = 5;
-                gold = 3;
-                break;
-        }
-    }
-
     public void setDefaultValues() {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
@@ -243,7 +225,11 @@ public class Player extends Entity {
         if (i != -1) {
             if (!invincible) {
                 gp.soundEffect(6);
-                life--;
+                int damage = gp.monster[i].attack - defense;
+                if (damage < 0) {
+                    damage = 0;
+                }
+                life -= damage;
                 invincible = true;
             }
         }
@@ -253,14 +239,40 @@ public class Player extends Entity {
         if (i != -1) {
             if (!gp.monster[i].invincible) {
                 gp.soundEffect(5);
-                gp.monster[i].life--;
+                int damage = attack - gp.monster[i].defense;
+                if (damage < 0) {
+                    damage = 0;
+                }
+                gp.monster[i].life -= damage;
+                gp.ui.addMessage(damage + " damage!");
+
                 gp.monster[i].invincible = true;
                 gp.monster[i].damageReaction();
 
                 if (gp.monster[i].life <= 0) {
                     gp.monster[i].dying = true;
+                    gp.ui.addMessage("You killed the " + gp.monster[i].name + "!");
+                    gp.ui.addMessage("Exp " + gp.monster[i].exp);
+                    exp += gp.monster[i].exp;
+                    checkLevelUp();
                 }
             }
+        }
+    }
+
+    public void checkLevelUp() {
+        if (exp >= nextLevelExp) {
+            level++;
+            nextLevelExp = nextLevelExp*2;
+            maxLife += 2;
+            strength++;
+            dexterity++;
+            attack = getAttackValue();
+            defense = getDefenseValue();
+
+            gp.soundEffect(8);
+            gp.gameState = gp.GS_DIALOGUE;
+            gp.ui.currentDialogue = "You are level " + level + "now!\n" + "You feel stronger!";
         }
     }
 

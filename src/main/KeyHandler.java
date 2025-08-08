@@ -92,7 +92,7 @@ public class KeyHandler implements KeyListener {
 
                 if (gp.ui.cNum >= 0 && gp.ui.cNum <= 2) {
                     gp.player.playerClass = classes[gp.ui.cNum];
-                    gp.player.classBonus(gp.player.playerClass);
+                    System.out.println("You've chosen the " + gp.player.playerClass + " class.");
                     gp.gameState = gp.GS_PLAY;
                 }
                 else if (gp.ui.cNum == 3) {

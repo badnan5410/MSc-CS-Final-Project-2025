@@ -99,7 +99,11 @@ public class Entity {
         if (this.type == 2 && touchPlayer) {
             if (!gp.player.invincible) {
                 gp.soundEffect(6);
-                gp.player.life--;
+                int damage = attack - gp.player.defense;
+                if (damage < 0) {
+                    damage = 0;
+                }
+                gp.player.life -= damage;
                 gp.player.invincible = true;
             }
         }
