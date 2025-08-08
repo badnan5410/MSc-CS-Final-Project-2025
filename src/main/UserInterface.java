@@ -29,13 +29,13 @@ public class UserInterface {
 
         // Instantiate icons
         Icon_Fighter fighter = new Icon_Fighter(gp);
-        fighterIcon = fighter.image1;
+        fighterIcon = fighter.down1;
 
         Icon_Magician magician = new Icon_Magician(gp);
-        magicianIcon = magician.image1;
+        magicianIcon = magician.down1;
 
         Icon_Thief thief = new Icon_Thief(gp);
-        thiefIcon = thief.image1;
+        thiefIcon = thief.down1;
 
         // Instantiate custom font
         try {
@@ -341,7 +341,7 @@ public class UserInterface {
         g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.TILE_SIZE, textY - 14, null);
         textY += gp.TILE_SIZE;
 
-        g2.drawImage(gp.player.currentShield.down1, tailX - gp.TILE_SIZE, textY - 14, null);
+        g2.drawImage(gp.player.currentShield.down1, tailX - gp.TILE_SIZE, textY - 12, null);
     }
 
     public void drawMiniWindow(int x, int y, int width, int height) {
