@@ -86,7 +86,7 @@ public class Entity {
 
         if (this.type == 2 && touchPlayer) {
             if (!gp.player.invincible) {
-                gp.soundEffect(7);
+                gp.soundEffect(6);
                 gp.player.life--;
                 gp.player.invincible = true;
             }
