@@ -43,8 +43,8 @@ public class EventHandler {
         }
 
         if (canTouchEvent) {
-            if (hit(27, 16, "right")) {teleport(gp.GS_DIALOGUE);}
-            if (hit(23, 19, "any")) {damagePit(gp.GS_DIALOGUE);}
+            /*if (hit(27, 16, "right")) {teleport(gp.GS_DIALOGUE);}
+            if (hit(23, 19, "any")) {damagePit(gp.GS_DIALOGUE);}*/
             if (hit(23, 12, "up")) {healingPool(gp.GS_DIALOGUE);}
         }
 
@@ -81,6 +81,7 @@ public class EventHandler {
 
     public void damagePit(int gameState) {
         gp.gameState = gameState;
+        gp.soundEffect(6);
         gp.ui.currentDialogue = "You fall into a pit. \n You take damage.";
         gp.player.life --;
 
@@ -90,6 +91,8 @@ public class EventHandler {
     public void healingPool(int gameState) {
         if (gp.kHandler.enterPressed) {
             gp.gameState = gameState;
+            gp.player.attackCancelled = true;
+            gp.soundEffect(2);
             gp.ui.currentDialogue = "You drink the water. \nYour health has recovered.";
             gp.player.life = gp.player.maxLife;
         }

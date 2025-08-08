@@ -14,6 +14,7 @@ public class Player extends Entity {
     public final int screenY;
 
     public String playerClass;
+    public boolean attackCancelled = false;
 
     public Player(GamePanel gp, KeyHandler kHandler) {
         super(gp);
@@ -129,6 +130,14 @@ public class Player extends Entity {
                     case "left": worldX -= speed; break;
                 }
             }
+
+            if (kHandler.enterPressed && !attackCancelled) {
+                gp.soundEffect(7);
+                attacking = true;
+                spriteCounter = 0;
+            }
+            attackCancelled = false;
+
             gp.kHandler.enterPressed = false;
 
             spriteCounter++;
@@ -202,12 +211,9 @@ public class Player extends Entity {
 
         if (gp.kHandler.enterPressed) {
             if (i != -1) {
+                attackCancelled = true;
                 gp.gameState = gp.GS_DIALOGUE;
                 gp.npc[i].speak();
-            }
-            else {
-                gp.soundEffect(7);
-                attacking = true;
             }
         }
     }
