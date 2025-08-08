@@ -94,7 +94,8 @@ public class KeyHandler implements KeyListener {
                     gp.player.playerClass = classes[gp.ui.cNum];
                     gp.player.classBonus(gp.player.playerClass);
                     gp.gameState = gp.GS_PLAY;
-                } else if (gp.ui.cNum == 3) {
+                }
+                else if (gp.ui.cNum == 3) {
                     gp.ui.titleScreenState = 0;
                     gp.ui.cNum = 0;
                 }
