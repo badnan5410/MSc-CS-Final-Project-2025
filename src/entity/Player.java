@@ -252,8 +252,11 @@ public class Player extends Entity {
                 if (gp.monster[i].life <= 0) {
                     gp.monster[i].dying = true;
                     gp.ui.addMessage("You killed the " + gp.monster[i].name + "!");
+                    gp.soundEffect(1);
+                    gp.ui.addMessage("You earned " + gp.monster[i].gold + " gold!");
                     gp.ui.addMessage("Exp " + gp.monster[i].exp);
                     exp += gp.monster[i].exp;
+                    gold += gp.monster[i].gold;
                     checkLevelUp();
                 }
             }
@@ -272,7 +275,7 @@ public class Player extends Entity {
 
             gp.soundEffect(8);
             gp.gameState = gp.GS_DIALOGUE;
-            gp.ui.currentDialogue = "You are level " + level + "now!\n" + "You feel stronger!";
+            gp.ui.currentDialogue = "You are level " + level + " now!\n" + "You feel stronger!";
         }
     }
 
