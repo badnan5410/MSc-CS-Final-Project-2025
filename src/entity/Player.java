@@ -226,8 +226,8 @@ public class Player extends Entity {
             if (!invincible) {
                 gp.soundEffect(6);
                 int damage = gp.monster[i].attack - defense;
-                if (damage < 0) {
-                    damage = 0;
+                if (damage <= 0) {
+                    damage = 1;
                 }
                 life -= damage;
                 invincible = true;
