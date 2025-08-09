@@ -113,6 +113,12 @@ public class UserInterface {
             i++;
             x += gp.TILE_SIZE;
         }
+
+        // player death
+        if (gp.player.life <= 0) {
+            System.exit(0);
+            System.out.println("Game Over");
+        }
     }
 
     public void drawMessage() {
