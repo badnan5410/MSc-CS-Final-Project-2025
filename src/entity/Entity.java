@@ -101,9 +101,6 @@ public class Entity {
             if (!gp.player.invincible) {
                 gp.soundEffect(6);
                 int damage = attack - gp.player.defense;
-                if (damage <= 0) {
-                    damage = 1;
-                }
                 gp.player.life -= damage;
                 gp.player.invincible = true;
             }
