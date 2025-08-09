@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 public class Entity {
     GamePanel gp;
@@ -258,14 +259,26 @@ public class Entity {
     }
 
     public String damageMovement(String direction) {
-        String monsterDirection = "";
-        switch (direction) {
-            case "up": monsterDirection = "down"; break;
-            case "down": monsterDirection = "up"; break;
-            case "right": monsterDirection = "left"; break;
-            case "left": monsterDirection = "right"; break;
+        String[] dirs = {"up", "down", "left", "right"};
+        Random rand = new Random();
+        int counter = rand.nextInt(100); // 0–99
+
+        // Filter out player's direction
+        String[] possibleDirs = new String[3];
+        int idx = 0;
+        for (String d : dirs) {
+            if (!d.equals(direction)) {
+                possibleDirs[idx++] = d;
+            }
         }
 
-        return monsterDirection;
+        // Map ranges to the remaining three directions
+        if (counter < 33) {
+            return possibleDirs[0];
+        } else if (counter < 66) {
+            return possibleDirs[1];
+        } else {
+            return possibleDirs[2];
+        }
     }
 }

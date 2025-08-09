@@ -298,27 +298,27 @@ public class UserInterface {
         final int lineHeight = 35;
 
         // Stats
-        g2.drawString("Level", textX, textY);
+        g2.drawString("LVL", textX, textY);
         textY += lineHeight;
-        g2.drawString("Life", textX, textY);
+        g2.drawString("HP", textX, textY);
         textY += lineHeight;
-        g2.drawString("Strength", textX, textY);
+        g2.drawString("STR", textX, textY);
         textY += lineHeight;
-        g2.drawString("Dexterity", textX, textY);
+        g2.drawString("DEX", textX, textY);
         textY += lineHeight;
-        g2.drawString("Attack", textX, textY);
+        g2.drawString("ATK", textX, textY);
         textY += lineHeight;
-        g2.drawString("Defense", textX, textY);
+        g2.drawString("DEF", textX, textY);
         textY += lineHeight;
-        g2.drawString("Exp", textX, textY);
+        g2.drawString("XP", textX, textY);
         textY += lineHeight;
-        g2.drawString("Next Level", textX, textY);
+        g2.drawString("MAX XP", textX, textY);
         textY += lineHeight;
-        g2.drawString("Gold", textX, textY);
+        g2.drawString("GOLD", textX, textY);
         textY += lineHeight + 20;
-        g2.drawString("Weapon", textX, textY);
+        g2.drawString("WEAPON", textX, textY);
         textY += lineHeight + 15;
-        g2.drawString("Shield", textX, textY);
+        g2.drawString("SHIELD", textX, textY);
         textY += lineHeight;
 
         // Values
