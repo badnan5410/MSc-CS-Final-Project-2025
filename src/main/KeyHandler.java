@@ -88,11 +88,10 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if (keyCode == KeyEvent.VK_ENTER) {
-                String[] classes = {"Fighter", "Magician", "Thief"};
+                String[] classes = {"FIGHTER", "MAGICIAN", "THIEF"};
 
                 if (gp.ui.cNum >= 0 && gp.ui.cNum <= 2) {
                     gp.player.playerClass = classes[gp.ui.cNum];
-                    System.out.println("You've chosen the " + gp.player.playerClass + " class.");
                     gp.gameState = gp.GS_PLAY;
                 }
                 else if (gp.ui.cNum == 3) {
