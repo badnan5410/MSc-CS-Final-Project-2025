@@ -133,7 +133,7 @@ public class UserInterface {
                 g2.setColor(Color.white);
                 g2.drawString(message.get(i), messageX, messageY);
 
-                int counter = messageCounter.get(i) + 1; // messageCounter++
+                int counter = messageCounter.get(i) + 1;
                 messageCounter.set(i, counter);
                 messageY += 50;
 
