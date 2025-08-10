@@ -142,7 +142,6 @@ public class UserInterface {
                     message.remove(i);
                     messageCounter.remove(i);
                 }
-
             }
         }
     }
@@ -380,10 +379,10 @@ public class UserInterface {
         g2.drawString(value, textX, textY);
         textY += lineHeight;
 
-        g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.TILE_SIZE, textY - 14, null);
+        g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.TILE_SIZE + 15, textY - 14, null);
         textY += gp.TILE_SIZE;
 
-        g2.drawImage(gp.player.currentShield.down1, tailX - gp.TILE_SIZE, textY - 12, null);
+        g2.drawImage(gp.player.currentShield.down1, tailX - gp.TILE_SIZE + 15, textY - 12, null);
     }
 
     public void drawMiniWindow(int x, int y, int width, int height) {
@@ -405,7 +404,7 @@ public class UserInterface {
 
     public int rightX(String text, int tailX) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = tailX - length;
+        int x = tailX - length + 15;
         return x;
     }
 }
