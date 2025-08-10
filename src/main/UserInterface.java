@@ -284,9 +284,9 @@ public class UserInterface {
     public void drawCharacterScreen() {
         // Create a frame
         final int frameX = gp.TILE_SIZE/2;
-        final int frameY = gp.TILE_SIZE;
+        final int frameY = gp.TILE_SIZE/2;
         final int frameWidth = gp.TILE_SIZE*5;
-        final int frameHeight = gp.TILE_SIZE*10;
+        final int frameHeight = 490;
         drawMiniWindow(frameX, frameY, frameWidth, frameHeight);
 
         // Text
@@ -301,6 +301,8 @@ public class UserInterface {
         g2.drawString("LVL", textX, textY);
         textY += lineHeight;
         g2.drawString("HP", textX, textY);
+        textY += lineHeight;
+        g2.drawString("CLASS", textX, textY);
         textY += lineHeight;
         g2.drawString("STR", textX, textY);
         textY += lineHeight;
@@ -334,6 +336,11 @@ public class UserInterface {
         textY += lineHeight;
 
         value = String.valueOf(gp.player.life + "/" + gp.player.maxLife);
+        textX = rightX(value, tailX);
+        g2.drawString(value, textX, textY);
+        textY += lineHeight;
+
+        value = gp.player.playerClass;
         textX = rightX(value, tailX);
         g2.drawString(value, textX, textY);
         textY += lineHeight;
