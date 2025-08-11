@@ -133,6 +133,11 @@ public class KeyHandler implements KeyListener {
         if (keyCode == KeyEvent.VK_T) {
             toggleDebug = !toggleDebug;
         }
+
+        if (keyCode == KeyEvent.VK_R) {
+            gp.tm.mapLoader("/maps/world_02.txt");
+            System.out.println("refresh map");
+        }
     }
 
     public void pauseState(int keyCode) {
