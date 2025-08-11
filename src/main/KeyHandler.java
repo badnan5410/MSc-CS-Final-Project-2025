@@ -55,12 +55,14 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.cNum < 0) {
                     gp.ui.cNum = 2;
                 }
+                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_S) {
                 gp.ui.cNum++;
                 if (gp.ui.cNum > 2) {
                     gp.ui.cNum = 0;
                 }
+                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_ENTER) {
                 if (gp.ui.cNum == 0) {
@@ -72,6 +74,7 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.cNum == 2) {
                     System.exit(0);
                 }
+                gp.soundEffect(10);
             }
         }
         else if (gp.ui.titleScreenState == 1) {
@@ -80,12 +83,14 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.cNum < 0) {
                     gp.ui.cNum = 3;
                 }
+                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_S) {
                 gp.ui.cNum++;
                 if (gp.ui.cNum > 3) {
                     gp.ui.cNum = 0;
                 }
+                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_ENTER) {
                 String[] classes = {"FIGHTER", "MAGICIAN", "THIEF"};
@@ -98,6 +103,8 @@ public class KeyHandler implements KeyListener {
                     gp.ui.titleScreenState = 0;
                     gp.ui.cNum = 0;
                 }
+
+                gp.soundEffect(10);
             }
         }
     }
@@ -136,7 +143,6 @@ public class KeyHandler implements KeyListener {
 
         if (keyCode == KeyEvent.VK_R) {
             gp.tm.mapLoader("/maps/world_02.txt");
-            System.out.println("refresh map");
         }
     }
 
@@ -155,6 +161,30 @@ public class KeyHandler implements KeyListener {
     public void characterState(int keyCode) {
         if (keyCode == KeyEvent.VK_C) {
             gp.gameState = gp.GS_PLAY;
+        }
+        if (keyCode == KeyEvent.VK_W) {
+            if (gp.ui.slotRow != 0) {
+                gp.ui.slotRow--;
+                gp.soundEffect(9);
+            }
+        }
+        if (keyCode == KeyEvent.VK_S) {
+            if (gp.ui.slotRow != 3) {
+                gp.ui.slotRow++;
+                gp.soundEffect(9);
+            }
+        }
+        if (keyCode == KeyEvent.VK_D) {
+            if (gp.ui.slotCol != 4) {
+                gp.ui.slotCol++;
+                gp.soundEffect(9);
+            }
+        }
+        if (keyCode == KeyEvent.VK_A) {
+            if (gp.ui.slotCol != 0) {
+                gp.ui.slotCol--;
+                gp.soundEffect(9);
+            }
         }
     }
 

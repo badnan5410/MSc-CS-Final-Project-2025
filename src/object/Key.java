@@ -9,5 +9,6 @@ public class Key extends Entity {
         super(gp);
         name = "Key";
         down1 = setup("/objects/key");
+        description = "[" + name + "]\nA mysterious key. I wonder\nwhat it unlocks...";
     }
 }

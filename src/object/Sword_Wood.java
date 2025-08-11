@@ -10,5 +10,6 @@ public class Sword_Wood extends Entity {
         name = "Wooden Sword";
         down1 = setup("/objects/sword_wooden");
         attackValue = 1;
+        description = "[" + name + "]\nJust a wooden sword.";
     }
 }
