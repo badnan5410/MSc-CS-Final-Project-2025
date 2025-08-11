@@ -9,7 +9,7 @@ public class KeyHandler implements KeyListener {
     public boolean upKey, downKey, leftKey, rightKey, enterPressed;
 
     // Debug
-    boolean checkDrawTime = false;
+    boolean toggleDebug = false;
 
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
@@ -131,7 +131,7 @@ public class KeyHandler implements KeyListener {
 
         // Debug
         if (keyCode == KeyEvent.VK_T) {
-            checkDrawTime = !checkDrawTime;
+            toggleDebug = !toggleDebug;
         }
     }
 
