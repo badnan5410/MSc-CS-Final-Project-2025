@@ -3,8 +3,8 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import object.Key;
-import object.Shield_Wood;
-import object.Sword_Wood;
+import object.Wood_Shield;
+import object.Wood_Sword;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,9 +33,6 @@ public class Player extends Entity {
         default_rectX = rect.x;
         default_rectY = rect.y;
 
-        attackArea.width = 36;
-        attackArea.height = 36;
-
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
@@ -49,16 +46,17 @@ public class Player extends Entity {
         direction = "down";
 
         // Player Status
+        type = TYPE_PLAYER;
         level = 1;
         maxLife = 6;
         life = maxLife;
         strength = 1; // More strength = more damage dealt
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
-        nextLevelExp = 5;
+        nextLevelExp = 4;
         gold = 0;
-        currentWeapon = new Sword_Wood(gp);
-        currentShield = new Shield_Wood(gp);
+        currentWeapon = new Wood_Sword(gp);
+        currentShield = new Wood_Shield(gp);
         attack = getAttackValue(); // Strength * weapon
         defense = getDefenseValue(); // Dexterity * shield
     }
@@ -71,8 +69,10 @@ public class Player extends Entity {
     }
 
     public int getAttackValue() {
+        attackArea = currentWeapon.attackArea;
         return attack = strength * currentWeapon.attackValue;
     }
+
     public int getDefenseValue() {
         return defense = dexterity * currentShield.defenseValue;
     }
@@ -89,14 +89,34 @@ public class Player extends Entity {
     }
 
     public void getPlayerAttackImage() {
-        atk_up1 = setup("/player/attacking/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
-        atk_up2 = setup("/player/attacking/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
-        atk_down1 = setup("/player/attacking/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
-        atk_down2 = setup("/player/attacking/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
-        atk_right1 = setup("/player/attacking/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
-        atk_right2 = setup("/player/attacking/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
-        atk_left1 = setup("/player/attacking/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
-        atk_left2 = setup("/player/attacking/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+
+        if (currentWeapon.type == TYPE_SWORD) {
+            if (currentWeapon.name == "Hero's Sword") {
+                atk_up1 = setup("/player/attacking/sword/iron/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_up2 = setup("/player/attacking/sword/iron/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down1 = setup("/player/attacking/sword/iron/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down2 = setup("/player/attacking/sword/iron/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_right1 = setup("/player/attacking/sword/iron/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_right2 = setup("/player/attacking/sword/iron/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left1 = setup("/player/attacking/sword/iron/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left2 = setup("/player/attacking/sword/iron/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            }
+            if (currentWeapon.name == "Wooden Sword") {
+                atk_up1 = setup("/player/attacking/sword/wood/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_up2 = setup("/player/attacking/sword/wood/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down1 = setup("/player/attacking/sword/wood/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down2 = setup("/player/attacking/sword/wood/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_right1 = setup("/player/attacking/sword/wood/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_right2 = setup("/player/attacking/sword/wood/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left1 = setup("/player/attacking/sword/wood/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left2 = setup("/player/attacking/sword/wood/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            }
+
+        }
+        if (currentWeapon.type == TYPE_AXE) {
+            // TODO
+        }
+
     }
 
     public void update() {
@@ -220,7 +240,20 @@ public class Player extends Entity {
     }
 
     public void objectPickup(int i) {
-        if (i != -1) {}
+        if (i != -1) {
+            String text;
+
+            if (inventory.size() != INVENTORY_CAPACITY) {
+                inventory.add(gp.obj[i]);
+                gp.soundEffect(1);
+                text = "Got a " + gp.obj[i].name + "!";
+                gp.obj[i] = null;
+            }
+            else {
+                text = "Inventory is full!";
+            }
+            gp.ui.addMessage(text);
+        }
     }
 
     public void npcInteraction(int i) {
@@ -239,8 +272,10 @@ public class Player extends Entity {
             if (!invincible) {
                 gp.soundEffect(6);
                 int damage = gp.monster[i].attack - defense;
-                life -= damage;
-                invincible = true;
+                if (damage > 0) {
+                    life -= damage;
+                    invincible = true;
+                }
             }
         }
     }
@@ -273,7 +308,8 @@ public class Player extends Entity {
     public void checkLevelUp() {
         if (exp >= nextLevelExp) {
             level++;
-            nextLevelExp = nextLevelExp*2;
+            nextLevelExp = (int)(5 * Math.pow(1.3, level));
+            exp = 0;
             maxLife += 2;
             life = maxLife;
             strength++;
@@ -284,6 +320,28 @@ public class Player extends Entity {
             gp.soundEffect(8);
             gp.gameState = gp.GS_DIALOGUE;
             gp.ui.currentDialogue = "You are level " + level + " now!\n" + "You feel stronger!";
+        }
+    }
+
+    public void selectItem() {
+        int itemIndex = gp.ui.getSlotIndex();
+
+        if (itemIndex < inventory.size()) {
+            Entity selectedItem = inventory.get(itemIndex);
+
+            if (selectedItem.type == TYPE_SWORD || selectedItem.type == TYPE_AXE) {
+                currentWeapon = selectedItem;
+                attack = getAttackValue();
+                getPlayerAttackImage();
+            }
+            if (selectedItem.type == TYPE_SHIELD) {
+                currentShield = selectedItem;
+                defense = getDefenseValue();
+            }
+            if (selectedItem.type == TYPE_CONSUMABLE) {
+                selectedItem.useItem(this);
+                inventory.remove(itemIndex);
+            }
         }
     }
 
