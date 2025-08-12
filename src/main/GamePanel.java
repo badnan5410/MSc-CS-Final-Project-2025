@@ -45,7 +45,6 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity monster[] = new Entity[20];
     ArrayList<Entity> entityList = new ArrayList<>();
 
-
     // Game States
     public int gameState;
     public final int GS_PLAY = 0;
@@ -190,9 +189,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Debug
         if (kHandler.toggleDebug) {
-            long drawEnd = System.nanoTime();
-            long passed = drawEnd - drawStart;
-
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
             g2.setColor(Color.white);
             int x = 10;
@@ -203,9 +199,8 @@ public class GamePanel extends JPanel implements Runnable {
             y += lineHeight;
             g2.drawString("Tile: (" + (player.worldX + player.rect.x)/TILE_SIZE + ", " + (player.worldY + player.rect.y)/TILE_SIZE + ")", x, y);
             y += lineHeight;
-
-            //g2.drawString("Draw Time: "+passed, x, y);
         }
+
         g2.dispose();
     }
 
