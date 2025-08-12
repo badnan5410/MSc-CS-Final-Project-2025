@@ -2,7 +2,6 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import object.Key;
 import object.Wood_Shield;
 import object.Wood_Sword;
 
@@ -64,8 +63,6 @@ public class Player extends Entity {
     public void setInventory() {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
-        inventory.add(new Key(gp));
-        inventory.add(new Key(gp));
     }
 
     public int getAttackValue() {

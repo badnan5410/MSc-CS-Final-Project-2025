@@ -13,18 +13,20 @@ public class Potion_Red extends Entity {
         down1 = setup("/objects/potion_red");
         type = TYPE_CONSUMABLE;
         life = 4;
-        description = "[" + name + "]\nDrink this potion to recover your health.\n+" + life + " HP";
+        description = "[" + name + "]\nDrink this potion to recover\nyour health.\n+" + life + " HP";
     }
 
     public void useItem(Entity entity) {
         gp.soundEffect(11);
         gp.gameState = gp.GS_DIALOGUE;
-        gp.ui.currentDialogue = "You drink the " + name + "!\n You have recovered " + life + " HP!";
+
         if (life + entity.life > entity.maxLife) {
             entity.life = entity.maxLife;
+            gp.ui.currentDialogue = "You drink the " + name + "!\n You have recovered full HP!";
         }
         else {
             entity.life += life;
+            gp.ui.currentDialogue = "You drink the " + name + "!\n You have recovered " + life + " HP!";
         }
     }
 }

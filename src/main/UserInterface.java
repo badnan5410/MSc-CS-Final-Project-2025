@@ -422,7 +422,7 @@ public class UserInterface {
 
         // Cursor
         int cursorX = slotX_start + (slotSize*slotCol);
-        int cursorY = slotY_start + (slotSize*slotRow);;
+        int cursorY = slotY_start + (slotSize*slotRow);
         int cursorWidth = gp.TILE_SIZE;
         int cursorHeight = gp.TILE_SIZE;
 

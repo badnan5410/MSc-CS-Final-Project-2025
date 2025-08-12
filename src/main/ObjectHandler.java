@@ -19,14 +19,9 @@ public class ObjectHandler {
         gp.obj[i].worldY = gp.TILE_SIZE*19;
         i++;
 
-        gp.obj[i] = new Key(gp);
+        gp.obj[i] = new Iron_Axe(gp);
         gp.obj[i].worldX = gp.TILE_SIZE*21;
         gp.obj[i].worldY = gp.TILE_SIZE*19;
-        i++;
-
-        gp.obj[i] = new Iron_Axe(gp);
-        gp.obj[i].worldX = gp.TILE_SIZE*26;
-        gp.obj[i].worldY = gp.TILE_SIZE*21;
         i++;
 
         gp.obj[i] = new Iron_Sword(gp);
