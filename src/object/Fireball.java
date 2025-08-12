@@ -1,5 +1,6 @@
 package object;
 
+import entity.Entity;
 import entity.Projectile;
 import main.GamePanel;
 
@@ -14,7 +15,7 @@ public class Fireball extends Projectile {
         speed = 5;
         maxLife = 80;
         life = maxLife;
-        attack = 2;
+        attack = 3;
         useCost = 1;
         alive = false;
         getImage();
@@ -29,5 +30,13 @@ public class Fireball extends Projectile {
         right2 = setup("/projectiles/fireball_right_2");
         left1 = setup("/projectiles/fireball_left_1");
         left2 = setup("/projectiles/fireball_left_2");
+    }
+
+    public boolean checkResource(Entity user) {
+        return user.mana >= useCost;
+    }
+
+    public void subtractResource(Entity user) {
+        user.mana -= useCost;
     }
 }

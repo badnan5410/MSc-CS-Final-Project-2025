@@ -50,6 +50,8 @@ public class Player extends Entity {
         level = 1;
         maxLife = 6;
         life = maxLife;
+        maxMana = 4;
+        mana = maxMana;
         strength = 1; // More strength = more damage dealt
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
@@ -194,8 +196,11 @@ public class Player extends Entity {
             }
         }
 
-        if (gp.kHandler.shotKeyPressed && !projectile.alive && shotCooldownCounter == 30) {
+        if (gp.kHandler.shotKeyPressed && !projectile.alive && shotCooldownCounter == 30 && projectile.checkResource(this)) {
             projectile.set(worldX, worldY, direction, true, this);
+
+            // use up mana
+            projectile.subtractResource(this);
 
             // add projectile to ArrayList
             gp.projectileList.add(projectile);
@@ -293,8 +298,11 @@ public class Player extends Entity {
                 int damage = gp.monster[i].attack - defense;
                 if (damage > 0) {
                     life -= damage;
-                    invincible = true;
                 }
+                else {
+                    life--;
+                }
+                invincible = true;
             }
         }
     }
@@ -331,6 +339,7 @@ public class Player extends Entity {
             exp = 0;
             maxLife += 2;
             life = maxLife;
+            mana = maxMana;
             strength++;
             dexterity++;
             attack = getAttackValue();

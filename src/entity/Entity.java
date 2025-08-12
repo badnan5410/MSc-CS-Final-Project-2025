@@ -121,15 +121,7 @@ public class Entity {
         boolean touchPlayer = gp.cHandler.checkPlayer(this);
 
         if (this.type == TYPE_MONSTER && touchPlayer) {
-            if (!gp.player.invincible) {
-                gp.soundEffect(6);
-                int damage = attack - gp.player.defense;
-                if (damage > 0) {
-                    gp.player.life -= damage;
-                    gp.player.invincible = true;
-                }
-
-            }
+            damagePlayer(attack);
         }
 
         if (!checkCollision) {
@@ -166,6 +158,24 @@ public class Entity {
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+
+        if (shotCooldownCounter < 30) {
+            shotCooldownCounter++;
+        }
+    }
+
+    public void damagePlayer(int attack) {
+        if (!gp.player.invincible) {
+            gp.soundEffect(6);
+            int damage = attack - gp.player.defense;
+            if (damage > 0) {
+                gp.player.life -= damage;
+            }
+            else {
+                gp.player.life--;
+            }
+            gp.player.invincible = true;
         }
     }
 

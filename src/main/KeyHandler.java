@@ -135,7 +135,7 @@ public class KeyHandler implements KeyListener {
         if (keyCode == KeyEvent.VK_ENTER) {
             enterPressed = true;
         }
-        if (keyCode == KeyEvent.VK_SPACE) {
+        if (keyCode == KeyEvent.VK_F) {
             shotKeyPressed = true;
         }
 
@@ -211,7 +211,7 @@ public class KeyHandler implements KeyListener {
         if (keyCode == KeyEvent.VK_D) {
             rightKey = false;
         }
-        if (keyCode == KeyEvent.VK_SPACE) {
+        if (keyCode == KeyEvent.VK_F) {
             shotKeyPressed = false;
         }
     }

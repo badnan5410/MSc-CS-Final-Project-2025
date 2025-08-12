@@ -2,6 +2,7 @@ package monster;
 
 import entity.Entity;
 import main.GamePanel;
+import object.SlimeBall;
 
 import java.util.Random;
 
@@ -21,6 +22,7 @@ public class MON_GreenSlime extends Entity {
         defense = 0;
         exp = 2;
         gold = 1;
+        projectile = new SlimeBall(gp);
 
         rect.x = 3;
         rect.y = 18;
@@ -64,6 +66,13 @@ public class MON_GreenSlime extends Entity {
             }
 
             movementCounter = 0;
+
+        }
+        int i = new Random().nextInt(100)+1;
+        if (i > 99 && !projectile.alive && shotCooldownCounter == 30) {
+            projectile.set(worldX, worldY, direction, true, this);
+            gp.projectileList.add(projectile);
+            shotCooldownCounter = 0;
         }
     }
 

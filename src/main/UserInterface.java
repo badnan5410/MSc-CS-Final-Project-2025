@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import object.Heart;
-import object.Icon_Fighter;
-import object.Icon_Magician;
-import object.Icon_Thief;
+import object.*;
 
 public class UserInterface {
     GamePanel gp;
@@ -25,6 +22,7 @@ public class UserInterface {
     public int titleScreenState = 0;
     BufferedImage fighterIcon, magicianIcon, thiefIcon;
     BufferedImage heartFull, heartHalf, heartEmpty;
+    BufferedImage manaFull, manaEmpty;
     public int slotCol = 0;
     public int slotRow = 0;
 
@@ -55,6 +53,11 @@ public class UserInterface {
         heartFull = heart.image1;
         heartHalf = heart.image2;
         heartEmpty = heart.image3;
+
+        Entity mana = new Mana(gp);
+        manaFull = mana.image1;
+        manaEmpty = mana.image2;
+
     }
 
     public void addMessage(String text) {
@@ -98,7 +101,7 @@ public class UserInterface {
         while (i < gp.player.maxLife/2) {
             g2.drawImage(heartEmpty, x, y, null);
             i++;
-            x += gp.TILE_SIZE;
+            x += gp.TILE_SIZE + 4;
         }
 
         // reset values
@@ -114,13 +117,27 @@ public class UserInterface {
                 g2.drawImage(heartFull, x, y, null);
             }
             i++;
-            x += gp.TILE_SIZE;
+            x += gp.TILE_SIZE + 4;
         }
 
-        // player death
-        if (gp.player.life <= 0) {
-            System.exit(0);
-            System.out.println("Game Over");
+        // draw max mana
+        x = gp.TILE_SIZE/2;
+        y = gp.TILE_SIZE + 20;
+        i = 0;
+        while (i < gp.player.maxMana) {
+            g2.drawImage(manaEmpty, x, y, null);
+            i++;
+            x += gp.TILE_SIZE + 4;
+        }
+
+        // draw mana
+        x = gp.TILE_SIZE/2;
+        y = gp.TILE_SIZE + 20;
+        i = 0;
+        while (i < gp.player.mana) {
+            g2.drawImage(manaFull, x, y, null);
+            i++;
+            x += gp.TILE_SIZE + 4;
         }
     }
 
@@ -287,7 +304,7 @@ public class UserInterface {
         final int frameX = gp.TILE_SIZE/2;
         final int frameY = gp.TILE_SIZE/2;
         final int frameWidth = gp.TILE_SIZE*5;
-        final int frameHeight = 490;
+        final int frameHeight = gp.TILE_SIZE*11;
         drawMiniWindow(frameX, frameY, frameWidth, frameHeight);
 
         // Text
@@ -299,30 +316,19 @@ public class UserInterface {
         final int lineHeight = 35;
 
         // Stats
-        g2.drawString("LVL", textX, textY);
-        textY += lineHeight;
-        g2.drawString("HP", textX, textY);
-        textY += lineHeight;
-        g2.drawString("CLASS", textX, textY);
-        textY += lineHeight;
-        g2.drawString("STR", textX, textY);
-        textY += lineHeight;
-        g2.drawString("DEX", textX, textY);
-        textY += lineHeight;
-        g2.drawString("ATK", textX, textY);
-        textY += lineHeight;
-        g2.drawString("DEF", textX, textY);
-        textY += lineHeight;
-        g2.drawString("XP", textX, textY);
-        textY += lineHeight;
-        g2.drawString("MAX XP", textX, textY);
-        textY += lineHeight;
-        g2.drawString("GOLD", textX, textY);
-        textY += lineHeight + 20;
-        g2.drawString("WEAPON", textX, textY);
-        textY += lineHeight + 15;
-        g2.drawString("SHIELD", textX, textY);
-        textY += lineHeight;
+        g2.drawString("LVL", textX, textY); textY += lineHeight;
+        g2.drawString("HP", textX, textY); textY += lineHeight;
+        g2.drawString("MP", textX, textY); textY += lineHeight;
+        g2.drawString("CLASS", textX, textY); textY += lineHeight;
+        g2.drawString("STR", textX, textY); textY += lineHeight;
+        g2.drawString("DEX", textX, textY); textY += lineHeight;
+        g2.drawString("ATK", textX, textY); textY += lineHeight;
+        g2.drawString("DEF", textX, textY); textY += lineHeight;
+        g2.drawString("XP", textX, textY); textY += lineHeight;
+        g2.drawString("MAX XP", textX, textY); textY += lineHeight;
+        g2.drawString("GOLD", textX, textY); textY += lineHeight + 20;
+        g2.drawString("WEAPON", textX, textY); textY += lineHeight + 15;
+        g2.drawString("SHIELD", textX, textY); textY += lineHeight;
 
         // Values
         int tailX = (frameX + frameWidth) - 30;
@@ -337,6 +343,11 @@ public class UserInterface {
         textY += lineHeight;
 
         value = String.valueOf(gp.player.life + "/" + gp.player.maxLife);
+        textX = rightX(value, tailX);
+        g2.drawString(value, textX, textY);
+        textY += lineHeight;
+
+        value = String.valueOf(gp.player.mana + "/" + gp.player.maxMana);
         textX = rightX(value, tailX);
         g2.drawString(value, textX, textY);
         textY += lineHeight;

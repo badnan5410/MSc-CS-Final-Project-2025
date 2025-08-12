@@ -28,7 +28,11 @@ public class Projectile extends Entity {
             }
         }
         else {
-            //TODO
+            boolean touchPlayer = gp.cHandler.checkPlayer(this);
+            if (!gp.player.invincible && touchPlayer) {
+                damagePlayer(attack);
+                alive = false;
+            }
         }
 
         switch (direction) {
@@ -48,4 +52,10 @@ public class Projectile extends Entity {
             spriteCounter = 0;
         }
     }
+
+    public boolean checkResource(Entity user) {
+        return false;
+    }
+
+    public void subtractResource(Entity user) {}
 }
