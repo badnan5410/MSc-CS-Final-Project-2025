@@ -51,20 +51,21 @@ public class KeyHandler implements KeyListener {
         // Title State 1
         if (gp.ui.titleScreenState == 0) {
             if (keyCode == KeyEvent.VK_W) {
+                gp.soundEffect(9);
                 gp.ui.cNum--;
                 if (gp.ui.cNum < 0) {
                     gp.ui.cNum = 2;
                 }
-                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_S) {
+                gp.soundEffect(9);
                 gp.ui.cNum++;
                 if (gp.ui.cNum > 2) {
                     gp.ui.cNum = 0;
                 }
-                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_ENTER) {
+                gp.soundEffect(10);
                 if (gp.ui.cNum == 0) {
                     gp.ui.titleScreenState = 1;
                 }
@@ -74,25 +75,26 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.cNum == 2) {
                     System.exit(0);
                 }
-                gp.soundEffect(10);
+
             }
         }
         else if (gp.ui.titleScreenState == 1) {
             if (keyCode == KeyEvent.VK_W) {
+                gp.soundEffect(9);
                 gp.ui.cNum--;
                 if (gp.ui.cNum < 0) {
                     gp.ui.cNum = 3;
                 }
-                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_S) {
+                gp.soundEffect(9);
                 gp.ui.cNum++;
                 if (gp.ui.cNum > 3) {
                     gp.ui.cNum = 0;
                 }
-                gp.soundEffect(9);
             }
             if (keyCode == KeyEvent.VK_ENTER) {
+                gp.soundEffect(10);
                 String[] classes = {"FIGHTER", "MAGICIAN", "THIEF"};
 
                 if (gp.ui.cNum >= 0 && gp.ui.cNum <= 2) {
@@ -103,8 +105,6 @@ public class KeyHandler implements KeyListener {
                     gp.ui.titleScreenState = 0;
                     gp.ui.cNum = 0;
                 }
-
-                gp.soundEffect(10);
             }
         }
     }
@@ -163,28 +163,32 @@ public class KeyHandler implements KeyListener {
             gp.gameState = gp.GS_PLAY;
         }
         if (keyCode == KeyEvent.VK_W) {
+            gp.soundEffect(9);
             if (gp.ui.slotRow != 0) {
                 gp.ui.slotRow--;
-                gp.soundEffect(9);
             }
         }
         if (keyCode == KeyEvent.VK_S) {
+            gp.soundEffect(9);
             if (gp.ui.slotRow != 3) {
                 gp.ui.slotRow++;
-                gp.soundEffect(9);
             }
         }
         if (keyCode == KeyEvent.VK_D) {
+            gp.soundEffect(9);
             if (gp.ui.slotCol != 4) {
                 gp.ui.slotCol++;
-                gp.soundEffect(9);
             }
         }
         if (keyCode == KeyEvent.VK_A) {
+            gp.soundEffect(9);
             if (gp.ui.slotCol != 0) {
                 gp.ui.slotCol--;
-                gp.soundEffect(9);
             }
+        }
+        if (keyCode == KeyEvent.VK_ENTER) {
+            gp.soundEffect(10);
+            gp.player.selectItem();
         }
     }
 

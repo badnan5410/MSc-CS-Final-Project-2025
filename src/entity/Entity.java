@@ -40,7 +40,6 @@ public class Entity {
     int hpBarCounter = 0;
 
     // Character Status
-    public int type;
     public String name;
     public int speed;
     public int maxLife;
@@ -52,6 +51,8 @@ public class Entity {
     public int defense;
     public int exp;
     public int nextLevelExp;
+    public final int baseExp = 5;
+    public final double multiplier = 1.3;
     public int gold;
     public Entity currentWeapon;
     public Entity currentShield;
@@ -62,11 +63,24 @@ public class Entity {
     public int durability;
     public String description = "";
 
+    // Type
+    public int type;
+    public final int TYPE_PLAYER = 0;
+    public final int TYPE_NPC = 1;
+    public final int TYPE_MONSTER = 2;
+    public final int TYPE_SWORD = 3;
+    public final int TYPE_AXE = 4;
+    public final int TYPE_SHIELD = 5;
+    public final int TYPE_CONSUMABLE = 6;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
+
     public void setAction() {}
+
     public void damageReaction() {}
+
     public void speak() {
         if (dialogues[dialogueIndex] == null) {
             dialogueIndex = 0;
@@ -90,6 +104,8 @@ public class Entity {
         }
     }
 
+    public void useItem(Entity entity) {}
+
     public void update() {
         setAction();
         checkCollision = false;
@@ -99,12 +115,15 @@ public class Entity {
         gp.cHandler.checkEntity(this, gp.monster);
         boolean touchPlayer = gp.cHandler.checkPlayer(this);
 
-        if (this.type == 2 && touchPlayer) {
+        if (this.type == TYPE_MONSTER && touchPlayer) {
             if (!gp.player.invincible) {
                 gp.soundEffect(6);
                 int damage = attack - gp.player.defense;
-                gp.player.life -= damage;
-                gp.player.invincible = true;
+                if (damage > 0) {
+                    gp.player.life -= damage;
+                    gp.player.invincible = true;
+                }
+
             }
         }
 
@@ -173,7 +192,7 @@ public class Entity {
             }
 
             // monster HP bar
-            if (type == 2 && hpBarOn) {
+            if (type == TYPE_MONSTER && hpBarOn) {
                 double oneScale = (double)gp.TILE_SIZE/maxLife;
                 double hpBarValue = oneScale*life;
 

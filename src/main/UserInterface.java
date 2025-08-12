@@ -404,12 +404,19 @@ public class UserInterface {
 
         // Inventory Items
         for (int i = 0; i < gp.player.inventory.size(); i++) {
+
+            // Equip Cursor
+            if (gp.player.inventory.get(i) == gp.player.currentWeapon || gp.player.inventory.get(i) == gp.player.currentShield) {
+                g2.setColor(new Color(240, 190, 90));
+                g2.fillRoundRect(slotX, slotY, gp.TILE_SIZE, gp.TILE_SIZE, 10, 10);
+            }
+
             g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
             slotX += slotSize;
 
             if (i == 4 || i == 9 || i == 14) {
                 slotX = slotX_start;
-                slotY = slotSize;
+                slotY += slotSize;
             }
         }
 
@@ -428,8 +435,7 @@ public class UserInterface {
         int dFrameX = frameX;
         int dFrameY = frameY + frameHeight + 20;
         int dFrameWidth = frameWidth;
-        int dFrameHeight = gp.TILE_SIZE*3;
-        drawMiniWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+        int dFrameHeight = 170;
 
         // Description Text
         int textX = dFrameX + 20;
@@ -438,6 +444,7 @@ public class UserInterface {
 
         int itemIndex = getSlotIndex();
         if (itemIndex < gp.player.inventory.size()) {
+            drawMiniWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
             for (String line: gp.player.inventory.get(itemIndex).description.split("\n")) {
                 g2.drawString(line, textX, textY);
                 textY += 32;

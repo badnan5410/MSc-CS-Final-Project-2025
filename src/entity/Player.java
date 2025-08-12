@@ -111,12 +111,19 @@ public class Player extends Entity {
                 atk_left1 = setup("/player/attacking/sword/wood/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
                 atk_left2 = setup("/player/attacking/sword/wood/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
             }
-
         }
         if (currentWeapon.type == TYPE_AXE) {
-            // TODO
+            if (currentWeapon.name == "Woodcutter's Axe") {
+                atk_up1 = setup("/player/attacking/axe/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_up2 = setup("/player/attacking/axe/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down1 = setup("/player/attacking/axe/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down2 = setup("/player/attacking/axe/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_right1 = setup("/player/attacking/axe/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_right2 = setup("/player/attacking/axe/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left1 = setup("/player/attacking/axe/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left2 = setup("/player/attacking/axe/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            }
         }
-
     }
 
     public void update() {
