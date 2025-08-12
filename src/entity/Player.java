@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.Fireball;
 import object.Wood_Shield;
 import object.Wood_Sword;
 
@@ -56,6 +57,7 @@ public class Player extends Entity {
         gold = 0;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
+        projectile = new Fireball(gp);
         attack = getAttackValue(); // Strength * weapon
         defense = getDefenseValue(); // Dexterity * shield
     }
@@ -192,6 +194,15 @@ public class Player extends Entity {
             }
         }
 
+        if (gp.kHandler.shotKeyPressed && !projectile.alive && shotCooldownCounter == 30) {
+            projectile.set(worldX, worldY, direction, true, this);
+
+            // add projectile to ArrayList
+            gp.projectileList.add(projectile);
+            shotCooldownCounter = 0;
+            gp.soundEffect(12);
+        }
+
         // Invincible Counter
         if (invincible) {
             invincibleCounter++;
@@ -199,6 +210,10 @@ public class Player extends Entity {
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+
+        if (shotCooldownCounter < 30) {
+            shotCooldownCounter++;
         }
     }
 
@@ -228,7 +243,7 @@ public class Player extends Entity {
 
             // check monster collision with updated worldX/worldY and rect
             int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
 
             // restore original data
             worldX = currentWorldX;
@@ -273,7 +288,7 @@ public class Player extends Entity {
 
     public void monsterInteraction(int i) {
         if (i != -1) {
-            if (!invincible) {
+            if (!invincible && !gp.monster[i].dying) {
                 gp.soundEffect(6);
                 int damage = gp.monster[i].attack - defense;
                 if (damage > 0) {
@@ -284,7 +299,7 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i) {
+    public void damageMonster(int i, int attack) {
         if (i != -1) {
             if (!gp.monster[i].invincible) {
                 gp.soundEffect(5);

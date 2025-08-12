@@ -38,12 +38,15 @@ public class Entity {
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
     int hpBarCounter = 0;
+    public int shotCooldownCounter = 0;
 
     // Character Status
     public String name;
     public int speed;
     public int maxLife;
     public int life;
+    public int maxMana;
+    public int mana;
     public int level;
     public int strength;
     public int dexterity;
@@ -56,12 +59,14 @@ public class Entity {
     public int gold;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
 
     // Item Properties
     public int attackValue;
     public int defenseValue;
     public int durability;
     public String description = "";
+    public int useCost;
 
     // Type
     public int type;
@@ -239,7 +244,6 @@ public class Entity {
         if (dyingCounter > i*6 && dyingCounter <= i*7) {changeAlpha(g2, 0f);}
         if (dyingCounter > i*7 && dyingCounter <= i*8) {changeAlpha(g2, 1f);}
         if (dyingCounter > i*8) {
-            dying = false;
             alive = false;
         }
     }
