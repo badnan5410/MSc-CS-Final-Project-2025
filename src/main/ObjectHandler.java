@@ -39,7 +39,6 @@ public class ObjectHandler {
         gp.obj[i].worldY = gp.TILE_SIZE*27;
         i++;
 
-
     }
 
     public void setNPC() {
