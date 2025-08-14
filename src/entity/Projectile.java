@@ -24,15 +24,16 @@ public class Projectile extends Entity {
             int i = gp.cHandler.checkEntity(this, gp.monster);
             if (i != -1) {
                 gp.player.damageMonster(i, attack);
+                alive = false;
             }
         }
         else {
             boolean touchPlayer = gp.cHandler.checkPlayer(this);
             if (!gp.player.invincible && touchPlayer) {
                 damagePlayer(attack);
+                alive = false;
             }
         }
-        alive = false;
 
         switch (direction) {
             case "up": worldY -= speed; break;
