@@ -19,6 +19,8 @@ public class Entity {
     public int default_rectX, default_rectY;
     public boolean collision = false;
     String[] dialogues = new String[20];
+    Color brightRed = new Color(255, 0, 30);
+    Color darkGrey = new Color(35, 35, 35);
 
     // State
     public int worldX, worldY;
@@ -56,7 +58,7 @@ public class Entity {
     public int nextLevelExp;
     public final int baseExp = 5;
     public final double multiplier = 1.3;
-    public int gold;
+    public int coins;
     public Entity currentWeapon;
     public Entity currentShield;
     public Projectile projectile;
@@ -67,6 +69,7 @@ public class Entity {
     public int durability;
     public String description = "";
     public int useCost;
+    public int value;
 
     // Type
     public int type;
@@ -77,6 +80,7 @@ public class Entity {
     public final int TYPE_AXE = 4;
     public final int TYPE_SHIELD = 5;
     public final int TYPE_CONSUMABLE = 6;
+    public final int TYPE_PICKUP = 7;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -110,6 +114,20 @@ public class Entity {
     }
 
     public void useItem(Entity entity) {}
+
+    public void checkDrop() {}
+
+    public void dropItem(Entity droppedItem) {
+
+        for (int i = 0; i < gp.obj.length; i++) {
+            if (gp.obj[i] == null) {
+                gp.obj[i] = droppedItem;
+                gp.obj[i].worldX = worldX;
+                gp.obj[i].worldY = worldY;
+                break;
+            }
+        }
+    }
 
     public void update() {
         setAction();
@@ -211,10 +229,10 @@ public class Entity {
                 double oneScale = (double)gp.TILE_SIZE/maxLife;
                 double hpBarValue = oneScale*life;
 
-                g2.setColor((new Color(35, 35, 35)));
+                g2.setColor(darkGrey);
                 g2.fillRect(screenX-1, screenY-16, gp.TILE_SIZE+2, 12);
 
-                g2.setColor(new Color(255, 0, 30));
+                g2.setColor(brightRed);
                 g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
 
                 hpBarCounter++;
@@ -234,7 +252,7 @@ public class Entity {
                 dyingAnimation(g2);
             }
 
-            g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+            g2.drawImage(image, screenX, screenY,null);
 
             changeAlpha(g2, 1f);
         }

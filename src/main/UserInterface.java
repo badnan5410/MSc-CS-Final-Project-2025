@@ -326,7 +326,7 @@ public class UserInterface {
         g2.drawString("DEF", textX, textY); textY += lineHeight;
         g2.drawString("XP", textX, textY); textY += lineHeight;
         g2.drawString("MAX XP", textX, textY); textY += lineHeight;
-        g2.drawString("GOLD", textX, textY); textY += lineHeight + 20;
+        g2.drawString("COINS", textX, textY); textY += lineHeight + 20;
         g2.drawString("WEAPON", textX, textY); textY += lineHeight + 15;
         g2.drawString("SHIELD", textX, textY); textY += lineHeight;
 
@@ -387,7 +387,7 @@ public class UserInterface {
         g2.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gp.player.gold);
+        value = String.valueOf(gp.player.coins);
         textX = rightX(value, tailX);
         g2.drawString(value, textX, textY);
         textY += lineHeight;

@@ -56,7 +56,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        gold = 0;
+        coins = 0;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         projectile = new Fireball(gp);
@@ -220,6 +220,14 @@ public class Player extends Entity {
         if (shotCooldownCounter < 30) {
             shotCooldownCounter++;
         }
+
+        if (life > maxLife) {
+            life = maxLife;
+        }
+
+        if (mana > maxMana) {
+            mana = maxMana;
+        }
     }
 
     public void playerAttack() {
@@ -265,18 +273,28 @@ public class Player extends Entity {
 
     public void objectPickup(int i) {
         if (i != -1) {
-            String text;
 
-            if (inventory.size() != INVENTORY_CAPACITY) {
-                inventory.add(gp.obj[i]);
-                gp.soundEffect(1);
-                text = "Got a " + gp.obj[i].name + "!";
+            // pickup objects
+            if (gp.obj[i].type == TYPE_PICKUP) {
+                gp.obj[i].useItem(this);
                 gp.obj[i] = null;
             }
+
+            // inventory items
             else {
-                text = "Inventory is full!";
+                String text;
+
+                if (inventory.size() != INVENTORY_CAPACITY) {
+                    inventory.add(gp.obj[i]);
+                    gp.soundEffect(1);
+                    text = "Got a " + gp.obj[i].name + "!";
+                    gp.obj[i] = null;
+                }
+                else {
+                    text = "Inventory is full!";
+                }
+                gp.ui.addMessage(text);
             }
-            gp.ui.addMessage(text);
         }
     }
 
@@ -322,10 +340,8 @@ public class Player extends Entity {
                     gp.monster[i].dying = true;
                     gp.ui.addMessage("You killed the " + gp.monster[i].name + "!");
                     gp.soundEffect(1);
-                    gp.ui.addMessage("You earned " + gp.monster[i].gold + " gold!");
                     gp.ui.addMessage("Exp " + gp.monster[i].exp);
                     exp += gp.monster[i].exp;
-                    gold += gp.monster[i].gold;
                     checkLevelUp();
                 }
             }

@@ -2,7 +2,7 @@ package monster;
 
 import entity.Entity;
 import main.GamePanel;
-import object.SlimeBall;
+import object.*;
 
 import java.util.Random;
 
@@ -21,7 +21,7 @@ public class MON_GreenSlime extends Entity {
         attack = 2;
         defense = 0;
         exp = 2;
-        gold = 1;
+        coins = 1;
         projectile = new SlimeBall(gp);
 
         rect.x = 3;
@@ -79,5 +79,23 @@ public class MON_GreenSlime extends Entity {
     public void damageReaction() {
         movementCounter = 0;
         direction = damageMovement(gp.player.direction);
+    }
+
+    public void checkDrop() {
+        int i = new Random().nextInt(100) + 1; // 1–100
+
+        if (i <= 50) {                           // 1–50 (50%)
+            dropItem(new Coin_Bronze(gp));
+        } else if (i <= 72) {                    // 51–72 (22%)
+            dropItem(new Heart(gp));
+        } else if (i <= 94) {                    // 73–94 (22%)
+            dropItem(new Mana(gp));
+        } else if (i <= 97) {                    // 95–97 (3%)
+            dropItem(new Iron_Shield(gp));
+        } else if (i <= 99) {                    // 98–99 (2%)
+            dropItem(new Iron_Sword(gp));
+        } else {                                 // 100 (1%)
+            dropItem(new Iron_Axe(gp));
+        }
     }
 }
