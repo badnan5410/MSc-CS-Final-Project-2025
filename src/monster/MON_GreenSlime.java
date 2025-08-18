@@ -84,18 +84,21 @@ public class MON_GreenSlime extends Entity {
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1; // 1–100
 
-        if (i <= 50) {                           // 1–50 (50%)
+        if (i <= 40) {                                   // 40%
             dropItem(new Coin_Bronze(gp));
-        } else if (i <= 72) {                    // 51–72 (22%)
-            dropItem(new Heart(gp));
-        } else if (i <= 94) {                    // 73–94 (22%)
+        } else if (i <= 60) {                            // 20%
             dropItem(new Mana(gp));
-        } else if (i <= 97) {                    // 95–97 (3%)
+        } else if (i <= 80) {                            // 20%
+            dropItem(new Heart(gp));
+        } else if (i <= 85) {                            // 5%
+            dropItem(new Potion_Red(gp));
+        } else if (i <= 90) {                            // 5%
             dropItem(new Iron_Shield(gp));
-        } else if (i <= 99) {                    // 98–99 (2%)
+        } else if (i <= 95) {                            // 5%
             dropItem(new Iron_Sword(gp));
-        } else {                                 // 100 (1%)
+        } else {                                         // 5% (96–100)
             dropItem(new Iron_Axe(gp));
         }
+
     }
 }

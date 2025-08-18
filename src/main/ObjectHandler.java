@@ -14,11 +14,6 @@ public class ObjectHandler {
 
     public void setObject() {
         int i = 0;
-
-        gp.obj[i] = new Potion_Red(gp);
-        gp.obj[i].worldX = gp.TILE_SIZE*21;
-        gp.obj[i].worldY = gp.TILE_SIZE*23;
-        i++;
     }
 
     public void setNPC() {

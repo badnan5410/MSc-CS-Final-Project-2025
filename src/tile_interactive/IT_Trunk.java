@@ -24,5 +24,4 @@ public class IT_Trunk extends InteractiveTile {
         default_rectX = rect.x;
         default_rectY = rect.y;
     }
-
 }

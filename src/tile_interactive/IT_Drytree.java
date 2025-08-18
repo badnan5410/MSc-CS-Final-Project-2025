@@ -19,8 +19,7 @@ public class IT_Drytree extends InteractiveTile {
     }
 
     public boolean checkTool(Entity entity) {
-        boolean isCorrectTool = entity.currentWeapon.type == TYPE_AXE;
-        return isCorrectTool;
+        return entity.currentWeapon.type == TYPE_AXE;
     }
 
     public void soundEffect() {

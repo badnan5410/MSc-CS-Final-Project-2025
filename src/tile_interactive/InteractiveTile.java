@@ -11,10 +11,8 @@ public class InteractiveTile extends Entity {
         super(gp);
         this.gp = gp;
     }
-
     public boolean checkTool(Entity entity) {
-        boolean isCorrectTool = false;
-        return isCorrectTool;
+        return false;
     }
 
     public void soundEffect() {}
