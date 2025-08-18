@@ -136,6 +136,7 @@ public class Entity {
         gp.cHandler.checkObject(this, false);
         gp.cHandler.checkEntity(this, gp.npc);
         gp.cHandler.checkEntity(this, gp.monster);
+        gp.cHandler.checkEntity(this, gp.iTile);
         boolean touchPlayer = gp.cHandler.checkPlayer(this);
 
         if (this.type == TYPE_MONSTER && touchPlayer) {

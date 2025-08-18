@@ -3,6 +3,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import object.Fireball;
+import object.Wood_Axe;
 import object.Wood_Shield;
 import object.Wood_Sword;
 
@@ -67,6 +68,7 @@ public class Player extends Entity {
     public void setInventory() {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
+        inventory.add(new Wood_Axe(gp));
     }
 
     public int getAttackValue() {
@@ -114,15 +116,25 @@ public class Player extends Entity {
             }
         }
         if (currentWeapon.type == TYPE_AXE) {
+            if (currentWeapon.name == "Basic Axe") {
+                atk_up1 = setup("/player/attacking/axe/wood/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_up2 = setup("/player/attacking/axe/wood/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down1 = setup("/player/attacking/axe/wood/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down2 = setup("/player/attacking/axe/wood/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_right1 = setup("/player/attacking/axe/wood/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_right2 = setup("/player/attacking/axe/wood/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left1 = setup("/player/attacking/axe/wood/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left2 = setup("/player/attacking/axe/wood/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            }
             if (currentWeapon.name == "Woodcutter's Axe") {
-                atk_up1 = setup("/player/attacking/axe/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_up2 = setup("/player/attacking/axe/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_down1 = setup("/player/attacking/axe/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_down2 = setup("/player/attacking/axe/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_right1 = setup("/player/attacking/axe/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
-                atk_right2 = setup("/player/attacking/axe/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
-                atk_left1 = setup("/player/attacking/axe/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
-                atk_left2 = setup("/player/attacking/axe/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_up1 = setup("/player/attacking/axe/iron/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_up2 = setup("/player/attacking/axe/iron/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down1 = setup("/player/attacking/axe/iron/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down2 = setup("/player/attacking/axe/iron/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_right1 = setup("/player/attacking/axe/iron/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_right2 = setup("/player/attacking/axe/iron/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left1 = setup("/player/attacking/axe/iron/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left2 = setup("/player/attacking/axe/iron/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
             }
         }
     }
@@ -161,6 +173,9 @@ public class Player extends Entity {
             // Check Monster Collision
             int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
             monsterInteraction(monsterIndex);
+
+            // Check Interactive Tile Collision
+            int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
 
             // Check Events
             gp.eHandler.checkEvent();
@@ -258,6 +273,9 @@ public class Player extends Entity {
             int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
             damageMonster(monsterIndex, attack);
 
+            int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
+            damageInteractiveTile(iTileIndex);
+
             // restore original data
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -344,6 +362,18 @@ public class Player extends Entity {
                     exp += gp.monster[i].exp;
                     checkLevelUp();
                 }
+            }
+        }
+    }
+
+    public void damageInteractiveTile(int i) {
+        if (i != -1 && gp.iTile[i].destructible && gp.iTile[i].checkTool(this) && !gp.iTile[i].invincible) {
+            gp.iTile[i].soundEffect();
+            gp.iTile[i].life -= currentWeapon.value;
+            gp.iTile[i].invincible = true;
+
+            if (gp.iTile[i].life <= 0) {
+                gp.iTile[i] = gp.iTile[i].getDestroyedImage();
             }
         }
     }

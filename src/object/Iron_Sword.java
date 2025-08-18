@@ -11,8 +11,8 @@ public class Iron_Sword extends Entity {
         down1 = setup("/objects/sword_iron");
         type = TYPE_SWORD;
         attackValue = 2;
-        attackArea.width = 38;
-        attackArea.height = 38;
+        attackArea.width = 36;
+        attackArea.height = 36;
         description = "[" + name + "]\nA powerful sword that can\nslice enemies in half.\n+" + attackValue + " ATK";
     }
 }

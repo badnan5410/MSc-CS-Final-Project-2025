@@ -11,8 +11,8 @@ public class Wood_Sword extends Entity {
         down1 = setup("/objects/sword_wooden");
         type = TYPE_SWORD;
         attackValue = 1;
-        attackArea.width = 36;
-        attackArea.height = 36;
+        attackArea.width = 34;
+        attackArea.height = 34;
         description = "[" + name + "]\nJust a wooden sword.\n+" + attackValue + " ATK";
     }
 }

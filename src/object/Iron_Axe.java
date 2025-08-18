@@ -11,6 +11,7 @@ public class Iron_Axe extends Entity {
         down1 = setup("/objects/axe_iron");
         type = TYPE_AXE;
         attackValue = 3;
+        value = 4;
         attackArea.width = 32;
         attackArea.height = 32;
         description = "[" + name + "]\nA powerful axe that can cut\ndown the tallest tree.\n+" + attackValue + " ATK";
