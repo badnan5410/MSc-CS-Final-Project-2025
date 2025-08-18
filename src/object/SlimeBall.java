@@ -3,6 +3,8 @@ package object;
 import entity.Projectile;
 import main.GamePanel;
 
+import java.awt.*;
+
 public class SlimeBall extends Projectile {
     GamePanel gp;
 
@@ -11,8 +13,8 @@ public class SlimeBall extends Projectile {
         this.gp = gp;
 
         name = "Slime Ball";
-        speed = 8;
-        maxLife = 80;
+        speed = 6;
+        maxLife = 60;
         life = maxLife;
         attack = 1;
         useCost = 1;
@@ -30,4 +32,12 @@ public class SlimeBall extends Projectile {
         left1 = setup("/projectiles/slime_ball");
         left2 = setup("/projectiles/slime_ball");
     }
+
+    public Color getParticleColor() {return new Color(106, 193, 127);}
+
+    public int getParticleSize() {return 10;}
+
+    public int getParticleSpeed() {return 1;}
+
+    public int getParticleMaxLife() {return 20;}
 }

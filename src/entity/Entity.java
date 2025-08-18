@@ -33,6 +33,7 @@ public class Entity {
     public boolean alive = true;
     public boolean dying = false;
     boolean hpBarOn = false;
+    public boolean destructible = false;
 
     // Counters
     public int spriteCounter = 0;
@@ -127,6 +128,31 @@ public class Entity {
                 break;
             }
         }
+    }
+
+    public Color getParticleColor() {return new Color(0, 0, 0);}
+
+    public int getParticleSize() {return -1;}
+
+    public int getParticleSpeed() {return -1;}
+
+    public int getParticleMaxLife() {return -1;}
+
+    public void generateParticle(Entity generator, Entity target) {
+        Color color = generator.getParticleColor();
+        int size = generator.getParticleSize();
+        int speed = generator.getParticleSpeed();
+        int maxLife = generator.getParticleMaxLife();
+
+        Particle p1 = new Particle(gp, generator, color, size, speed, maxLife, -2, -1);
+        Particle p2 = new Particle(gp, generator, color, size, speed, maxLife, 2, -1);
+        Particle p3 = new Particle(gp, generator, color, size, speed, maxLife, -2, 1);
+        Particle p4 = new Particle(gp, generator, color, size, speed, maxLife, 2, 1);
+
+        gp.particleList.add(p1);
+        gp.particleList.add(p2);
+        gp.particleList.add(p3);
+        gp.particleList.add(p4);
     }
 
     public void update() {
@@ -244,7 +270,7 @@ public class Entity {
                 }
             }
 
-            if (invincible) {
+            if (invincible && !destructible) {
                 hpBarOn = true;
                 hpBarCounter = 0;
                 changeAlpha(g2, 0.4f);

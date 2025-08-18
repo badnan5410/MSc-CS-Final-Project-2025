@@ -24,6 +24,7 @@ public class Projectile extends Entity {
             int i = gp.cHandler.checkEntity(this, gp.monster);
             if (i != -1) {
                 gp.player.damageMonster(i, attack);
+                generateParticle(user.projectile, gp.monster[i]);
                 alive = false;
             }
         }
@@ -31,6 +32,7 @@ public class Projectile extends Entity {
             boolean touchPlayer = gp.cHandler.checkPlayer(this);
             if (!gp.player.invincible && touchPlayer) {
                 damagePlayer(attack);
+                generateParticle(user.projectile, gp.player);
                 alive = false;
             }
         }
