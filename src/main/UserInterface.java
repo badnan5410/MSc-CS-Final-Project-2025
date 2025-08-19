@@ -302,7 +302,7 @@ public class UserInterface {
     public void drawCharacterScreen() {
         // Create a frame
         final int frameX = gp.TILE_SIZE/2;
-        final int frameY = gp.TILE_SIZE/2;
+        final int frameY = gp.TILE_SIZE/2 - 12;
         final int frameWidth = gp.TILE_SIZE*5;
         final int frameHeight = gp.TILE_SIZE*11;
         drawMiniWindow(frameX, frameY, frameWidth, frameHeight);
@@ -400,7 +400,7 @@ public class UserInterface {
 
     public void drawInventory() {
         // Frame
-        int frameX = gp.TILE_SIZE*9;
+        int frameX = gp.TILE_SIZE*13 + 24;
         int frameY = gp.TILE_SIZE;
         int frameWidth = gp.TILE_SIZE*6;
         int frameHeight = gp.TILE_SIZE*5;

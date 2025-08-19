@@ -6,6 +6,7 @@ import tile.TileManager;
 import tile_interactive.InteractiveTile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,8 +17,8 @@ public class GamePanel extends JPanel implements Runnable {
     // Custom Screen Settings
     final int TILE = 16;
     final int SCALE = 3;
-    public final int TILE_SIZE = TILE*SCALE; // 48X48 tile
-    public final int MAX_COL = 16;
+    public final int TILE_SIZE = TILE*SCALE;
+    public final int MAX_COL = 20;
     public final int MAX_ROW = 12;
     public final int SCREEN_WIDTH = TILE_SIZE * MAX_COL;
     public final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW;
@@ -25,6 +26,12 @@ public class GamePanel extends JPanel implements Runnable {
     // World Settings
     public final int MAX_WORLD_COL = 50;
     public final int MAX_WORLD_ROW = 50;
+
+    // Full Screen Settings
+    public int fullScreenWidth = SCREEN_WIDTH;
+    public int fullScreenHeight = SCREEN_HEIGHT;
+    BufferedImage tempScreen = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2 = (Graphics2D)tempScreen.getGraphics();
 
     // FPS
     final int FPS = 60;
@@ -71,12 +78,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game Setup
     public void gameSetup() {
+        setFullScreen(); // <-- change full screen here
         oHandler.setObject();
         oHandler.setNPC();
         oHandler.setMonster();
         oHandler.setInteractiveTile();
-        //playMusic(0);
-        //gameState = GS_TITLE_SCREEN;
+    }
+
+    public void setFullScreen() {
+        GraphicsEnvironment gEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gDevice = gEnvironment.getDefaultScreenDevice();
+        gDevice.setFullScreenWindow(Main.window);
+
+        fullScreenWidth = Main.window.getWidth();
+        fullScreenHeight = Main.window.getHeight();
     }
 
     public void startGameLoop() {
@@ -98,7 +113,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (frame_tracker >= 1) {
                 update();
-                repaint();
+                //repaint();
+                drawTempScreen();
+                drawGameScreen();
                 frame_tracker--;
             }
 
@@ -159,10 +176,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
-
+    public void drawTempScreen() {
         // Debug
         long drawStart = 0;
         if (kHandler.toggleDebug) {
@@ -252,7 +266,12 @@ public class GamePanel extends JPanel implements Runnable {
             y += lineHeight;
         }
 
-        g2.dispose();
+    }
+
+    public void drawGameScreen() {
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen, 0, 0, fullScreenWidth, fullScreenHeight, null);
+        g.dispose();
     }
 
     public void playMusic(int i) {
