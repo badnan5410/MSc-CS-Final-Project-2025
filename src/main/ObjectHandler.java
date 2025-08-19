@@ -14,6 +14,11 @@ public class ObjectHandler {
 
     public void setObject() {
         int i = 0;
+
+        gp.obj[i] = new Wood_Axe(gp);
+        gp.obj[i].worldX = gp.TILE_SIZE*33;
+        gp.obj[i].worldY = gp.TILE_SIZE*7;
+        i++;
     }
 
     public void setNPC() {
@@ -62,15 +67,7 @@ public class ObjectHandler {
         gp.iTile[i] = new IT_Drytree(gp, 32, 12); i++;
         gp.iTile[i] = new IT_Drytree(gp, 33, 12); i++;
 
-        gp.iTile[i] = new IT_Drytree(gp, 30, 20); i++;
         gp.iTile[i] = new IT_Drytree(gp, 30, 21); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 30, 22); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 20, 20); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 20, 21); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 20, 22); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 22, 24); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 23, 24); i++;
-        gp.iTile[i] = new IT_Drytree(gp, 24, 24); i++;
     }
 }
 
