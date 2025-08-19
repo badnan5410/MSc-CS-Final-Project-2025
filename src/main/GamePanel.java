@@ -14,12 +14,13 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Runnable {
 
     // Custom Screen Settings
-    public final int TILE_SIZE = 48; // 48X48 tile
+    final int TILE = 16;
+    final int SCALE = 3;
+    public final int TILE_SIZE = TILE*SCALE; // 48X48 tile
     public final int MAX_COL = 16;
-    public final int MAX_ROW = 12; // col:row = 16:12 or 4:3
-
-    public final int SCREEN_WIDTH = TILE_SIZE * MAX_COL; // 16x48 = 768 pixels
-    public final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW; // 12x48 = 576 pixels
+    public final int MAX_ROW = 12;
+    public final int SCREEN_WIDTH = TILE_SIZE * MAX_COL;
+    public final int SCREEN_HEIGHT = TILE_SIZE * MAX_ROW;
 
     // World Settings
     public final int MAX_WORLD_COL = 50;
