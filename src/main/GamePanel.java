@@ -113,7 +113,6 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (frame_tracker >= 1) {
                 update();
-                //repaint();
                 drawTempScreen();
                 drawGameScreen();
                 frame_tracker--;

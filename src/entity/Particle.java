@@ -8,10 +8,10 @@ public class Particle extends Entity {
     Entity generator;
     Color color;
     int size;
-    int xd;
-    int yd;
+    int displacementX;
+    int displacementY;
 
-    public Particle(GamePanel gp, Entity generator, Color color, int size, int speed, int maxLife, int xd, int yd) {
+    public Particle(GamePanel gp, Entity generator, Color color, int size, int speed, int maxLife, int displacementX, int displacementY) {
         super(gp);
 
         this.generator = generator;
@@ -19,10 +19,10 @@ public class Particle extends Entity {
         this.size = size;
         this.speed = speed;
         this.maxLife = maxLife;
-        this.xd = xd;
-        this.yd = yd;
-
+        this.displacementX = displacementX;
+        this.displacementY = displacementY;
         life = maxLife;
+
         int offset = (gp.TILE_SIZE/2) - (size/2);
         worldX = generator.worldX + offset;
         worldY = generator.worldY + offset;
@@ -32,11 +32,11 @@ public class Particle extends Entity {
     public void update() {
         life--;
         if (life < maxLife/3) {
-            yd++;
+            displacementY++;
         }
 
-        worldX += xd*speed;
-        worldY += yd*speed;
+        worldX += displacementX *speed;
+        worldY += displacementY *speed;
 
         if (life == 0) {
             alive = false;
