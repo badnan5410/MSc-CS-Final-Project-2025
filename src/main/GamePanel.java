@@ -15,8 +15,8 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Runnable {
 
     // Custom Screen Settings
-    final int TILE = 16;
-    final int SCALE = 3;
+    private final int TILE = 16;
+    private final int SCALE = 3;
     public final int TILE_SIZE = TILE*SCALE;
     public final int MAX_COL = 20;
     public final int MAX_ROW = 12;
@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int fullScreenHeight = SCREEN_HEIGHT;
     BufferedImage tempScreen = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g2 = (Graphics2D)tempScreen.getGraphics();
+    public boolean fullScreenOn = false;
 
     // FPS
     final int FPS = 60;
@@ -64,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_DIALOGUE = 2;
     public final int GS_TITLE_SCREEN = 3;
     public final int GS_CHARACTER_STATE = 4;
+    public final int GS_OPTIONS_STATE = 5;
 
     // Class constructor
     public GamePanel() {
@@ -78,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game Setup
     public void gameSetup() {
-        setFullScreen(); // <-- change full screen here
+        //setFullScreen(); // <-- change full screen here
         oHandler.setObject();
         oHandler.setNPC();
         oHandler.setMonster();
