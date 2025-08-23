@@ -22,34 +22,25 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        if (gp.gameState == gp.GS_TITLE_SCREEN) {
-            titleState(keyCode);
-        }
+        if (gp.gameState == gp.GS_TITLE_SCREEN) {titleState(keyCode);}
 
         // Play State
-        else if (gp.gameState == gp.GS_PLAY) {
-            playState(keyCode);
-        }
+        else if (gp.gameState == gp.GS_PLAY) {playState(keyCode);}
 
         // Pause State
-        else if (gp.gameState == gp.GS_PAUSE) {
-            pauseState(keyCode);
-        }
+        else if (gp.gameState == gp.GS_PAUSE) {pauseState(keyCode);}
 
         // Dialogue State
-        else if (gp.gameState == gp.GS_DIALOGUE) {
-            dialogueState(keyCode);
-        }
+        else if (gp.gameState == gp.GS_DIALOGUE) {dialogueState(keyCode);}
 
         // Character State
-        else if (gp.gameState == gp.GS_CHARACTER_STATE) {
-            characterState(keyCode);
-        }
+        else if (gp.gameState == gp.GS_CHARACTER_STATE) {characterState(keyCode);}
 
-        // Options State
-        else if (gp.gameState == gp.GS_OPTIONS_STATE) {
-            optionsState(keyCode);
-        }
+        // Settings State
+        else if (gp.gameState == gp.GS_SETTINGS_STATE) {settingsState(keyCode);}
+
+        // End State
+        else if (gp.gameState == gp.GS_END_STATE) {endState(keyCode);}
     }
 
     public void titleState(int keyCode) {
@@ -144,7 +135,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keyCode == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.GS_OPTIONS_STATE;
+            gp.gameState = gp.GS_SETTINGS_STATE;
         }
 
         // Debug
@@ -203,11 +194,11 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    public void optionsState(int keyCode) {
+    public void settingsState(int keyCode) {
         if (keyCode == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.GS_PLAY;
             gp.ui.cNum = 0;
-            gp.ui.optionsScreenState = 0;
+            gp.ui.settingsScreenState = 0;
         }
         if (keyCode == KeyEvent.VK_ENTER) {
             gp.soundEffect(10);
@@ -251,6 +242,28 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+    }
+
+    public void endState(int keyCode) {
+
+        // Moving Cursor
+        if (keyCode == KeyEvent.VK_W) {
+            gp.soundEffect(9);
+            gp.ui.cNum--;
+            if (gp.ui.cNum < 0) {gp.ui.cNum = gp.ui.cNumMax;}
+        }
+
+        if (keyCode == KeyEvent.VK_S) {
+            gp.soundEffect(9);
+            gp.ui.cNum++;
+            if (gp.ui.cNum > gp.ui.cNumMax) {gp.ui.cNum = 0;}
+        }
+
+        // Select
+        if (keyCode == KeyEvent.VK_ENTER) {
+            gp.soundEffect(10);
+            enterPressed = true;
+        }
     }
 
     @Override

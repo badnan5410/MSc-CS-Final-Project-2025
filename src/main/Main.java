@@ -11,10 +11,13 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Pixel Adventure Quest");
-        //window.setUndecorated(true);
 
         GamePanel gp = new GamePanel();
         window.add(gp);
+
+        gp.config.loadConfig();
+        if (gp.fullScreenOn) {window.setUndecorated(true);}
+
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);

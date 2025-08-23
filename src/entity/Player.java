@@ -65,7 +65,20 @@ public class Player extends Entity {
         defense = getDefenseValue(); // Dexterity * shield
     }
 
+    public void setDefaultPosition() {
+        worldX = gp.TILE_SIZE * 23;
+        worldY = gp.TILE_SIZE * 21;
+        direction = "down";
+    }
+
+    public void restoreLifeAndMana() {
+        life = maxLife;
+        mana = maxMana;
+        invincible = false;
+    }
+
     public void setInventory() {
+        inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
     }
@@ -231,16 +244,15 @@ public class Player extends Entity {
             }
         }
 
-        if (shotCooldownCounter < 30) {
-            shotCooldownCounter++;
-        }
+        if (shotCooldownCounter < 30) {shotCooldownCounter++;}
 
-        if (life > maxLife) {
-            life = maxLife;
-        }
+        if (life > maxLife) {life = maxLife;}
 
-        if (mana > maxMana) {
-            mana = maxMana;
+        if (mana > maxMana) {mana = maxMana;}
+
+        if (life <= 0) {
+            gp.gameState = gp.GS_END_STATE;
+            gp.soundEffect(15);
         }
     }
 

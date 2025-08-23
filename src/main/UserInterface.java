@@ -21,7 +21,7 @@ public class UserInterface {
     public int cNum = 0;
     public int cNumMax;
     public int titleScreenState = 0;
-    public int optionsScreenState = 0;
+    public int settingsScreenState = 0;
     BufferedImage fighterIcon, magicianIcon, thiefIcon;
     BufferedImage heartFull, heartHalf, heartEmpty;
     BufferedImage manaFull, manaEmpty;
@@ -73,28 +73,29 @@ public class UserInterface {
         g2.setFont(maruMonica);
         g2.setColor(Color.white);
 
-        // Title Screen
-        if (gp.gameState == gp.GS_TITLE_SCREEN) {
-            drawTitleScreen();
-        }
+        if (gp.gameState == gp.GS_TITLE_SCREEN) {drawTitleScreen();}
+
         if (gp.gameState == gp.GS_PLAY) {
             drawPlayerLife();
             drawMessage();
         }
+
         if (gp.gameState == gp.GS_PAUSE) {
             drawPauseScreen();
             drawPlayerLife();
         }
-        if (gp.gameState == gp.GS_DIALOGUE) {
-            drawDialogueScreen();
-        }
+
+        if (gp.gameState == gp.GS_DIALOGUE) {drawDialogueScreen();}
+
         if (gp.gameState == gp.GS_CHARACTER_STATE) {
             drawCharacterScreen();
             drawInventory();
         }
-        if (gp.gameState == gp.GS_OPTIONS_STATE) {
-            drawOptionsScreen();
-        }
+
+        if (gp.gameState == gp.GS_SETTINGS_STATE) {drawSettingsScreen();}
+
+        if (gp.gameState == gp.GS_END_STATE) {drawEndScreen();}
+
     }
 
     public void drawPlayerLife() {
@@ -468,7 +469,59 @@ public class UserInterface {
         }
     }
 
-    public void drawOptionsScreen() {
+    public void drawEndScreen() {
+        gp.stopMusic();
+        g2.setColor(new Color(0, 0, 0, 150));
+        g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        cNumMax = 1;
+
+        int x;
+        int y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 110f));
+
+        // Shadow
+        text = "Game Over!";
+        g2.setColor(Color.black);
+        x = centerX(text);
+        y = gp.TILE_SIZE*4;
+        g2.drawString(text, x, y);
+
+        // Main Text
+        g2.setColor(Color.white);
+        g2.drawString(text, x-4, y-4);
+
+        // Retry
+        g2.setFont(g2.getFont().deriveFont(50f));
+        text = "Retry";
+        x = centerX(text);
+        y += gp.TILE_SIZE*4;
+        g2.drawString(text, x, y);
+        if (cNum == 0) {
+            g2.drawString("->", x-47, y);
+            if (gp.kHandler.enterPressed) {
+                gp.gameState = gp.GS_PLAY;
+                gp.retry();
+                gp.playMusic(0);
+            }
+        }
+
+        // Main Menu
+        text = "Quit";
+        x = centerX(text);
+        y += 60;
+        g2.drawString(text, x, y);
+        if (cNum == 1) {
+            g2.drawString("->", x-47, y);
+            if (gp.kHandler.enterPressed) {
+                gp.gameState = gp.GS_TITLE_SCREEN;
+                gp.restart();
+            }
+        }
+
+    }
+
+    public void drawSettingsScreen() {
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(32F));
 
@@ -478,23 +531,23 @@ public class UserInterface {
         int frameHeight = gp.TILE_SIZE*10;
         drawMiniWindow(frameX, frameY, frameWidth, frameHeight);
 
-        switch(optionsScreenState) {
-            case 0: optionsMenuScreenState(frameX, frameY); break;
-            case 1: optionsFullScreenState(frameX, frameY); break;
-            case 2: optionsControlScreenState(frameX, frameY); break;
-            case 3: optionsEndGameConfirmScreenState(frameX, frameY); break;
+        switch(settingsScreenState) {
+            case 0: settingsMenuScreenState(frameX, frameY); break;
+            case 1: settingsFullScreenState(frameX, frameY); break;
+            case 2: settingsControlScreenState(frameX, frameY); break;
+            case 3: settingsEndGameConfirmScreenState(frameX, frameY); break;
         }
         gp.kHandler.enterPressed = false;
     }
 
-    public void optionsMenuScreenState(int frameX, int frameY) {
+    public void settingsMenuScreenState(int frameX, int frameY) {
         int textX;
         int textY;
         int lineHeight = gp.TILE_SIZE+12;
         cNumMax = 5;
 
         // Title
-        String text = "Options Menu";
+        String text = "Settings";
         textX = centerX(text);
         textY = frameY + gp.TILE_SIZE;
         g2.drawString(text, textX, textY);
@@ -507,7 +560,7 @@ public class UserInterface {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
                 gp.fullScreenOn = !gp.fullScreenOn;
-                optionsScreenState = 1;
+                settingsScreenState = 1;
             }
         }
 
@@ -531,7 +584,7 @@ public class UserInterface {
         if (cNum == 3) {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
-                optionsScreenState = 2;
+                settingsScreenState = 2;
                 cNum = 0;
             }
         }
@@ -542,7 +595,7 @@ public class UserInterface {
         if (cNum == 4) {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
-                optionsScreenState = 3;
+                settingsScreenState = 3;
                 cNum = 0;
             }
         }
@@ -563,9 +616,7 @@ public class UserInterface {
         textY = frameY + gp.TILE_SIZE*2;
         g2.setStroke(new BasicStroke(3));
         g2.drawRect(textX, textY, gp.TILE_SIZE/2, gp.TILE_SIZE/2);
-        if (gp.fullScreenOn) {
-            g2.fillRect(textX, textY, gp.TILE_SIZE/2, gp.TILE_SIZE/2);
-        }
+        if (gp.fullScreenOn) {g2.fillRect(textX, textY, gp.TILE_SIZE/2, gp.TILE_SIZE/2);}
 
         // Music Volume
         textY += lineHeight;
@@ -574,14 +625,15 @@ public class UserInterface {
         g2.fillRect(textX, textY, volumeWidth, 24);
 
         // SFX Volume
-        // Music Volume
         textY += lineHeight;
         g2.drawRect(textX, textY, 120, gp.TILE_SIZE/2);
         volumeWidth = 24 * gp.se.volumeScale;
         g2.fillRect(textX, textY, volumeWidth, 24);
+
+        gp.config.saveConfig();
     }
 
-    public void optionsFullScreenState(int frameX, int frameY) {
+    public void settingsFullScreenState(int frameX, int frameY) {
         int textX = frameX + gp.TILE_SIZE;
         int textY = frameY + gp.TILE_SIZE*2;
         cNumMax = 0;
@@ -600,12 +652,12 @@ public class UserInterface {
         if (cNum == 0) {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
-                optionsScreenState = 0;
+                settingsScreenState = 0;
             }
         }
     }
 
-    public void optionsControlScreenState(int frameX, int frameY) {
+    public void settingsControlScreenState(int frameX, int frameY) {
         int textX;
         int textY;
         cNumMax = 0;
@@ -640,19 +692,19 @@ public class UserInterface {
         if (cNum == 0) {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
-                optionsScreenState = 0;
+                settingsScreenState = 0;
                 cNum = 3;
             }
         }
 
     }
 
-    public void optionsEndGameConfirmScreenState(int frameX, int frameY) {
+    public void settingsEndGameConfirmScreenState(int frameX, int frameY) {
         int textX;
         int textY = frameY + gp.TILE_SIZE*2;
         cNumMax = 1;
 
-        currentDialogue = "Are you sure you want to\nquit the game and return to\nthe start menu?";
+        currentDialogue = "Are you sure you want to\nquit the game?";
         for (String line: currentDialogue.split("\n")) {
             textX = centerX(line);
             g2.drawString(line, textX, textY);
@@ -667,8 +719,10 @@ public class UserInterface {
         if (cNum == 0) {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
-                optionsScreenState = 0;
+                settingsScreenState = 0;
                 gp.gameState = gp.GS_TITLE_SCREEN;
+                gp.stopMusic();
+                gp.restart();
             }
         }
 
@@ -680,7 +734,7 @@ public class UserInterface {
         if (cNum == 1) {
             g2.drawString("->", textX-32, textY);
             if (gp.kHandler.enterPressed) {
-                optionsScreenState = 0;
+                settingsScreenState = 0;
                 cNum = 4;
             }
         }

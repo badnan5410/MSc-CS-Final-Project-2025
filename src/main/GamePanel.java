@@ -46,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     public ObjectHandler oHandler = new ObjectHandler(this);
     public UserInterface ui = new UserInterface(this);
     public EventHandler eHandler = new EventHandler(this);
+    Config config = new Config(this);
     Thread gameLoop;
 
     // Entity and Object
@@ -65,7 +66,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_DIALOGUE = 2;
     public final int GS_TITLE_SCREEN = 3;
     public final int GS_CHARACTER_STATE = 4;
-    public final int GS_OPTIONS_STATE = 5;
+    public final int GS_SETTINGS_STATE = 5;
+    public final int GS_END_STATE = 6;
 
     // Class constructor
     public GamePanel() {
@@ -80,7 +82,25 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game Setup
     public void gameSetup() {
-        //setFullScreen(); // <-- change full screen here
+        oHandler.setObject();
+        oHandler.setNPC();
+        oHandler.setMonster();
+        oHandler.setInteractiveTile();
+
+        if (fullScreenOn) {setFullScreen();}
+    }
+
+    public void retry() {
+        player.setDefaultPosition();
+        player.restoreLifeAndMana();
+        player.coins = (int)player.coins/2;
+        oHandler.setNPC();
+        oHandler.setMonster();
+    }
+
+    public void restart() {
+        player.setDefaultValues();
+        player.setInventory();
         oHandler.setObject();
         oHandler.setNPC();
         oHandler.setMonster();

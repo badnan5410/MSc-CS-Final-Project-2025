@@ -68,6 +68,9 @@ public class ObjectHandler {
         gp.iTile[i] = new IT_Drytree(gp, 33, 12); i++;
 
         gp.iTile[i] = new IT_Drytree(gp, 30, 21); i++;
+        gp.iTile[i] = new IT_Drytree(gp, 23, 13); i++;
+        gp.iTile[i] = new IT_Drytree(gp, 12, 23); i++;
+        gp.iTile[i] = new IT_Drytree(gp, 17, 39); i++;
     }
 }
 
