@@ -2,10 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import object.Fireball;
-import object.Wood_Axe;
-import object.Wood_Shield;
-import object.Wood_Sword;
+import object.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

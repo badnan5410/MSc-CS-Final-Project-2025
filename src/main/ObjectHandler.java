@@ -19,6 +19,31 @@ public class ObjectHandler {
         gp.obj[i].worldX = gp.TILE_SIZE*33;
         gp.obj[i].worldY = gp.TILE_SIZE*7;
         i++;
+
+        gp.obj[i] = new Key(gp);
+        gp.obj[i].worldX = gp.TILE_SIZE*20;
+        gp.obj[i].worldY = gp.TILE_SIZE*7;
+        i++;
+
+        gp.obj[i] = new Key(gp);
+        gp.obj[i].worldX = gp.TILE_SIZE*41;
+        gp.obj[i].worldY = gp.TILE_SIZE*7;
+        i++;
+
+        gp.obj[i] = new Key(gp);
+        gp.obj[i].worldX = gp.TILE_SIZE*39;
+        gp.obj[i].worldY = gp.TILE_SIZE*42;
+        i++;
+
+        gp.obj[i] = new Key(gp);
+        gp.obj[i].worldX = gp.TILE_SIZE*8;
+        gp.obj[i].worldY = gp.TILE_SIZE*36;
+        i++;
+
+        gp.obj[i] = new Key(gp);
+        gp.obj[i].worldX = gp.TILE_SIZE*9;
+        gp.obj[i].worldY = gp.TILE_SIZE*34;
+        i++;
     }
 
     public void setNPC() {
@@ -53,6 +78,41 @@ public class ObjectHandler {
         gp.monster[i] = new MON_GreenSlime(gp);
         gp.monster[i].worldX = gp.TILE_SIZE*38;
         gp.monster[i].worldY = gp.TILE_SIZE*42;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*36;
+        gp.monster[i].worldY = gp.TILE_SIZE*10;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*40;
+        gp.monster[i].worldY = gp.TILE_SIZE*8;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*35;
+        gp.monster[i].worldY = gp.TILE_SIZE*12;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*41;
+        gp.monster[i].worldY = gp.TILE_SIZE*12;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*20;
+        gp.monster[i].worldY = gp.TILE_SIZE*12;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*26;
+        gp.monster[i].worldY = gp.TILE_SIZE*12;
+        i++;
+
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.TILE_SIZE*26;
+        gp.monster[i].worldY = gp.TILE_SIZE*7;
         i++;
     }
 
