@@ -25,8 +25,8 @@ public class CollisionHandler {
         switch (entity.direction) {
             case "up":
                 topRow = (top_worldY - entity.speed)/ gp.TILE_SIZE;
-                tileNum1 = gp.tm.mapArray[leftCol][topRow];
-                tileNum2 = gp.tm.mapArray[rightCol][topRow];
+                tileNum1 = gp.tm.mapArray[gp.currentMap][leftCol][topRow];
+                tileNum2 = gp.tm.mapArray[gp.currentMap][rightCol][topRow];
 
                 if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
@@ -34,8 +34,8 @@ public class CollisionHandler {
                 break;
             case "down":
                 bottomRow = (bottom_worldY + entity.speed)/ gp.TILE_SIZE;
-                tileNum1 = gp.tm.mapArray[leftCol][bottomRow];
-                tileNum2 = gp.tm.mapArray[rightCol][bottomRow];
+                tileNum1 = gp.tm.mapArray[gp.currentMap][leftCol][bottomRow];
+                tileNum2 = gp.tm.mapArray[gp.currentMap][rightCol][bottomRow];
 
                 if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
@@ -43,8 +43,8 @@ public class CollisionHandler {
                 break;
             case "right":
                 rightCol = (right_worldX + entity.speed)/ gp.TILE_SIZE;
-                tileNum1 = gp.tm.mapArray[rightCol][topRow];
-                tileNum2 = gp.tm.mapArray[rightCol][bottomRow];
+                tileNum1 = gp.tm.mapArray[gp.currentMap][rightCol][topRow];
+                tileNum2 = gp.tm.mapArray[gp.currentMap][rightCol][bottomRow];
 
                 if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
@@ -52,8 +52,8 @@ public class CollisionHandler {
                 break;
             case "left":
                 leftCol = (left_worldX - entity.speed)/ gp.TILE_SIZE;
-                tileNum1 = gp.tm.mapArray[leftCol][topRow];
-                tileNum2 = gp.tm.mapArray[leftCol][bottomRow];
+                tileNum1 = gp.tm.mapArray[gp.currentMap][leftCol][topRow];
+                tileNum2 = gp.tm.mapArray[gp.currentMap][leftCol][bottomRow];
 
                 if (gp.tm.tile[tileNum1].collision || gp.tm.tile[tileNum2].collision) {
                     entity.checkCollision = true;
@@ -65,14 +65,14 @@ public class CollisionHandler {
     public int checkObject(Entity entity, boolean isPlayer) {
         int index = -1;
 
-        for (int i = 0; i < gp.obj.length; i++) {
-            if (gp.obj[i] != null) {
+        for (int i = 0; i < gp.obj[1].length; i++) {
+            if (gp.obj[gp.currentMap][i] != null) {
 
                 entity.rect.x = entity.worldX + entity.rect.x;
                 entity.rect.y = entity.worldY + entity.rect.y;
 
-                gp.obj[i].rect.x = gp.obj[i].worldX + gp.obj[i].rect.x;
-                gp.obj[i].rect.y = gp.obj[i].worldY + gp.obj[i].rect.y;
+                gp.obj[gp.currentMap][i].rect.x = gp.obj[gp.currentMap][i].worldX + gp.obj[gp.currentMap][i].rect.x;
+                gp.obj[gp.currentMap][i].rect.y = gp.obj[gp.currentMap][i].worldY + gp.obj[gp.currentMap][i].rect.y;
 
                 switch (entity.direction) {
                     case "up": entity.rect.y -= entity.speed; break;
@@ -81,8 +81,8 @@ public class CollisionHandler {
                     case "left": entity.rect.x -= entity.speed; break;
                 }
 
-                if (entity.rect.intersects(gp.obj[i].rect)) {
-                    if (gp.obj[i].collision) {
+                if (entity.rect.intersects(gp.obj[gp.currentMap][i].rect)) {
+                    if (gp.obj[gp.currentMap][i].collision) {
                         entity.checkCollision = true;
                     }
 
@@ -92,8 +92,8 @@ public class CollisionHandler {
                 }
                 entity.rect.x = entity.default_rectX;
                 entity.rect.y = entity.default_rectY;
-                gp.obj[i].rect.x = gp.obj[i].default_rectX;
-                gp.obj[i].rect.y = gp.obj[i].default_rectY;
+                gp.obj[gp.currentMap][i].rect.x = gp.obj[gp.currentMap][i].default_rectX;
+                gp.obj[gp.currentMap][i].rect.y = gp.obj[gp.currentMap][i].default_rectY;
             }
 
         }
@@ -101,17 +101,17 @@ public class CollisionHandler {
     }
 
     // Check NPC or Monster Collision
-    public int checkEntity(Entity entity, Entity[] target) {
+    public int checkEntity(Entity entity, Entity[][] target) {
         int index = -1;
 
-        for (int i = 0; i < target.length; i++) {
-            if (target[i] != null) {
+        for (int i = 0; i < target[1].length; i++) {
+            if (target[gp.currentMap][i] != null) {
 
                 entity.rect.x = entity.worldX + entity.rect.x;
                 entity.rect.y = entity.worldY + entity.rect.y;
 
-                target[i].rect.x = target[i].worldX + target[i].rect.x;
-                target[i].rect.y = target[i].worldY + target[i].rect.y;
+                target[gp.currentMap][i].rect.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].rect.x;
+                target[gp.currentMap][i].rect.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].rect.y;
 
                 switch (entity.direction) {
                     case "up": entity.rect.y -= entity.speed; break;
@@ -120,16 +120,16 @@ public class CollisionHandler {
                     case "left": entity.rect.x -= entity.speed; break;
                 }
 
-                if (entity.rect.intersects(target[i].rect)) {
-                    if (target[i] != entity) {
+                if (entity.rect.intersects(target[gp.currentMap][i].rect)) {
+                    if (target[gp.currentMap][i] != entity) {
                         entity.checkCollision = true;
                         index = i;
                     }
                 }
                 entity.rect.x = entity.default_rectX;
                 entity.rect.y = entity.default_rectY;
-                target[i].rect.x = target[i].default_rectX;
-                target[i].rect.y = target[i].default_rectY;
+                target[gp.currentMap][i].rect.x = target[gp.currentMap][i].default_rectX;
+                target[gp.currentMap][i].rect.y = target[gp.currentMap][i].default_rectY;
             }
 
         }

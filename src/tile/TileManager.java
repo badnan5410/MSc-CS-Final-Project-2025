@@ -14,14 +14,15 @@ import java.io.InputStreamReader;
 public class TileManager {
     GamePanel gp;
     public Tile[] tile;
-    public int mapArray[][];
+    public int mapArray[][][];
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[50];
-        mapArray = new int[gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
+        mapArray = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
         getTileImage();
-        mapLoader("/maps/world_02.txt");
+        mapLoader("/maps/world_02.txt", 0);
+        mapLoader("/maps/interior_01.txt", 1);
     }
 
     public void getTileImage() {
@@ -78,7 +79,9 @@ public class TileManager {
         setup(40, "wall/wall", true);
         setup(41, "tree/tree", true);
 
-
+        setup(42, "hut", false);
+        setup(43, "floor", false);
+        setup(44, "table", true);
     }
 
     public void setup(int i, String imageName, boolean collision) {
@@ -94,7 +97,7 @@ public class TileManager {
         }
     }
 
-    public void mapLoader(String filepath) {
+    public void mapLoader(String filepath, int map) {
         try {
             InputStream is = getClass().getResourceAsStream(filepath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -108,7 +111,7 @@ public class TileManager {
                 while (col < gp.MAX_WORLD_COL) {
                     String tileNumbers[] = line.split(" ");
                     int currentTile = Integer.parseInt(tileNumbers[col]);
-                    mapArray[col][row] = currentTile;
+                    mapArray[map][col][row] = currentTile;
                     col++;
                 }
 
@@ -129,7 +132,7 @@ public class TileManager {
         int row = 0;
 
         while (col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
-            int currentTile = mapArray[col][row];
+            int currentTile = mapArray[gp.currentMap][col][row];
             int worldX = col * gp.TILE_SIZE;
             int worldY = row * gp.TILE_SIZE;
             int screenX = worldX - gp.player.worldX + gp.player.screenX;

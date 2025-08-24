@@ -144,7 +144,10 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keyCode == KeyEvent.VK_R) {
-            gp.tm.mapLoader("/maps/world_02.txt");
+            switch(gp.currentMap) {
+                case 0: gp.tm.mapLoader("/maps/world_02.txt", gp.currentMap); break;
+                case 1: gp.tm.mapLoader("/maps/interior_01.txt", gp.currentMap); break;
+            }
         }
     }
 

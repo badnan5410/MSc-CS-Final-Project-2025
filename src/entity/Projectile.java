@@ -24,7 +24,7 @@ public class Projectile extends Entity {
             int i = gp.cHandler.checkEntity(this, gp.monster);
             if (i != -1) {
                 gp.player.damageMonster(i, attack);
-                generateParticle(user.projectile, gp.monster[i]);
+                generateParticle(user.projectile, gp.monster[gp.currentMap][i]);
                 alive = false;
             }
         }
