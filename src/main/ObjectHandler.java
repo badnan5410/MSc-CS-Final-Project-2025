@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC_Merchant;
 import entity.NPC_Wizard;
 import monster.MON_GreenSlime;
 import object.*;
@@ -23,11 +24,18 @@ public class ObjectHandler {
     }
 
     public void setNPC() {
+        int i = 0;
         int mapNum = 0;
 
-        gp.npc[mapNum][0] = new NPC_Wizard(gp);
-        gp.npc[mapNum][0].worldX = gp.TILE_SIZE*21;
-        gp.npc[mapNum][0].worldY = gp.TILE_SIZE*21;
+        gp.npc[mapNum][i] = new NPC_Wizard(gp);
+        gp.npc[mapNum][i].worldX = gp.TILE_SIZE*21;
+        gp.npc[mapNum][i].worldY = gp.TILE_SIZE*21;
+
+        mapNum++;
+
+        gp.npc[mapNum][i] = new NPC_Merchant(gp);
+        gp.npc[mapNum][i].worldX = gp.TILE_SIZE*12;
+        gp.npc[mapNum][i].worldY = gp.TILE_SIZE*7;
     }
 
     public void setMonster() {

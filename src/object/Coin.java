@@ -3,17 +3,17 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-public class Coin_Bronze extends Entity {
+public class Coin extends Entity {
     GamePanel gp;
 
-    public Coin_Bronze(GamePanel gp) {
+    public Coin(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
         type = TYPE_PICKUP;
-        name = "Bronze Coin";
+        name = "Gold Coin";
         value = 1;
-        down1 = setup("/objects/coin_bronze");
+        down1 = setup("/objects/coin_gold");
 
     }
 

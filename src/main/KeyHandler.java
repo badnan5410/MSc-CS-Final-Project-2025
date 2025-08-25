@@ -41,6 +41,9 @@ public class KeyHandler implements KeyListener {
 
         // End State
         else if (gp.gameState == gp.GS_END_STATE) {endState(keyCode);}
+
+        // Trade State
+        else if (gp.gameState == gp.GS_TRADE_STATE) {tradeState(keyCode);}
     }
 
     public void titleState(int keyCode) {
@@ -91,7 +94,7 @@ public class KeyHandler implements KeyListener {
             }
             if (keyCode == KeyEvent.VK_ENTER) {
                 gp.soundEffect(10);
-                String[] classes = {"FIGHTER", "MAGICIAN", "THIEF"};
+                String[] classes = {"Fighter", "Magician", "Thief"};
 
                 if (gp.ui.cNum >= 0 && gp.ui.cNum <= 2) {
                     gp.player.playerClass = classes[gp.ui.cNum];
@@ -167,34 +170,11 @@ public class KeyHandler implements KeyListener {
         if (keyCode == KeyEvent.VK_C) {
             gp.gameState = gp.GS_PLAY;
         }
-        if (keyCode == KeyEvent.VK_W) {
-            gp.soundEffect(9);
-            if (gp.ui.slotRow != 0) {
-                gp.ui.slotRow--;
-            }
-        }
-        if (keyCode == KeyEvent.VK_S) {
-            gp.soundEffect(9);
-            if (gp.ui.slotRow != 3) {
-                gp.ui.slotRow++;
-            }
-        }
-        if (keyCode == KeyEvent.VK_D) {
-            gp.soundEffect(9);
-            if (gp.ui.slotCol != 4) {
-                gp.ui.slotCol++;
-            }
-        }
-        if (keyCode == KeyEvent.VK_A) {
-            gp.soundEffect(9);
-            if (gp.ui.slotCol != 0) {
-                gp.ui.slotCol--;
-            }
-        }
         if (keyCode == KeyEvent.VK_ENTER) {
             gp.soundEffect(10);
             gp.player.selectItem();
         }
+        playerInventory(keyCode);
     }
 
     public void settingsState(int keyCode) {
@@ -266,6 +246,92 @@ public class KeyHandler implements KeyListener {
         if (keyCode == KeyEvent.VK_ENTER) {
             gp.soundEffect(10);
             enterPressed = true;
+        }
+    }
+
+    public void tradeState(int keyCode) {
+        if (keyCode == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+        }
+
+        if (gp.ui.tradeScreenState == 0) {
+            if (keyCode == KeyEvent.VK_W) {
+                gp.ui.cNum--;
+                if (gp.ui.cNum < 0) {gp.ui.cNum = gp.ui.cNumMax;}
+            }
+
+            if (keyCode == KeyEvent.VK_S) {
+                gp.ui.cNum++;
+                if (gp.ui.cNum > gp.ui.cNumMax) {gp.ui.cNum = 0;}
+            }
+        }
+
+        if (gp.ui.tradeScreenState == 1) {
+            if (keyCode == KeyEvent.VK_ESCAPE) {
+                gp.ui.tradeScreenState = 0;
+            }
+            npcInventory(keyCode);
+        }
+
+        if (gp.ui.tradeScreenState == 2) {
+            if (keyCode == KeyEvent.VK_ESCAPE) {
+                gp.ui.tradeScreenState = 0;
+            }
+            playerInventory(keyCode);
+        }
+    }
+
+    public void playerInventory(int keyCode) {
+        if (keyCode == KeyEvent.VK_W) {
+            gp.soundEffect(9);
+            if (gp.ui.playerSlotRow != 0) {
+                gp.ui.playerSlotRow--;
+            }
+        }
+        if (keyCode == KeyEvent.VK_S) {
+            gp.soundEffect(9);
+            if (gp.ui.playerSlotRow != 3) {
+                gp.ui.playerSlotRow++;
+            }
+        }
+        if (keyCode == KeyEvent.VK_D) {
+            gp.soundEffect(9);
+            if (gp.ui.playerSlotCol != 4) {
+                gp.ui.playerSlotCol++;
+            }
+        }
+        if (keyCode == KeyEvent.VK_A) {
+            gp.soundEffect(9);
+            if (gp.ui.playerSlotCol != 0) {
+                gp.ui.playerSlotCol--;
+            }
+        }
+    }
+
+    public void npcInventory(int keyCode) {
+        if (keyCode == KeyEvent.VK_W) {
+            gp.soundEffect(9);
+            if (gp.ui.npcSlotRow != 0) {
+                gp.ui.npcSlotRow--;
+            }
+        }
+        if (keyCode == KeyEvent.VK_S) {
+            gp.soundEffect(9);
+            if (gp.ui.npcSlotRow != 3) {
+                gp.ui.npcSlotRow++;
+            }
+        }
+        if (keyCode == KeyEvent.VK_D) {
+            gp.soundEffect(9);
+            if (gp.ui.npcSlotCol != 4) {
+                gp.ui.npcSlotCol++;
+            }
+        }
+        if (keyCode == KeyEvent.VK_A) {
+            gp.soundEffect(9);
+            if (gp.ui.npcSlotCol != 0) {
+                gp.ui.npcSlotCol--;
+            }
         }
     }
 

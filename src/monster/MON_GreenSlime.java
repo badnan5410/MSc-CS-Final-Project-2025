@@ -21,7 +21,6 @@ public class MON_GreenSlime extends Entity {
         attack = 2;
         defense = 0;
         exp = 2;
-        coins = 1;
         projectile = new SlimeBall(gp);
 
         rect.x = 3;
@@ -84,21 +83,8 @@ public class MON_GreenSlime extends Entity {
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1; // 1–100
 
-        if (i <= 40) {                                   // 40%
-            dropItem(new Coin_Bronze(gp));
-        } else if (i <= 60) {                            // 20%
-            dropItem(new Mana(gp));
-        } else if (i <= 80) {                            // 20%
-            dropItem(new Heart(gp));
-        } else if (i <= 85) {                            // 5%
-            dropItem(new Potion_Red(gp));
-        } else if (i <= 90) {                            // 5%
-            dropItem(new Iron_Shield(gp));
-        } else if (i <= 95) {                            // 5%
-            dropItem(new Iron_Sword(gp));
-        } else {                                         // 5% (96–100)
-            dropItem(new Iron_Axe(gp));
-        }
-
+        if (i <= 80) {dropItem(new Coin(gp));}
+        else if (i <= 90) {dropItem(new Mana(gp));}
+        else if (i <= 100) {dropItem(new Heart(gp));}
     }
 }

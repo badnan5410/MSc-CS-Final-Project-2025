@@ -14,5 +14,6 @@ public class Iron_Sword extends Entity {
         attackArea.width = 36;
         attackArea.height = 36;
         description = "[" + name + "]\nA powerful sword that can\nslice enemies in half.\n+" + attackValue + " ATK";
+        price = 18;
     }
 }

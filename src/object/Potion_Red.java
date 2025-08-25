@@ -14,6 +14,7 @@ public class Potion_Red extends Entity {
         type = TYPE_CONSUMABLE;
         value = 4;
         description = "[" + name + "]\nDrink this potion to recover\nyour health.\n+" + value + " HP";
+        price = 12;
     }
 
     public void useItem(Entity entity) {

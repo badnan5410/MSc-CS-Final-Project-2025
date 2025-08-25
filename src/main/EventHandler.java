@@ -1,5 +1,7 @@
 package main;
 
+import entity.Entity;
+
 import java.awt.*;
 
 public class EventHandler {
@@ -60,6 +62,7 @@ public class EventHandler {
                 teleport(0, 10, 37);
                 gp.soundEffect(16);
             }
+            else if (hit(1, 12, 9, "up")) {speak(gp.npc[1][0]);}
         }
 
     }
@@ -116,6 +119,14 @@ public class EventHandler {
         tempCol = col;
         tempRow = row;
         canTouchEvent = false;
+    }
+
+    public void speak(Entity entity) {
+        if (gp.kHandler.enterPressed) {
+            gp.gameState = gp.GS_DIALOGUE;
+            gp.player.attackCancelled = true;
+            entity.speak();
+        }
     }
 
 }

@@ -17,9 +17,6 @@ public class Player extends Entity {
     public String playerClass;
     public boolean attackCancelled = false;
 
-    public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int INVENTORY_CAPACITY = 20;
-
     public Player(GamePanel gp, KeyHandler kHandler) {
         super(gp);
         this.kHandler = kHandler;
@@ -38,13 +35,14 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.TILE_SIZE * 23;
-        worldY = gp.TILE_SIZE * 21;
+        /*worldX = gp.TILE_SIZE * 23;
+        worldY = gp.TILE_SIZE * 21;*/
 
-        /*worldX = gp.TILE_SIZE * 12;
-        worldY = gp.TILE_SIZE * 13;*/
+        worldX = gp.TILE_SIZE * 12;
+        worldY = gp.TILE_SIZE * 12;
+        gp.currentMap = 1;
 
-        speed = 3;
+        speed = 4;
         direction = "down";
 
         // Player Status
@@ -58,7 +56,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        coins = 0;
+        coins = 300;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         projectile = new Fireball(gp);
@@ -214,7 +212,7 @@ public class Player extends Entity {
             gp.kHandler.enterPressed = false;
 
             spriteCounter++;
-            if (spriteCounter > 12) {
+            if (spriteCounter > 10) {
                 if (spriteNum == 1) {
                     spriteNum = 2;
                 }
@@ -413,7 +411,7 @@ public class Player extends Entity {
     }
 
     public void selectItem() {
-        int itemIndex = gp.ui.getSlotIndex();
+        int itemIndex = gp.ui.getSlotIndex(gp.ui.playerSlotCol, gp.ui.playerSlotRow);
 
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex);

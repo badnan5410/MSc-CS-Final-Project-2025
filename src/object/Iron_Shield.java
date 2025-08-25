@@ -12,6 +12,7 @@ public class Iron_Shield extends Entity {
         type = TYPE_SHIELD;
         defenseValue = 2;
         description = "[" + name + "]\nA tough shield, perfect for a\nwarrior.\n+" + defenseValue + " DEF";
+        price = 15;
     }
 }
 

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Entity {
@@ -65,12 +66,15 @@ public class Entity {
     public Projectile projectile;
 
     // Item Properties
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int INVENTORY_CAPACITY = 20;
     public int attackValue;
     public int defenseValue;
     public int durability;
     public String description = "";
     public int useCost;
     public int value;
+    public int price;
 
     // Type
     public int type;
@@ -171,23 +175,15 @@ public class Entity {
 
         if (!checkCollision) {
             switch(direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
+                case "up": worldY -= speed; break;
+                case "down": worldY += speed; break;
+                case "right": worldX += speed; break;
+                case "left": worldX -= speed; break;
             }
         }
 
         spriteCounter++;
-        if (spriteCounter > 12) {
+        if (spriteCounter > 24) {
             if (spriteNum == 1) {
                 spriteNum = 2;
             }
