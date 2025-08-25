@@ -27,6 +27,7 @@ public class UserInterface {
     BufferedImage manaFull, manaEmpty;
     public int slotCol = 0;
     public int slotRow = 0;
+    int counter = 0;
 
     public UserInterface(GamePanel gp) {
         this.gp = gp;
@@ -95,6 +96,8 @@ public class UserInterface {
         if (gp.gameState == gp.GS_SETTINGS_STATE) {drawSettingsScreen();}
 
         if (gp.gameState == gp.GS_END_STATE) {drawEndScreen();}
+
+        if (gp.gameState == gp.GS_TRANSITION_STATE) {drawTransition();}
 
     }
 
@@ -739,6 +742,21 @@ public class UserInterface {
             }
         }
 
+    }
+
+    public void drawTransition() {
+        counter++;
+        g2.setColor(new Color(0, 0, 0, counter*5));
+        g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
+        if (counter == 50) {
+            counter = 0;
+            gp.gameState = gp.GS_PLAY;
+            gp.currentMap = gp.eHandler.tempMap;
+            gp.player.worldX = gp.TILE_SIZE * gp.eHandler.tempCol;
+            gp.player.worldY = gp.TILE_SIZE * gp.eHandler.tempRow;
+            gp.eHandler.previousEventX = gp.player.worldX;
+            gp.eHandler.previousEventY = gp.player.worldY;
+        }
     }
 
     public int getSlotIndex() {

@@ -70,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_CHARACTER_STATE = 4;
     public final int GS_SETTINGS_STATE = 5;
     public final int GS_END_STATE = 6;
+    public final int GS_TRANSITION_STATE = 7;
 
     // Class constructor
     public GamePanel() {

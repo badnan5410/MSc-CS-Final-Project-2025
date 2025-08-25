@@ -82,6 +82,7 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
+        inventory.add(new Iron_Axe(gp));
     }
 
     public int getAttackValue() {
