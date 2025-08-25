@@ -318,7 +318,7 @@ public class Player extends Entity {
                     inventory.add(gp.obj[gp.currentMap][i]);
                     gp.soundEffect(1);
                     text = "Got a " + gp.obj[gp.currentMap][i].name + "!";
-                    gp.obj[gp.currentMap][i] = null;
+                    gp.obj[gp.currentMap][i] = null;// this line ruined me
                 }
                 else {
                     text = "Inventory is full!";
