@@ -82,7 +82,6 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
-        inventory.add(new Iron_Axe(gp));
     }
 
     public int getAttackValue() {
@@ -319,7 +318,7 @@ public class Player extends Entity {
                     inventory.add(gp.obj[gp.currentMap][i]);
                     gp.soundEffect(1);
                     text = "Got a " + gp.obj[gp.currentMap][i].name + "!";
-                    gp.obj[i] = null;
+                    gp.obj[gp.currentMap][i] = null;
                 }
                 else {
                     text = "Inventory is full!";
