@@ -35,14 +35,14 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        /*worldX = gp.TILE_SIZE * 23;
-        worldY = gp.TILE_SIZE * 21;*/
+        worldX = gp.TILE_SIZE * 23;
+        worldY = gp.TILE_SIZE * 21;
 
-        worldX = gp.TILE_SIZE * 12;
+        /*worldX = gp.TILE_SIZE * 12;
         worldY = gp.TILE_SIZE * 12;
-        gp.currentMap = 1;
+        gp.currentMap = 1;*/
 
-        speed = 4;
+        speed = 3;
         direction = "down";
 
         // Player Status
@@ -56,7 +56,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        coins = 300;
+        coins = 0;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         projectile = new Fireball(gp);
@@ -80,7 +80,6 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
-        inventory.add(new Iron_Axe(gp));
     }
 
     public int getAttackValue() {
@@ -254,6 +253,8 @@ public class Player extends Entity {
             gp.gameState = gp.GS_END_STATE;
             gp.soundEffect(15);
         }
+
+        if (maxLife > 12) {maxLife = 12;}
     }
 
     public void playerAttack() {
