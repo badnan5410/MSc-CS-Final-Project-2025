@@ -228,8 +228,14 @@ public class Player extends Entity {
             // use up mana
             projectile.subtractResource(this);
 
-            // add projectile to ArrayList
-            gp.projectileList.add(projectile);
+            // check if there's space
+            for (int i = 0; i < gp.projectile[1].length; i++) {
+                if (gp.projectile[gp.currentMap][i] == null) {
+                    gp.projectile[gp.currentMap][i] = projectile;
+                    break;
+                }
+            }
+
             shotCooldownCounter = 0;
             gp.soundEffect(12);
         }
@@ -259,6 +265,7 @@ public class Player extends Entity {
 
     public void playerAttack() {
         spriteCounter++;
+
         if (spriteCounter <= 5) {spriteNum = 1;}
         if (spriteCounter > 5 && spriteCounter <= 25) {
             spriteNum = 2;
@@ -287,6 +294,9 @@ public class Player extends Entity {
 
             int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
+
+            int projectileIndex = gp.cHandler.checkEntity(this, gp.projectile);
+            damageProjectile(projectileIndex);
 
             // restore original data
             worldX = currentWorldX;
@@ -389,6 +399,14 @@ public class Player extends Entity {
             if (gp.iTile[gp.currentMap][i].life <= 0) {
                 gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedImage();
             }
+        }
+    }
+
+    public void damageProjectile(int i) {
+        if (i != -1) {
+            Entity projectile = gp.projectile[gp.currentMap][i];
+            projectile.alive = false;
+            generateParticle(projectile, projectile);
         }
     }
 
