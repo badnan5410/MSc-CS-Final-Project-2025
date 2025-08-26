@@ -16,5 +16,6 @@ public class Wood_Axe extends Entity {
         attackArea.height = 30;
         description = "[" + name + "]\nJust a wooden axe.\n+" + attackValue + " ATK";
         price = 8;
+        knockBackPower = 5;
     }
 }

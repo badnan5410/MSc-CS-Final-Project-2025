@@ -15,7 +15,8 @@ public class MON_GreenSlime extends Entity {
 
         name = "Green Slime";
         type = TYPE_MONSTER;
-        speed = 1;
+        defaultSpeed = 1;
+        speed = defaultSpeed;
         maxLife = 8;
         life = maxLife;
         attack = 2;
@@ -52,13 +53,13 @@ public class MON_GreenSlime extends Entity {
         dy = Math.abs(worldY - gp.player.worldY);
         tileDistance = (dx + dy)/gp.TILE_SIZE;
 
-        if (!onPath && tileDistance < 5) {
+        if (!onPath && tileDistance < 3) {
             int i = new Random().nextInt(100)+1;
             if (i > 50) {
                 onPath = true;
             }
         }
-        if (onPath && tileDistance > 20) {
+        if (onPath && tileDistance > 10) {
             onPath = false;
         }
     }

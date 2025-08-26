@@ -42,7 +42,8 @@ public class Player extends Entity {
         worldY = gp.TILE_SIZE * 12;
         gp.currentMap = 1;*/
 
-        speed = 3;
+        defaultSpeed = 4;
+        speed = defaultSpeed;
         direction = "down";
 
         // Player Status
@@ -290,7 +291,7 @@ public class Player extends Entity {
 
             // check monster collision with updated worldX/worldY and rect
             int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack);
+            damageMonster(monsterIndex, attack, currentWeapon.knockBackPower);
 
             int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
@@ -365,10 +366,15 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i, int attack) {
+    public void damageMonster(int i, int attack, int power) {
         if (i != -1) {
             if (!gp.monster[gp.currentMap][i].invincible) {
                 gp.soundEffect(5);
+
+                if (knockBackPower > 0) {
+                    knockBack(gp.monster[gp.currentMap][i], knockBackPower);
+                }
+
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
                 gp.monster[gp.currentMap][i].life -= damage;
                 gp.ui.addMessage(damage + " damage!");
@@ -386,6 +392,12 @@ public class Player extends Entity {
                 }
             }
         }
+    }
+
+    public void knockBack(Entity entity, int power) {
+        entity.direction = direction;
+        entity.speed += power;
+        entity.knockback = true;
     }
 
     public void damageInteractiveTile(int i) {

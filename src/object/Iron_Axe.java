@@ -16,5 +16,6 @@ public class Iron_Axe extends Entity {
         attackArea.height = 32;
         description  = "[" + name + "]\nA powerful axe that can cut\ndown the tallest tree.\n+" + attackValue + " ATK";
         price = 20;
+        knockBackPower = 8;
     }
 }
