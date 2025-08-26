@@ -116,7 +116,6 @@ public class ObjectHandler {
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 33, 12); i++;
 
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 23, 13); i++;
-        gp.iTile[mapNum][i] = new IT_Drytree(gp, 12, 23); i++;
 
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 10, 38); i++;
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 10, 39); i++;

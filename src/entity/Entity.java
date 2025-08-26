@@ -35,6 +35,7 @@ public class Entity {
     public boolean dying = false;
     boolean hpBarOn = false;
     public boolean destructible = false;
+    public boolean onPath = false;
 
     // Counters
     public int spriteCounter = 0;
@@ -159,8 +160,7 @@ public class Entity {
         gp.particleList.add(p4);
     }
 
-    public void update() {
-        setAction();
+    public void checkCollision() {
         checkCollision = false;
         gp.cHandler.checkTile(this);
         gp.cHandler.checkObject(this, false);
@@ -172,6 +172,11 @@ public class Entity {
         if (this.type == TYPE_MONSTER && touchPlayer) {
             damagePlayer(attack);
         }
+    }
+
+    public void update() {
+        setAction();
+        checkCollision();
 
         if (!checkCollision) {
             switch(direction) {
@@ -331,27 +336,83 @@ public class Entity {
         return image;
     }
 
-    public String damageMovement(String direction) {
-        String[] dirs = {"up", "down", "left", "right"};
-        Random rand = new Random();
-        int counter = rand.nextInt(100); // 0–99
+    public void searchPath(int endCol, int endRow) {
+        int startCol, startRow, nextX, nextY;
 
-        // Filter out player's direction
-        String[] possibleDirs = new String[3];
-        int idx = 0;
-        for (String d : dirs) {
-            if (!d.equals(direction)) {
-                possibleDirs[idx++] = d;
+        startCol = (worldX + rect.x)/gp.TILE_SIZE;
+        startRow = (worldY + rect.y)/gp.TILE_SIZE;
+
+
+        gp.pFinder.setNodes(startCol, startRow, endCol, endRow);
+
+        if (gp.pFinder.search()) {
+
+            // next worldX and worldY
+            nextX = gp.pFinder.pathList.get(0).col * gp.TILE_SIZE;
+            nextY = gp.pFinder.pathList.get(0).row * gp.TILE_SIZE;
+
+            // entity's hitbox position
+            int leftX = worldX + rect.x;
+            int rightX = worldX + rect.x + rect.width;
+            int topY = worldY + rect.y;
+            int bottomY = worldY + rect.y + rect.height;
+
+            if (topY > nextY && leftX >= nextX && rightX < nextX+gp.TILE_SIZE) {
+                direction = "up";
+            }
+            else if (topY < nextY && leftX >= nextX && rightX < nextX+gp.TILE_SIZE) {
+                direction = "down";
+            }
+            else if (topY >= nextY && bottomY < nextY+gp.TILE_SIZE) {
+
+                // left or right
+                if (leftX > nextX) {direction = "left";}
+                if (leftX < nextX) {direction = "right";}
+            }
+            else if (topY > nextY && leftX > nextX) {
+
+                // up or left
+                direction = "up";
+                checkCollision();
+                if (checkCollision) {
+                    direction = "left";
+                }
+            }
+            else if (topY > nextY && leftX < nextX) {
+
+                // up or right
+                direction = "up";
+                checkCollision();
+                if (checkCollision) {
+                    direction = "right";
+                }
+            }
+            else if (topY < nextY && leftX > nextX) {
+
+                // down or left
+                direction = "down";
+                checkCollision();
+                if (checkCollision) {
+                    direction = "left";
+                }
+            }
+            else if (topY < nextY && leftX < nextX) {
+
+                // down or right
+                direction = "down";
+                checkCollision();
+                if (checkCollision) {
+                    direction = "right";
+                }
+            }
+
+            // if the entity reaches the end node, stop this search
+            int nextCol = gp.pFinder.pathList.get(0).col;
+            int nextRow = gp.pFinder.pathList.get(0).row;
+            if (nextCol == endCol && nextRow == endRow) {
+                onPath = false;
             }
         }
-
-        // Map ranges to the remaining three directions
-        if (counter < 33) {
-            return possibleDirs[0];
-        } else if (counter < 66) {
-            return possibleDirs[1];
-        } else {
-            return possibleDirs[2];
-        }
     }
+
 }

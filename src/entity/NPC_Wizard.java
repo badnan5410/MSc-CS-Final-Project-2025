@@ -9,7 +9,7 @@ public class NPC_Wizard extends Entity {
     public NPC_Wizard(GamePanel gp) {
         super(gp);
         direction = "down";
-        speed = 1;
+        speed = 2;
         type = TYPE_NPC;
 
         getImage();
@@ -17,7 +17,7 @@ public class NPC_Wizard extends Entity {
 
         rect.x = 0;
         rect.y = 16;
-        rect.width = 48;
+        rect.width = 32;
         rect.height = 32;
         default_rectX = rect.x;
         default_rectY = rect.y;
@@ -35,7 +35,7 @@ public class NPC_Wizard extends Entity {
     }
 
     public void setDialogue() {
-        dialogues[0] = "Hello there!";
+        dialogues[0] = "Hello there, young adventurer! Follow me!";
         dialogues[1] = "So you've come to this island to find \ntreasure?";
         dialogues[2] = "I used to be a great wizard but now... \nI'm a bit too old for an adventure.";
         dialogues[3] = "Well, good luck to you!";
@@ -43,31 +43,48 @@ public class NPC_Wizard extends Entity {
 
     @Override
     public void setAction() {
-        movementCounter++;
 
-        if (movementCounter == 120) {
-            Random rand = new Random();
-            int i = rand.nextInt(100)+1;
+        if (onPath) {
+            int endCol, endRow;
+            // wizard's house position
+            endCol = 10;
+            endRow = 10;
 
-            if (i <= 25) {
-                direction = "up";
-            }
-            if (i > 25 && i <= 50) {
-                direction = "down";
-            }
-            if (i > 50 && i <= 75) {
-                direction = "right";
-            }
-            if (i > 75 && i <= 100) {
-                direction = "left";
-            }
+            // player's position
+            /*endCol = (gp.player.worldX + gp.player.rect.x)/gp.TILE_SIZE;
+            endRow = (gp.player.worldY + gp.player.rect.y)/gp.TILE_SIZE;*/
 
-            movementCounter = 0;
+            searchPath(endCol, endRow);
         }
+        else {
+            movementCounter++;
+
+            if (movementCounter == 120) {
+                Random rand = new Random();
+                int i = rand.nextInt(100)+1;
+
+                if (i <= 25) {
+                    direction = "up";
+                }
+                if (i > 25 && i <= 50) {
+                    direction = "down";
+                }
+                if (i > 50 && i <= 75) {
+                    direction = "right";
+                }
+                if (i > 75 && i <= 100) {
+                    direction = "left";
+                }
+
+                movementCounter = 0;
+            }
+        }
+
     }
 
     @Override
     public void speak() {
         super.speak();
+        onPath = true;
     }
 }

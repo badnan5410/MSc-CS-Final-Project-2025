@@ -299,12 +299,12 @@ public class UserInterface {
     }
 
     public void drawPauseScreen() {
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
+        /*g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60F));
         String message = "GAME PAUSED";
         int x = centerX(message);
         int y = gp.SCREEN_HEIGHT/2;
 
-        g2.drawString(message, x, y);
+        g2.drawString(message, x, y);*/
     }
 
     public void drawDialogueScreen() {
