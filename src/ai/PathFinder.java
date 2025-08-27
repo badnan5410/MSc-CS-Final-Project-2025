@@ -73,13 +73,13 @@ public class PathFinder {
 
         while (col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
 
-            // set solid node
             // check tiles
             int tileNum = gp.tm.mapArray[gp.currentMap][col][row];
             node[col][row].solid = gp.tm.tile[tileNum].collision;
 
             // check interactive tiles
             for (int i = 0; i < gp.iTile[1].length; i++) {
+
                 if (gp.iTile[gp.currentMap][i] != null && gp.iTile[gp.currentMap][i].destructible) {
                     int itCol = gp.iTile[gp.currentMap][i].worldX/gp.TILE_SIZE;
                     int itRow = gp.iTile[gp.currentMap][i].worldY/gp.TILE_SIZE;
@@ -89,8 +89,8 @@ public class PathFinder {
 
             // set cost
             getCost(node[col][row]);
-
             col++;
+
             if (col == gp.MAX_WORLD_COL) {
                 col = 0;
                 row++;
@@ -127,24 +127,16 @@ public class PathFinder {
             openList.remove(currentNode);
 
             // open the up node
-            if (row-1 >= 0) {
-                openNode(node[col][row-1]);
-            }
+            if (row-1 >= 0) {openNode(node[col][row-1]);}
 
             // open the left node
-            if (col-1 >= 0) {
-                openNode(node[col-1][row]);
-            }
+            if (col-1 >= 0) {openNode(node[col-1][row]);}
 
             // open the down node
-            if (row+1 >= 0) {
-                openNode(node[col][row+1]);
-            }
+            if (row+1 >= 0) {openNode(node[col][row+1]);}
 
             // open the right node
-            if (col+1 >= 0) {
-                openNode(node[col+1][row]);
-            }
+            if (col+1 >= 0) {openNode(node[col+1][row]);}
 
             // find the best node
             bestNodeIndex = 0;
@@ -157,8 +149,10 @@ public class PathFinder {
                     bestNodeIndex = i;
                     bestNodefCost = openList.get(i).fCost;
                 }
+
                 // if F cost the same, check G cost
                 else if (openList.get(i).fCost == bestNodefCost) {
+
                     if (openList.get(i).gCost < openList.get(bestNodeIndex).gCost) {
                         bestNodeIndex = i;
                     }
@@ -175,6 +169,7 @@ public class PathFinder {
                 endReached = true;
                 pathBacktracking();
             }
+
             step++;
         }
 

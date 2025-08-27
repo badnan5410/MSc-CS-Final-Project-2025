@@ -6,7 +6,6 @@ import object.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Player extends Entity {
     KeyHandler kHandler;
@@ -257,7 +256,7 @@ public class Player extends Entity {
         if (mana > maxMana) {mana = maxMana;}
 
         if (life <= 0) {
-            gp.gameState = gp.GS_END_STATE;
+            gp.gameState = gp.GS_GAME_OVER;
             gp.soundEffect(15);
         }
 
@@ -367,11 +366,13 @@ public class Player extends Entity {
     }
 
     public void damageMonster(int i, int attack, int power) {
+
         if (i != -1) {
+
             if (!gp.monster[gp.currentMap][i].invincible) {
                 gp.soundEffect(5);
 
-                if (knockBackPower > 0) {
+                if (currentWeapon.knockBackPower > 0) {
                     knockBack(gp.monster[gp.currentMap][i], knockBackPower);
                 }
 
@@ -415,6 +416,7 @@ public class Player extends Entity {
     }
 
     public void damageProjectile(int i) {
+
         if (i != -1) {
             Entity projectile = gp.projectile[gp.currentMap][i];
             projectile.alive = false;

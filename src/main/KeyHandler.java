@@ -34,16 +34,16 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.GS_DIALOGUE) {dialogueState(keyCode);}
 
         // Character State
-        else if (gp.gameState == gp.GS_CHARACTER_STATE) {characterState(keyCode);}
+        else if (gp.gameState == gp.GS_INVENTORY) {characterState(keyCode);}
 
         // Settings State
-        else if (gp.gameState == gp.GS_SETTINGS_STATE) {settingsState(keyCode);}
+        else if (gp.gameState == gp.GS_SETTINGS) {settingsState(keyCode);}
 
         // End State
-        else if (gp.gameState == gp.GS_END_STATE) {endState(keyCode);}
+        else if (gp.gameState == gp.GS_GAME_OVER) {endState(keyCode);}
 
         // Trade State
-        else if (gp.gameState == gp.GS_TRADE_STATE) {tradeState(keyCode);}
+        else if (gp.gameState == gp.GS_TRADE) {tradeState(keyCode);}
     }
 
     public void titleState(int keyCode) {
@@ -127,7 +127,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keyCode == KeyEvent.VK_C) {
-            gp.gameState = gp.GS_CHARACTER_STATE;
+            gp.gameState = gp.GS_INVENTORY;
         }
 
         if (keyCode == KeyEvent.VK_ENTER) {
@@ -138,7 +138,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keyCode == KeyEvent.VK_ESCAPE) {
-            gp.gameState = gp.GS_SETTINGS_STATE;
+            gp.gameState = gp.GS_SETTINGS;
         }
 
         // Debug

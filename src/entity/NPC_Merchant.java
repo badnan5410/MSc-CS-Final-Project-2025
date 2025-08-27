@@ -3,8 +3,6 @@ package entity;
 import main.GamePanel;
 import object.*;
 
-import java.util.Random;
-
 public class NPC_Merchant extends Entity {
 
     public NPC_Merchant(GamePanel gp) {
@@ -45,14 +43,12 @@ public class NPC_Merchant extends Entity {
         inventory.add(new Iron_Sword(gp));
         inventory.add(new Iron_Axe(gp));
         inventory.add(new Iron_Shield(gp));
-        inventory.add(new Key(gp));
     }
 
     @Override
     public void speak() {
         super.speak();
-        gp.gameState = gp.GS_TRADE_STATE;
+        gp.gameState = gp.GS_TRADE;
         gp.ui.merchant = this;
-
     }
 }

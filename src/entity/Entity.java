@@ -101,25 +101,17 @@ public class Entity {
     public void damageReaction() {}
 
     public void speak() {
-        if (dialogues[dialogueIndex] == null) {
-            dialogueIndex = 0;
-        }
+
+        if (dialogues[dialogueIndex] == null) {dialogueIndex = 0;}
+
         gp.ui.currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++;
 
         switch(gp.player.direction) {
-            case "up":
-                direction = "down";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "right":
-                direction = "left";
-                break;
-            case "left":
-                direction = "right";
-                break;
+            case "up": direction = "down"; break;
+            case "down": direction = "up"; break;
+            case "right": direction = "left"; break;
+            case "left": direction = "right"; break;
         }
     }
 
@@ -130,6 +122,7 @@ public class Entity {
     public void dropItem(Entity droppedItem) {
 
         for (int i = 0; i < gp.obj[1].length; i++) {
+
             if (gp.obj[gp.currentMap][i] == null) {
                 gp.obj[gp.currentMap][i] = droppedItem;
                 gp.obj[gp.currentMap][i].worldX = worldX;
@@ -189,6 +182,7 @@ public class Entity {
                 speed = defaultSpeed;
             }
             else if (!collision) {
+
                 switch(gp.player.direction) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
@@ -198,7 +192,8 @@ public class Entity {
             }
 
             knockBackCounter++;
-            if (knockBackCounter == 5) {
+
+            if (knockBackCounter == 45) {
                 knockBackCounter = 0;
                 knockback = false;
                 speed = defaultSpeed;
@@ -209,6 +204,7 @@ public class Entity {
             checkCollision();
 
             if (!checkCollision) {
+
                 switch(direction) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
@@ -218,48 +214,42 @@ public class Entity {
             }
         }
 
-
-
         spriteCounter++;
+
         if (spriteCounter > 24) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            }
-            else if (spriteNum == 2) {
-                spriteNum = 1;
-            }
+
+            if (spriteNum == 1) {spriteNum = 2;}
+            else if (spriteNum == 2) {spriteNum = 1;}
+
             spriteCounter = 0;
         }
 
         if (invincible) {
             invincibleCounter++;
+
             if (invincibleCounter > 40) {
                 invincible = false;
                 invincibleCounter = 0;
             }
         }
 
-        if (shotCooldownCounter < 30) {
-            shotCooldownCounter++;
-        }
+        if (shotCooldownCounter < 30) {shotCooldownCounter++;}
     }
 
     public void damagePlayer(int attack) {
+
         if (!gp.player.invincible) {
             gp.soundEffect(6);
             int damage = attack - gp.player.defense;
-            if (damage > 0) {
-                gp.player.life -= damage;
-            }
-            else {
-                gp.player.life--;
-            }
+
+            if (damage > 0) {gp.player.life -= damage;}
+            else {gp.player.life--;}
+
             gp.player.invincible = true;
         }
     }
 
     public void draw(Graphics2D g2) {
-
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;

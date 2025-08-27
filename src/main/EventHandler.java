@@ -2,8 +2,6 @@ package main;
 
 import entity.Entity;
 
-import java.awt.*;
-
 public class EventHandler {
     GamePanel gp;
     EventRect eventRect[][][];
@@ -114,7 +112,7 @@ public class EventHandler {
     }
 
     public void teleport(int map, int col, int row) {
-        gp.gameState = gp.GS_TRANSITION_STATE;
+        gp.gameState = gp.GS_TRANSITION;
         tempMap = map;
         tempCol = col;
         tempRow = row;

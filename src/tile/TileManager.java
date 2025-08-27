@@ -160,7 +160,6 @@ public class TileManager {
             g2.setColor(new Color(255, 0, 0, 70));
 
             for (int i = 0; i < gp.pFinder.pathList.size(); i++) {
-
                 int worldX = gp.pFinder.pathList.get(i).col * gp.TILE_SIZE;
                 int worldY = gp.pFinder.pathList.get(i).row * gp.TILE_SIZE;
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;

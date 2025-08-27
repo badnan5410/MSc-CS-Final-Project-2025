@@ -100,22 +100,22 @@ public class UserInterface {
         if (gp.gameState == gp.GS_DIALOGUE) {drawDialogueScreen();}
 
         // character state
-        if (gp.gameState == gp.GS_CHARACTER_STATE) {
+        if (gp.gameState == gp.GS_INVENTORY) {
             drawCharacterScreen();
             drawInventory(gp.player, true);
         }
 
         // settings state
-        if (gp.gameState == gp.GS_SETTINGS_STATE) {drawSettingsScreen();}
+        if (gp.gameState == gp.GS_SETTINGS) {drawSettingsScreen();}
 
         // end state
-        if (gp.gameState == gp.GS_END_STATE) {drawEndScreen();}
+        if (gp.gameState == gp.GS_GAME_OVER) {drawEndScreen();}
 
         // transition state
-        if (gp.gameState == gp.GS_TRANSITION_STATE) {drawTransition();}
+        if (gp.gameState == gp.GS_TRANSITION) {drawTransition();}
 
         // trade state
-        if (gp.gameState == gp.GS_TRADE_STATE) {drawTradeScreen();}
+        if (gp.gameState == gp.GS_TRADE) {drawTradeScreen();}
 
     }
 
@@ -328,6 +328,7 @@ public class UserInterface {
     }
 
     public void drawCharacterScreen() {
+
         // Create a frame
         final int frameX = gp.TILE_SIZE/2;
         final int frameY = gp.TILE_SIZE/2 - 12;
@@ -560,6 +561,7 @@ public class UserInterface {
             g2.drawString("->", x-47, y);
             if (gp.kHandler.enterPressed) {
                 gp.gameState = gp.GS_TITLE_SCREEN;
+                cNum = 0;
                 gp.restart();
             }
         }
@@ -858,6 +860,7 @@ public class UserInterface {
     }
 
     public void trade_buy() {
+
         // draw player inventory
         drawInventory(gp.player, false);
 

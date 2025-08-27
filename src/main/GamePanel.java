@@ -59,7 +59,6 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity npc[][] = new Entity[maxMap][10];
     public Entity monster[][] = new Entity[maxMap][20];
     public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];
-    //public ArrayList<Entity> projectileList = new ArrayList<>();
     public Entity projectile[][] = new Entity[maxMap][20];
     public ArrayList<Entity> particleList = new ArrayList<>();
     public ArrayList<Entity> entityList = new ArrayList<>();
@@ -70,11 +69,11 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_PAUSE = 1;
     public final int GS_DIALOGUE = 2;
     public final int GS_TITLE_SCREEN = 3;
-    public final int GS_CHARACTER_STATE = 4;
-    public final int GS_SETTINGS_STATE = 5;
-    public final int GS_END_STATE = 6;
-    public final int GS_TRANSITION_STATE = 7;
-    public final int GS_TRADE_STATE = 8;
+    public final int GS_INVENTORY = 4;
+    public final int GS_SETTINGS = 5;
+    public final int GS_GAME_OVER = 6;
+    public final int GS_TRANSITION = 7;
+    public final int GS_TRADE = 8;
 
     // Class constructor
     public GamePanel() {

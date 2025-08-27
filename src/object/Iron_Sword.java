@@ -10,11 +10,11 @@ public class Iron_Sword extends Entity {
         name = "Hero's Sword";
         down1 = setup("/objects/sword_iron");
         type = TYPE_SWORD;
-        attackValue = 2;
+        attackValue = 4;
         attackArea.width = 36;
         attackArea.height = 36;
         description = "[" + name + "]\nA powerful sword that can\nslice enemies in half.\n+" + attackValue + " ATK";
-        price = 18;
-        knockBackPower = 10;
+        price = 10;
+        knockBackPower = 90;
     }
 }

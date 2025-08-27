@@ -10,12 +10,12 @@ public class Iron_Axe extends Entity {
         name = "Woodcutter's Axe";
         down1 = setup("/objects/axe_iron");
         type = TYPE_AXE;
-        attackValue = 3;
+        attackValue = 6;
         value = 4;
         attackArea.width = 32;
         attackArea.height = 32;
         description  = "[" + name + "]\nA powerful axe that can cut\ndown the tallest tree.\n+" + attackValue + " ATK";
-        price = 20;
-        knockBackPower = 8;
+        price = 12;
+        knockBackPower = 100;
     }
 }
