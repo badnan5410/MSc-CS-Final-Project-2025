@@ -34,12 +34,12 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        /*worldX = gp.TILE_SIZE * 23;
-        worldY = gp.TILE_SIZE * 21;*/
+        worldX = gp.TILE_SIZE * 23;
+        worldY = gp.TILE_SIZE * 21;
 
-        worldX = gp.TILE_SIZE * 12;
+        /*worldX = gp.TILE_SIZE * 12;
         worldY = gp.TILE_SIZE * 12;
-        gp.currentMap = 1;
+        gp.currentMap = 1;*/
 
         defaultSpeed = 4;
         speed = defaultSpeed;

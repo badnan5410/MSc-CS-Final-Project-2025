@@ -74,8 +74,8 @@ public class PathFinder {
         while (col < gp.MAX_WORLD_COL && row < gp.MAX_WORLD_ROW) {
 
             // check tiles
-            int tileNum = gp.tm.mapArray[gp.currentMap][col][row];
-            node[col][row].solid = gp.tm.tile[tileNum].collision;
+            int tileNum = gp.tManager.mapArray[gp.currentMap][col][row];
+            node[col][row].solid = gp.tManager.tile[tileNum].collision;
 
             // check interactive tiles
             for (int i = 0; i < gp.iTile[1].length; i++) {

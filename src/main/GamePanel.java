@@ -3,6 +3,7 @@ package main;
 import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
+import environment.EnvironmentManager;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
 
@@ -41,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     // System
-    public TileManager tm = new TileManager(this);
+    public TileManager tManager = new TileManager(this);
     public KeyHandler kHandler = new KeyHandler(this);
     Sound se = new Sound();
     Sound music = new Sound();
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eHandler = new EventHandler(this);
     Config config = new Config(this);
     public PathFinder pFinder = new PathFinder(this);
+    EnvironmentManager eManager = new EnvironmentManager(this);
     Thread gameLoop;
 
     // Entity and Object
@@ -92,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
         oHandler.setNPC();
         oHandler.setMonster();
         oHandler.setInteractiveTile();
+        eManager.setup();
 
         if (fullScreenOn) {setFullScreen();}
     }
@@ -216,7 +219,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         else {
             // Tile
-            tm.draw(g2);
+            tManager.draw(g2);
 
             // Interactive Tile
             for (int i = 0; i < iTile[1].length; i++) {
@@ -274,6 +277,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             // empty entity list
             entityList.clear();
+
+            // environment
+            eManager.draw(g2);
 
             // User Interface
             ui.draw(g2);

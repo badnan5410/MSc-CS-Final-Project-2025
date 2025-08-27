@@ -148,8 +148,8 @@ public class KeyHandler implements KeyListener {
 
         if (keyCode == KeyEvent.VK_R) {
             switch(gp.currentMap) {
-                case 0: gp.tm.mapLoader("/maps/world_02.txt", gp.currentMap); break;
-                case 1: gp.tm.mapLoader("/maps/interior_01.txt", gp.currentMap); break;
+                case 0: gp.tManager.mapLoader("/maps/world_02.txt", gp.currentMap); break;
+                case 1: gp.tManager.mapLoader("/maps/interior_01.txt", gp.currentMap); break;
             }
         }
     }
