@@ -91,10 +91,23 @@ public class Entity {
     public final int TYPE_SHIELD = 5;
     public final int TYPE_CONSUMABLE = 6;
     public final int TYPE_PICKUP = 7;
+    public final int TYPE_OBSTACLE = 8;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
+
+    public int getLeftX() {return worldX + rect.x;}
+
+    public int getRightX() {return worldX + rect.x + rect.width;}
+
+    public int getTopY() {return worldY + rect.y;}
+
+    public int getBottomY() {return worldY + rect.y + rect.height;}
+
+    public int getCol() {return (worldX + rect.x)/gp.TILE_SIZE;}
+
+    public int getRow() {return (worldY + rect.y)/gp.TILE_SIZE;}
 
     public void setAction() {}
 
@@ -115,7 +128,9 @@ public class Entity {
         }
     }
 
-    public void useItem(Entity entity) {}
+    public void interact() {}
+
+    public boolean useItem(Entity entity) {return false;}
 
     public void checkDrop() {}
 
@@ -438,4 +453,33 @@ public class Entity {
         }
     }
 
+    public int getDetected(Entity user, Entity target[][], String targetName) {
+        int index = -1;
+
+        // check the surrounding objects;
+        int nextWorldX = user.getLeftX();
+        int nextWorldY = user.getTopY();
+
+        switch(user.direction) {
+            case "up": nextWorldY = user.getTopY()-user.speed; break;
+            case "down": nextWorldY = user.getBottomY()+user.speed; break;
+            case "left": nextWorldX = user.getLeftX()-user.speed; break;
+            case "right": nextWorldX = user.getRightX()+user.speed; break;
+        }
+
+        int col = nextWorldX/gp.TILE_SIZE;
+        int row = nextWorldY/gp.TILE_SIZE;
+
+        for (int i = 0; i < target[1].length; i++) {
+            if (target[gp.currentMap][i] != null) {
+
+                if (target[gp.currentMap][i].getCol() == col && target[gp.currentMap][i].getRow() == row && target[gp.currentMap][i].name.equals(targetName)) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        return index;
+    }
 }

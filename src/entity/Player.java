@@ -80,6 +80,8 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
+        inventory.add(new Iron_Axe(gp));
+        inventory.add(new Key(gp));
     }
 
     public int getAttackValue() {
@@ -312,12 +314,22 @@ public class Player extends Entity {
     }
 
     public void objectPickup(int i) {
+
         if (i != -1) {
 
             // pickup objects
             if (gp.obj[gp.currentMap][i].type == TYPE_PICKUP) {
                 gp.obj[gp.currentMap][i].useItem(this);
                 gp.obj[gp.currentMap][i] = null;
+            }
+
+            // obstacle
+            else if (gp.obj[gp.currentMap][i].type == TYPE_OBSTACLE) {
+
+                if (gp.kHandler.enterPressed) {
+                    attackCancelled = true;
+                    gp.obj[gp.currentMap][i].interact();
+                }
             }
 
             // inventory items
@@ -330,9 +342,8 @@ public class Player extends Entity {
                     text = "Got a " + gp.obj[gp.currentMap][i].name + "!";
                     gp.obj[gp.currentMap][i] = null;// this line ruined me
                 }
-                else {
-                    text = "Inventory is full!";
-                }
+                else {text = "Inventory is full!";}
+
                 gp.ui.addMessage(text);
             }
         }
@@ -459,8 +470,7 @@ public class Player extends Entity {
                 defense = getDefenseValue();
             }
             if (selectedItem.type == TYPE_CONSUMABLE) {
-                selectedItem.useItem(this);
-                inventory.remove(itemIndex);
+                if (selectedItem.useItem(this)) {inventory.remove(itemIndex);};
             }
         }
     }

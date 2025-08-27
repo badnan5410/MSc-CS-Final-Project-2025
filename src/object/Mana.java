@@ -18,9 +18,10 @@ public class Mana extends Entity {
         image2 = setup("/objects/mana_empty");
     }
 
-    public void useItem(Entity entity) {
+    public boolean useItem(Entity entity) {
         gp.soundEffect(2);
         entity.mana += value;
         gp.ui.addMessage("You have recovered " + value + " MP!");
+        return true;
     }
 }

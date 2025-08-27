@@ -17,10 +17,11 @@ public class Coin extends Entity {
 
     }
 
-    public void useItem(Entity entity) {
+    public boolean useItem(Entity entity) {
         gp.soundEffect(1);
         gp.ui.addMessage("Coin +" + value);
         gp.player.coins += value;
+        return true;
     }
 
 }

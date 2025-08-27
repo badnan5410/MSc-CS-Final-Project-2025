@@ -19,9 +19,10 @@ public class Heart extends Entity {
         image3 = setup("/objects/heart_empty");
     }
 
-    public void useItem(Entity entity) {
+    public boolean useItem(Entity entity) {
         gp.soundEffect(2);
         entity.life += value;
         gp.ui.addMessage("You have recovered " + value + " HP!");
+        return true;
     }
 }

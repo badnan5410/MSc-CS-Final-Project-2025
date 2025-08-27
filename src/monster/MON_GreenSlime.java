@@ -72,7 +72,7 @@ public class MON_GreenSlime extends Entity {
             int endRow = (gp.player.worldY + gp.player.rect.y)/gp.TILE_SIZE;
             searchPath(endCol, endRow);
 
-            /*int i = new Random().nextInt(200)+1;
+            int i = new Random().nextInt(200)+1;
             if (i > 198 && !projectile.alive && shotCooldownCounter == 30) {
                 projectile.set(worldX, worldY, direction, true, this);
 
@@ -84,7 +84,7 @@ public class MON_GreenSlime extends Entity {
                 }
 
                 shotCooldownCounter = 0;
-            }*/
+            }
         }
         else {
             movementCounter++;

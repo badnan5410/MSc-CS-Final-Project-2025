@@ -17,11 +17,11 @@ public class Potion_Red extends Entity {
         price = 16;
     }
 
-    public void useItem(Entity entity) {
+    public boolean useItem(Entity entity) {
         gp.soundEffect(11);
         gp.gameState = gp.GS_DIALOGUE;
         entity.life += value;
         gp.ui.currentDialogue = "You drink the " + name + "!\n You have recovered " + value + " HP!";
-
+        return true;
     }
 }
