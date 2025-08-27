@@ -472,6 +472,24 @@ public class UserInterface {
             }
 
             g2.drawImage(entity.inventory.get(i).down1, slotX, slotY, null);
+
+            // display amount
+            if (entity == gp.player && entity.inventory.get(i).amount > 1) {
+                g2.setFont(g2.getFont().deriveFont(32f));
+                String s = "" + entity.inventory.get(i).amount;
+                int amountX = rightX(s, slotX+44);
+                int amountY = slotY + gp.TILE_SIZE;
+
+                // shadow
+                g2.setColor(new Color(60, 60, 60));
+                g2.drawString(s, amountX, amountY);
+
+                // main colour
+                g2.setColor(Color.white);
+                g2.drawString(s, amountX-3, amountY-3);
+
+            }
+
             slotX += slotSize;
 
             if (i == 4 || i == 9 || i == 14) {
@@ -890,7 +908,18 @@ public class UserInterface {
                     currentDialogue = "You need more coins to buy that!";
                     drawDialogueScreen();
                 }
-                else if (gp.player.inventory.size() == gp.player.INVENTORY_CAPACITY) {
+                else {
+                    if (gp.player.isItemObtainable(merchant.inventory.get(itemIndex))) {
+                        gp.player.coins -= price;
+                    }
+                    else {
+                        tradeScreenState = 0;
+                        gp.gameState = gp.GS_DIALOGUE;
+                        currentDialogue = "Your inventory is already full!";
+                    }
+                }
+
+                /*else if (gp.player.inventory.size() == gp.player.INVENTORY_CAPACITY) {
                     tradeScreenState = 0;
                     gp.gameState = gp.GS_DIALOGUE;
                     currentDialogue = "Your inventory is already full!";
@@ -898,9 +927,9 @@ public class UserInterface {
                 }
                 else {
                     gp.soundEffect(17);
-                    gp.player.coins -= price;
+
                     gp.player.inventory.add(merchant.inventory.get(itemIndex));
-                }
+                }*/
             }
         }
 
@@ -951,7 +980,13 @@ public class UserInterface {
                     currentDialogue = "You cannot sell an equipped item!\nPlease unequip the item before selling it.";
                 }
                 else {
-                    gp.player.inventory.remove(itemIndex);
+                    if (gp.player.inventory.get(itemIndex).amount > 1) {
+                        gp.player.inventory.get(itemIndex).amount--;
+                    }
+                    else {
+                        gp.player.inventory.remove(itemIndex);
+                    }
+
                     gp.player.coins += sellingPrice;
                 }
             }

@@ -14,6 +14,7 @@ public class Key extends Entity {
         down1 = setup("/objects/key");
         description = "[" + name + "]\nA mysterious key. I wonder\nwhat it unlocks...";
         price = 50;
+        stackable = true;
     }
 
     public boolean useItem(Entity entity) {

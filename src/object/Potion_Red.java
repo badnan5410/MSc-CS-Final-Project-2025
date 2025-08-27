@@ -15,6 +15,7 @@ public class Potion_Red extends Entity {
         value = 4;
         description = "[" + name + "]\nDrink this potion to recover\nyour health.\n+" + value + " HP";
         price = 16;
+        stackable = true;
     }
 
     public boolean useItem(Entity entity) {

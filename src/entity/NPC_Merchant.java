@@ -39,10 +39,11 @@ public class NPC_Merchant extends Entity {
     }
 
     public void setItems() {
-        inventory.add(new Potion_Red(gp));
+        inventory.add(new Iron_Shield(gp));
         inventory.add(new Iron_Sword(gp));
         inventory.add(new Iron_Axe(gp));
-        inventory.add(new Iron_Shield(gp));
+        inventory.add(new Potion_Red(gp));
+        inventory.add(new Key(gp));
     }
 
     @Override

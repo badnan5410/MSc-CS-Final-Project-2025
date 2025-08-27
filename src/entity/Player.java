@@ -34,12 +34,12 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.TILE_SIZE * 23;
-        worldY = gp.TILE_SIZE * 21;
+        /*worldX = gp.TILE_SIZE * 23;
+        worldY = gp.TILE_SIZE * 21;*/
 
-        /*worldX = gp.TILE_SIZE * 12;
+        worldX = gp.TILE_SIZE * 12;
         worldY = gp.TILE_SIZE * 12;
-        gp.currentMap = 1;*/
+        gp.currentMap = 1;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -56,7 +56,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        coins = 0;
+        coins = 5000;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         projectile = new Fireball(gp);
@@ -336,8 +336,7 @@ public class Player extends Entity {
             else {
                 String text;
 
-                if (inventory.size() != INVENTORY_CAPACITY) {
-                    inventory.add(gp.obj[gp.currentMap][i]);
+                if (isItemObtainable(gp.obj[gp.currentMap][i])) {
                     gp.soundEffect(1);
                     text = "Got a " + gp.obj[gp.currentMap][i].name + "!";
                     gp.obj[gp.currentMap][i] = null;// this line ruined me
@@ -465,14 +464,60 @@ public class Player extends Entity {
                 attack = getAttackValue();
                 getPlayerAttackImage();
             }
+
             if (selectedItem.type == TYPE_SHIELD) {
                 currentShield = selectedItem;
                 defense = getDefenseValue();
             }
+
             if (selectedItem.type == TYPE_CONSUMABLE) {
-                if (selectedItem.useItem(this)) {inventory.remove(itemIndex);};
+                if (selectedItem.useItem(this)) {
+                    if (selectedItem.amount > 1) {selectedItem.amount--;}
+                    else {inventory.remove(itemIndex);}
+                }
             }
         }
+    }
+
+    public int searchInventory(String itemName) {
+        int itemIndex = -1;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).name.equals(itemName)) {
+                itemIndex = i;
+                break;
+            }
+        }
+
+        return itemIndex;
+    }
+
+    public boolean isItemObtainable(Entity item) {
+        boolean itemObtainable = false;
+
+        // check if item stackable
+        if (item.stackable) {
+            int index = searchInventory(item.name);
+
+            if (index != -1) {
+                inventory.get(index).amount++;
+                itemObtainable = true;
+            }
+            else { // this is new item, check vacancy
+                if (inventory.size() != INVENTORY_CAPACITY) {
+                    inventory.add(item);
+                    itemObtainable = true;
+                }
+            }
+        }
+        else { // item not stackable, check vacancy
+            if (inventory.size() != INVENTORY_CAPACITY) {
+                inventory.add(item);
+                itemObtainable = true;
+            }
+        }
+
+        return itemObtainable;
     }
 
     public void draw(Graphics2D g2) {
