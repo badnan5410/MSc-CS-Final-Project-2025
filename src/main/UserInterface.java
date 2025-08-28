@@ -475,7 +475,7 @@ public class UserInterface {
 
             // display amount
             if (entity == gp.player && entity.inventory.get(i).amount > 1) {
-                g2.setFont(g2.getFont().deriveFont(32f));
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32f));
                 String s = "" + entity.inventory.get(i).amount;
                 int amountX = rightX(s, slotX+44);
                 int amountY = slotY + gp.TILE_SIZE;

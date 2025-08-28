@@ -37,23 +37,18 @@ public class ObjectHandler {
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*26;
         i++;
 
-        gp.obj[mapNum][i] = new Potion_Red(gp);
+        gp.obj[mapNum][i] = new Key(gp);
         gp.obj[mapNum][i].worldX = gp.TILE_SIZE*17;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*21;
         i++;
 
         gp.obj[mapNum][i] = new Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*18;
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*16;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*21;
         i++;
 
-        gp.obj[mapNum][i] = new Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*19;
-        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*21;
-        i++;
-
-        gp.obj[mapNum][i] = new Potion_Red(gp);
-        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*20;
+        gp.obj[mapNum][i] = new Iron_Axe(gp);
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*15;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*21;
         i++;
     }

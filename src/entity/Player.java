@@ -81,16 +81,18 @@ public class Player extends Entity {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new Iron_Axe(gp));
+
         inventory.add(new Key(gp));
+        inventory.add(new Potion_Red(gp));
     }
 
     public int getAttackValue() {
         attackArea = currentWeapon.attackArea;
-        return attack = strength * currentWeapon.attackValue;
+        return attack = strength + currentWeapon.attackValue;
     }
 
     public int getDefenseValue() {
-        return defense = dexterity * currentShield.defenseValue;
+        return defense = dexterity + currentShield.defenseValue;
     }
 
     public void getPlayerImage() {
@@ -292,7 +294,7 @@ public class Player extends Entity {
 
             // check monster collision with updated worldX/worldY and rect
             int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack, currentWeapon.knockBackPower);
+            damageMonster(monsterIndex, attack, false);
 
             int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
@@ -375,14 +377,14 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i, int attack, int power) {
+    public void damageMonster(int i, int attack, boolean isProjectile) {
 
         if (i != -1) {
 
             if (!gp.monster[gp.currentMap][i].invincible) {
                 gp.soundEffect(5);
 
-                if (currentWeapon.knockBackPower > 0) {
+                if (currentWeapon.knockBackPower > 0 && !isProjectile) {
                     knockBack(gp.monster[gp.currentMap][i], knockBackPower);
                 }
 

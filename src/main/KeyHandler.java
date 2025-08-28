@@ -167,9 +167,11 @@ public class KeyHandler implements KeyListener {
     }
 
     public void characterState(int keyCode) {
-        if (keyCode == KeyEvent.VK_C) {
+
+        if (keyCode == KeyEvent.VK_C || keyCode == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.GS_PLAY;
         }
+
         if (keyCode == KeyEvent.VK_ENTER) {
             gp.soundEffect(10);
             gp.player.selectItem();

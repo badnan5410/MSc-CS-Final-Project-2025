@@ -14,7 +14,7 @@ public class Chest extends Entity {
         this.loot = loot;
         type = TYPE_OBSTACLE;
         name = "Chest";
-        image1 = setup("/objects/chest");
+        image1 = setup("/objects/chest_closed");
         image2 = setup("/objects/chest_opened");
         down1 = image1;
         collision = true;

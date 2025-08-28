@@ -3,20 +3,17 @@ package environment;
 import main.GamePanel;
 
 import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Lighting {
     GamePanel gp;
-    BufferedImage darknessFilter;
+    BufferedImage darkness;
 
     public Lighting(GamePanel gp, int circleSize) {
 
         // instantiate buffered image
-        darknessFilter = new BufferedImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D)darknessFilter.getGraphics();
+        darkness = new BufferedImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = (Graphics2D) darkness.getGraphics();
 
         // get the coordinates of the light circle
         int circleCenterX = gp.player.screenX + (gp.TILE_SIZE)/2;
@@ -67,6 +64,6 @@ public class Lighting {
     }
 
     public void draw(Graphics2D g2) {
-        g2.drawImage(darknessFilter, 0, 0, null);
+        g2.drawImage(darkness, 0, 0, null);
     }
 }
