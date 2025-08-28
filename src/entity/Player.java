@@ -9,12 +9,11 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
     KeyHandler kHandler;
-
     public final int screenX;
     public final int screenY;
-
     public String playerClass;
     public boolean attackCancelled = false;
+    public boolean lightUpdated = false;
 
     public Player(GamePanel gp, KeyHandler kHandler) {
         super(gp);
@@ -81,9 +80,6 @@ public class Player extends Entity {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new Iron_Axe(gp));
-
-        inventory.add(new Key(gp));
-        inventory.add(new Potion_Red(gp));
     }
 
     public int getAttackValue() {
@@ -470,6 +466,12 @@ public class Player extends Entity {
             if (selectedItem.type == TYPE_SHIELD) {
                 currentShield = selectedItem;
                 defense = getDefenseValue();
+            }
+
+            if (selectedItem.type == TYPE_LIGHT) {
+                if (currentLight == selectedItem) {currentLight = null;}
+                else {currentLight = selectedItem;}
+                lightUpdated = true;
             }
 
             if (selectedItem.type == TYPE_CONSUMABLE) {
