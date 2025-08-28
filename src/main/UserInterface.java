@@ -117,6 +117,8 @@ public class UserInterface {
         // trade state
         if (gp.gameState == gp.GS_TRADE) {drawTradeScreen();}
 
+        // sleep state
+        if (gp.gameState == gp.GS_SLEEP) {drawSleepScreen();}
     }
 
     public void drawPlayerLife() {
@@ -999,6 +1001,31 @@ public class UserInterface {
         height = gp.TILE_SIZE+24;
         drawMiniWindow(x, y, width, height);
         g2.drawString("Your coins: " + gp.player.coins, x+24, y+45);
+    }
+
+    public void drawSleepScreen() {
+        counter++;
+
+        if (counter < 120) {
+            gp.eManager.lighting.filterAlpha += 0.01f;
+
+            if (gp.eManager.lighting.filterAlpha > 1f) {
+                gp.eManager.lighting.filterAlpha = 1f;
+            }
+        }
+
+        if (counter >= 120) {
+            gp.eManager.lighting.filterAlpha -= 0.01f;
+
+            if (gp.eManager.lighting.filterAlpha <= 0f) {
+                gp.eManager.lighting.filterAlpha = 0;
+                counter = 0;
+                gp.eManager.lighting.dayState = gp.eManager.lighting.NOON;
+                gp.eManager.lighting.dayCounter = 0;
+                gp.gameState = gp.GS_PLAY;
+                gp.player.getPlayerImage();
+            }
+        }
     }
 
     public int getSlotIndex(int slotCol, int slotRow) {

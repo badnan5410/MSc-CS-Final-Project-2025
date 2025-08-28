@@ -58,7 +58,9 @@ public class Entity {
     public int level;
     public int strength;
     public int dexterity;
+    public int defaultAttack;
     public int attack;
+    public int defaultDefense;
     public int defense;
     public int exp;
     public int nextLevelExp;

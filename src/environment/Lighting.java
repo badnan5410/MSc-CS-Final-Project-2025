@@ -8,6 +8,15 @@ import java.awt.image.BufferedImage;
 public class Lighting {
     GamePanel gp;
     BufferedImage darkness;
+    public int dayCounter;
+    public float filterAlpha = 0f;
+
+    // day states
+    public final int NOON = 0;
+    public final int EVE = 1;
+    public final int NIGHT = 2;
+    public final int MORNING = 3;
+    public int dayState = NOON;
 
     public Lighting(GamePanel gp) {
         this.gp = gp;
@@ -74,13 +83,67 @@ public class Lighting {
     }
 
     public void update() {
+
         if (gp.player.lightUpdated) {
             setLightSource();
             gp.player.lightUpdated = false;
         }
+
+        // check day state
+        if (dayState == NOON) {
+            dayCounter++;
+
+            if (dayCounter > 600) { // 36000
+                dayState = EVE;
+                dayCounter = 0;
+            }
+        }
+
+        if (dayState == EVE) {
+            filterAlpha += 0.001f; //
+
+            if (filterAlpha > 1f) {
+                filterAlpha = 1f;
+                dayState = NIGHT;
+            }
+        }
+
+        if (dayState == NIGHT) {
+            dayCounter++;
+
+            if (dayCounter > 600) { //36000
+                dayState = MORNING;
+                dayCounter = 0;
+            }
+        }
+
+        if (dayState == MORNING) {
+            filterAlpha -= 0.001f; //0.0001f
+
+            if (filterAlpha < 0) {
+                filterAlpha = 0;
+                dayState = NOON;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
+        gp.player.changeAlpha(g2, filterAlpha);
         g2.drawImage(darkness, 0, 0, null);
+        gp.player.changeAlpha(g2, 1f);
+
+        // debug
+        String s = "";
+
+        switch (dayState) {
+            case NOON: s = "Day"; break;
+            case EVE: s = "Evening";  break;
+            case NIGHT: s = "Night"; break;
+            case MORNING: s = "Morning"; break;
+        }
+
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
+        g2.drawString(s, 800, 500);
     }
 }

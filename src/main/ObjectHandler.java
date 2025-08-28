@@ -41,6 +41,11 @@ public class ObjectHandler {
         gp.obj[mapNum][i].worldX = gp.TILE_SIZE*18;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*20;
         i++;
+
+        gp.obj[mapNum][i] = new Tent(gp);
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*16;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*21;
+        i++;
     }
 
     public void setNPC() {

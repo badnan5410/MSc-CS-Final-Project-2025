@@ -67,6 +67,7 @@ public class Player extends Entity {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
         direction = "down";
+        attackCancelled = true;
     }
 
     public void restoreLifeAndMana() {
@@ -100,6 +101,17 @@ public class Player extends Entity {
         right2 = setup("/player/walking/right_2");
         left1 = setup("/player/walking/left_1");
         left2 = setup("/player/walking/left_2");
+    }
+
+    public void getPlayerSleepingImage(BufferedImage image)  {
+        up1 = image;
+        up2 = image;
+        down1 = image;
+        down2 = image;
+        right1 = image;
+        right2 = image;
+        left1 = image;
+        left2 = image;
     }
 
     public void getPlayerAttackImage() {

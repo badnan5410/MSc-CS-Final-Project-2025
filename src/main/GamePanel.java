@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public EventHandler eHandler = new EventHandler(this);
     Config config = new Config(this);
     public PathFinder pFinder = new PathFinder(this);
-    EnvironmentManager eManager = new EnvironmentManager(this);
+    public EnvironmentManager eManager = new EnvironmentManager(this);
     Thread gameLoop;
 
     // Entity and Object
@@ -76,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_GAME_OVER = 6;
     public final int GS_TRANSITION = 7;
     public final int GS_TRADE = 8;
+    public final int GS_SLEEP = 9;
 
     // Class constructor
     public GamePanel() {
