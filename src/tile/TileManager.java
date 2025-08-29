@@ -10,79 +10,77 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int mapArray[][][];
     boolean drawPath = true;
+    ArrayList<String> fileNames = new ArrayList<>();
+    ArrayList<String> collisionStatus = new ArrayList<>();
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[50];
-        mapArray = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
+
+        // read tile data file
+        InputStream is = getClass().getResourceAsStream("/maps/tiledata.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        // read tile names and collision status from file
+        String line;
+
+        try {
+            while ((line = br.readLine()) != null) {
+                fileNames.add(line);
+                collisionStatus.add(br.readLine());
+            }
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // initialise tile array based on fileNames.size()
+        tile = new Tile[fileNames.size()];
         getTileImage();
-        mapLoader("/maps/world_02.txt", 0);
-        mapLoader("/maps/interior_01.txt", 1);
+
+        // get maxWorldCol/Row
+        is = getClass().getResourceAsStream("/maps/world_03.txt");
+        br = new BufferedReader(new InputStreamReader(is));
+
+        try {
+            String line2 = br.readLine();
+            String maxTile[] = line2.split(" ");
+            gp.MAX_WORLD_COL = maxTile.length;
+            gp.MAX_WORLD_ROW = maxTile.length;
+            mapArray = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
+        } catch (IOException e) {
+            System.out.println("Exception!");
+        }
+
+        mapLoader("/maps/world_03.txt", 0);
+        mapLoader("/maps/interior_02.txt", 1);
     }
 
     public void getTileImage() {
 
-        // Placeholder Tiles
-        setup(0, "grass/grass00", false);
-        setup(1, "grass/grass00", false);
-        setup(2, "grass/grass00", false);
-        setup(3, "grass/grass00", false);
-        setup(4, "grass/grass00", false);
-        setup(5, "grass/grass00", false);
-        setup(6, "grass/grass00", false);
-        setup(7, "grass/grass00", false);
-        setup(8, "grass/grass00", false);
-        setup(9, "grass/grass00", false);
+        for (int i = 0; i < fileNames.size(); i++) {
 
-        // Grass Tiles
-        setup(10, "grass/grass00", false);
-        setup(11, "grass/grass01", false);
+            // get file name
+            String fileName = fileNames.get(i);
 
-        // Water Tiles
-        setup(12, "water/water00", true);
-        setup(13, "water/water01", true);
-        setup(14, "water/water02", true);
-        setup(15, "water/water03", true);
-        setup(16, "water/water04", true);
-        setup(17, "water/water05", true);
-        setup(18, "water/water06", true);
-        setup(19, "water/water07", true);
-        setup(20, "water/water08", true);
-        setup(21, "water/water09", true);
-        setup(22, "water/water10", true);
-        setup(23, "water/water11", true);
-        setup(24, "water/water12", true);
-        setup(25, "water/water13", true);
+            // get collision status
+            boolean collision;
 
-        // Road Tiles
-        setup(26, "road/road00", false);
-        setup(27, "road/road01", false);
-        setup(28, "road/road02", false);
-        setup(29, "road/road03", false);
-        setup(30, "road/road04", false);
-        setup(31, "road/road05", false);
-        setup(32, "road/road06", false);
-        setup(33, "road/road07", false);
-        setup(34, "road/road08", false);
-        setup(35, "road/road09", false);
-        setup(36, "road/road10", false);
-        setup(37, "road/road11", false);
-        setup(38, "road/road12", false);
+            if (collisionStatus.get(i).equals("true")) {collision = true;}
+            else {collision = false;}
 
-        // Earth Tiles
-        setup(39, "earth/earth", false);
-        setup(40, "wall/wall", true);
-        setup(41, "tree/tree", true);
+            setup(i, fileName, collision);
+        }
 
-        setup(42, "hut", false);
-        setup(43, "floor", false);
-        setup(44, "table", true);
+
     }
 
     public void setup(int i, String imageName, boolean collision) {
@@ -90,7 +88,7 @@ public class TileManager {
 
         try {
             tile[i] = new Tile();
-            tile[i].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+            tile[i].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName));
             tile[i].image = uTool.scaleImage(tile[i].image, gp.TILE_SIZE, gp.TILE_SIZE);
             tile[i].collision = collision;
         } catch (IOException e) {

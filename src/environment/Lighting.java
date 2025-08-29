@@ -93,14 +93,14 @@ public class Lighting {
         if (dayState == NOON) {
             dayCounter++;
 
-            if (dayCounter > 600) { // 36000
+            if (dayCounter > 36000) { // 36000
                 dayState = EVE;
                 dayCounter = 0;
             }
         }
 
         if (dayState == EVE) {
-            filterAlpha += 0.001f; //
+            filterAlpha += 0.0001f; //
 
             if (filterAlpha > 1f) {
                 filterAlpha = 1f;
@@ -111,14 +111,14 @@ public class Lighting {
         if (dayState == NIGHT) {
             dayCounter++;
 
-            if (dayCounter > 600) { //36000
+            if (dayCounter > 36000) { //36000
                 dayState = MORNING;
                 dayCounter = 0;
             }
         }
 
         if (dayState == MORNING) {
-            filterAlpha -= 0.001f; //0.0001f
+            filterAlpha -= 0.0001f; //0.0001f
 
             if (filterAlpha < 0) {
                 filterAlpha = 0;

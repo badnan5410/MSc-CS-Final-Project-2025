@@ -52,12 +52,12 @@ public class EventHandler {
 
         if (canTouchEvent) {
             if (hit(0, 23, 12, "up")) {healingPool(gp.GS_DIALOGUE);}
-            else if (hit(0, 10, 37, "any")) {
+            else if (hit(0, 10, 39, "any")) {
                 teleport(1, 12, 13);
                 gp.soundEffect(16);
             }
             else if (hit(1, 12, 13, "any")) {
-                teleport(0, 10, 37);
+                teleport(0, 10, 39);
                 gp.soundEffect(16);
             }
             else if (hit(1, 12, 9, "up")) {speak(gp.npc[1][0]);}

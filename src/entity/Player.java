@@ -22,7 +22,7 @@ public class Player extends Entity {
         screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE /2);
         screenY = (gp.SCREEN_HEIGHT/2) - (gp.TILE_SIZE /2);
 
-        rect = new Rectangle(16, 19, 22, 25);
+        rect = new Rectangle(16, 19, 22, 22);
         default_rectX = rect.x;
         default_rectY = rect.y;
 
