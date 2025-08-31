@@ -15,7 +15,7 @@ public class MON_GreenSlime extends Entity {
 
         name = "Green Slime";
         type = TYPE_MONSTER;
-        defaultSpeed = 1;
+        defaultSpeed = 2;
         speed = defaultSpeed;
         maxLife = 8;
         life = maxLife;
@@ -23,6 +23,7 @@ public class MON_GreenSlime extends Entity {
         defaultDefense = 1;
         attack = defaultAttack;
         defense = defaultDefense;
+        resistance = 1;
         exp = 2;
         projectile = new SlimeBall(gp);
 
@@ -37,95 +38,43 @@ public class MON_GreenSlime extends Entity {
     }
 
     public void getImage() {
-        up1 = setup("/monster/green_slime_down_1");
-        up2 = setup("/monster/green_slime_down_2");
-        down1 = setup("/monster/green_slime_down_1");
-        down2 = setup("/monster/green_slime_down_2");
-        right1 = setup("/monster/green_slime_down_1");
-        right2 = setup("/monster/green_slime_down_2");
-        left1 = setup("/monster/green_slime_down_1");
-        left2 = setup("/monster/green_slime_down_2");
-    }
-
-    public void update() {
-        super.update();
-        int dx, dy, tileDistance;
-
-        dx = Math.abs(worldX - gp.player.worldX);
-        dy = Math.abs(worldY - gp.player.worldY);
-        tileDistance = (dx + dy)/gp.TILE_SIZE;
-
-        if (!onPath && tileDistance < 3) {
-            int i = new Random().nextInt(100)+1;
-            if (i > 50) {
-                onPath = true;
-            }
-        }
-        if (onPath && tileDistance > 10) {
-            onPath = false;
-        }
+        up1 = setup("/monster/green_slime/down_1");
+        up2 = setup("/monster/green_slime/down_2");
+        down1 = setup("/monster/green_slime/down_1");
+        down2 = setup("/monster/green_slime/down_2");
+        right1 = setup("/monster/green_slime/down_1");
+        right2 = setup("/monster/green_slime/down_2");
+        left1 = setup("/monster/green_slime/down_1");
+        left2 = setup("/monster/green_slime/down_2");
     }
 
     public void setAction() {
+        monsterBoost(2);
+
         if (onPath) {
 
-            // player's position
-            int endCol = (gp.player.worldX + gp.player.rect.x)/gp.TILE_SIZE;
-            int endRow = (gp.player.worldY + gp.player.rect.y)/gp.TILE_SIZE;
-            searchPath(endCol, endRow);
+            // check if it stops chasing
+            checkIfPlayerOutOfAggro(gp.player, 15, 100);
 
-            int i = new Random().nextInt(200)+1;
-            if (i > 198 && !projectile.alive && shotCooldownCounter == 30) {
-                projectile.set(worldX, worldY, direction, true, this);
+            // search the direction to go
+            searchPath(getEndCol(gp.player), getEndRow(gp.player));
 
-                for (int j = 0; j < gp.projectile[1].length; j++) {
-                    if (gp.projectile[gp.currentMap][j] == null) {
-                        gp.projectile[gp.currentMap][j] = projectile;
-                        break;
-                    }
-                }
-
-                shotCooldownCounter = 0;
-            }
+            // check if it shoots a projectile
+            checkIfMonsterShoot(200, 30);
         }
         else {
-            movementCounter++;
 
-            if (movementCounter == 120) {
-                Random rand = new Random();
-                int i = rand.nextInt(100)+1;
+            // check if it starts chasing
+            checkIfPlayerInAggro(gp.player, 5, 100);
 
-                if (i <= 25) {
-                    direction = "up";
-                }
-                if (i > 25 && i <= 50) {
-                    direction = "down";
-                }
-                if (i > 50 && i <= 75) {
-                    direction = "right";
-                }
-                if (i > 75 && i <= 100) {
-                    direction = "left";
-                }
-                movementCounter = 0;
-            }
+            // get a random direction if its not onPath
+            getRandomDirection();
         }
     }
 
     public void damageReaction() {
         movementCounter = 0;
         onPath = true;
-    }
-
-    public void monsterBoost() {
-        int dayState = gp.eManager.lighting.dayState;
-
-        switch (dayState) {
-            case 0: attack = defaultAttack; defense = defaultDefense; break;
-            case 1: attack = defaultAttack+2; defense = defaultDefense+2; break;
-            case 2: attack = defaultAttack+4; defense = defaultDefense+4; break;
-            case 3: attack = defaultAttack+2; defense = defaultDefense+2; break;
-        }
     }
 
     public void checkDrop() {

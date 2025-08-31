@@ -22,7 +22,14 @@ public class CollisionHandler {
 
         int tileNum1, tileNum2;
 
-        switch (entity.direction) {
+        // user temporary direction when being knock backed
+        String direction = entity.direction;
+
+        if (entity.knockback) {
+            direction = entity.knockBackDirection;
+        }
+
+        switch (direction) {
             case "up":
                 topRow = (top_worldY - entity.speed)/ gp.TILE_SIZE;
                 tileNum1 = gp.tManager.mapArray[gp.currentMap][leftCol][topRow];
@@ -104,6 +111,13 @@ public class CollisionHandler {
     public int checkEntity(Entity entity, Entity[][] target) {
         int index = -1;
 
+        // user temporary direction when being knock backed
+        String direction = entity.direction;
+
+        if (entity.knockback) {
+            direction = entity.knockBackDirection;
+        }
+
         for (int i = 0; i < target[1].length; i++) {
             if (target[gp.currentMap][i] != null) {
 
@@ -113,7 +127,7 @@ public class CollisionHandler {
                 target[gp.currentMap][i].rect.x = target[gp.currentMap][i].worldX + target[gp.currentMap][i].rect.x;
                 target[gp.currentMap][i].rect.y = target[gp.currentMap][i].worldY + target[gp.currentMap][i].rect.y;
 
-                switch (entity.direction) {
+                switch (direction) {
                     case "up": entity.rect.y -= entity.speed; break;
                     case "down": entity.rect.y += entity.speed; break;
                     case "right": entity.rect.x += entity.speed; break;

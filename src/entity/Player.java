@@ -80,11 +80,16 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
+        inventory.add(new Key(gp));
         inventory.add(new Wood_Axe(gp));
+        inventory.add(new Iron_Sword(gp));
+        inventory.add(new Iron_Axe(gp));
     }
 
     public int getAttackValue() {
         attackArea = currentWeapon.attackArea;
+        motion1_duration = currentWeapon.motion1_duration;
+        motion2_duration = currentWeapon.motion2_duration;
         return attack = strength + currentWeapon.attackValue;
     }
 
@@ -165,7 +170,7 @@ public class Player extends Entity {
     public void update() {
 
         if (attacking) {
-            playerAttack();
+            attacking();
         }
         else if (kHandler.upKey || kHandler.downKey || kHandler.rightKey || kHandler.leftKey || kHandler.enterPressed) {
             if (kHandler.upKey) {
@@ -275,54 +280,6 @@ public class Player extends Entity {
         if (maxLife > 12) {maxLife = 12;}
     }
 
-    public void playerAttack() {
-        spriteCounter++;
-
-        if (spriteCounter <= 5) {spriteNum = 1;}
-        if (spriteCounter > 5 && spriteCounter <= 25) {
-            spriteNum = 2;
-
-            // Save current worldX, worldY, rect
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int currentWidth = rect.width;
-            int currentHeight = rect.height;
-
-            // Adjust player's worldX/worldY for the attackArea
-            switch (direction) {
-                case "up": worldY -= attackArea.height; break;
-                case "down": worldY += attackArea.height; break;
-                case "right": worldX += attackArea.width; break;
-                case "left": worldX -= attackArea.width; break;
-            }
-
-            // attackArea becomes rect
-            rect.width = attackArea.width;
-            rect.height = attackArea.height;
-
-            // check monster collision with updated worldX/worldY and rect
-            int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack, false);
-
-            int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
-            damageInteractiveTile(iTileIndex);
-
-            int projectileIndex = gp.cHandler.checkEntity(this, gp.projectile);
-            damageProjectile(projectileIndex);
-
-            // restore original data
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            rect.width = currentWidth;
-            rect.height = currentHeight;
-        }
-        if (spriteCounter > 25) {
-            spriteNum = 1;
-            spriteCounter = 0;
-            attacking = false;
-        }
-    }
-
     public void objectPickup(int i) {
 
         if (i != -1) {
@@ -388,7 +345,7 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i, int attack, boolean isProjectile) {
+    public void damageMonster(int i, Entity attacker, int attack, boolean isProjectile) {
 
         if (i != -1) {
 
@@ -396,7 +353,7 @@ public class Player extends Entity {
                 gp.soundEffect(5);
 
                 if (currentWeapon.knockBackPower > 0 && !isProjectile) {
-                    knockBack(gp.monster[gp.currentMap][i], knockBackPower);
+                    setKnockBack(gp.monster[gp.currentMap][i], attacker ,currentWeapon.knockBackPower);
                 }
 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
@@ -406,7 +363,7 @@ public class Player extends Entity {
                     gp.ui.addMessage("You deal " + damage + " damage!");
                 }
                 else {
-                    gp.monster[gp.currentMap][i].life -= damage;
+                    gp.monster[gp.currentMap][i].life--;
                     gp.ui.addMessage("You deal 1 damage!");
                 }
 
@@ -426,12 +383,6 @@ public class Player extends Entity {
         }
     }
 
-    public void knockBack(Entity entity, int power) {
-        entity.direction = direction;
-        entity.speed += power;
-        entity.knockback = true;
-    }
-
     public void damageInteractiveTile(int i) {
         if (i != -1 && gp.iTile[gp.currentMap][i].destructible && gp.iTile[gp.currentMap][i].checkTool(this) && !gp.iTile[gp.currentMap][i].invincible) {
             gp.iTile[gp.currentMap][i].soundEffect();
@@ -446,7 +397,7 @@ public class Player extends Entity {
         }
     }
 
-    public void damageProjectile(int i) {
+    public void breakProjectile(int i) {
 
         if (i != -1) {
             Entity projectile = gp.projectile[gp.currentMap][i];
