@@ -4,6 +4,7 @@ import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import environment.EnvironmentManager;
+import tile.Map;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
 
@@ -53,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     Config config = new Config(this);
     public PathFinder pFinder = new PathFinder(this);
     public EnvironmentManager eManager = new EnvironmentManager(this);
+    Map map = new Map(this);
     Thread gameLoop;
 
     // Entity and Object
@@ -77,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_TRANSITION = 7;
     public final int GS_TRADE = 8;
     public final int GS_SLEEP = 9;
+    public final int GS_MAP = 10;
 
     // Class constructor
     public GamePanel() {
@@ -115,6 +118,8 @@ public class GamePanel extends JPanel implements Runnable {
         oHandler.setNPC();
         oHandler.setMonster();
         oHandler.setInteractiveTile();
+        eManager.lighting.dayState = 0;
+        eManager.lighting.dayCounter = 0;
     }
 
     public void setFullScreen() {
@@ -219,6 +224,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == GS_TITLE_SCREEN) {
             ui.draw(g2);
         }
+
+        // map screen
+        else if (gameState == GS_MAP) {
+            map.drawFullMapScreen(g2);
+        }
+
         else {
             // Tile
             tManager.draw(g2);
@@ -282,6 +293,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             // environment
             eManager.draw(g2);
+
+            // mini map
+            map.drawMiniMap(g2);
 
             // User Interface
             ui.draw(g2);

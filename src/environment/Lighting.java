@@ -93,14 +93,14 @@ public class Lighting {
         if (dayState == NOON) {
             dayCounter++;
 
-            if (dayCounter > 36000) { // 36000
+            if (dayCounter > 10800) {
                 dayState = EVE;
                 dayCounter = 0;
             }
         }
 
         if (dayState == EVE) {
-            filterAlpha += 0.0001f; //
+            filterAlpha += 0.00028f;
 
             if (filterAlpha > 1f) {
                 filterAlpha = 1f;
@@ -111,14 +111,14 @@ public class Lighting {
         if (dayState == NIGHT) {
             dayCounter++;
 
-            if (dayCounter > 36000) { //36000
+            if (dayCounter > 10800) {
                 dayState = MORNING;
                 dayCounter = 0;
             }
         }
 
         if (dayState == MORNING) {
-            filterAlpha -= 0.0001f; //0.0001f
+            filterAlpha -= 0.00028f;
 
             if (filterAlpha < 0) {
                 filterAlpha = 0;
@@ -136,7 +136,7 @@ public class Lighting {
         String s = "";
 
         switch (dayState) {
-            case NOON: s = "Day"; break;
+            case NOON: s = "Noon"; break;
             case EVE: s = "Evening";  break;
             case NIGHT: s = "Night"; break;
             case MORNING: s = "Morning"; break;
@@ -144,6 +144,6 @@ public class Lighting {
 
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50f));
-        g2.drawString(s, 800, 500);
+        g2.drawString(s, 750, 500);
     }
 }

@@ -67,7 +67,7 @@ public class ObjectHandler {
         int i = 0;
         int mapNum = 0;
 
-        /*gp.monster[mapNum][i] = new MON_GreenSlime(gp);
+        gp.monster[mapNum][i] = new MON_GreenSlime(gp);
         gp.monster[mapNum][i].worldX = gp.TILE_SIZE*21;
         gp.monster[mapNum][i].worldY = gp.TILE_SIZE*38;
         i++;
@@ -125,7 +125,7 @@ public class ObjectHandler {
         gp.monster[mapNum][i] = new MON_GreenSlime(gp);
         gp.monster[mapNum][i].worldX = gp.TILE_SIZE*26;
         gp.monster[mapNum][i].worldY = gp.TILE_SIZE*7;
-        i++;*/
+        i++;
     }
 
     public void setInteractiveTile() {

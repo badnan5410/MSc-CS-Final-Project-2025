@@ -12,7 +12,7 @@ public class Coin extends Entity {
 
         type = TYPE_PICKUP;
         name = "Gold Coin";
-        value = 2;
+        value = 5;
         down1 = setup("/objects/coin_gold");
 
     }

@@ -117,6 +117,17 @@ public class MON_GreenSlime extends Entity {
         onPath = true;
     }
 
+    public void monsterBoost() {
+        int dayState = gp.eManager.lighting.dayState;
+
+        switch (dayState) {
+            case 0: attack = defaultAttack; defense = defaultDefense; break;
+            case 1: attack = defaultAttack+2; defense = defaultDefense+2; break;
+            case 2: attack = defaultAttack+4; defense = defaultDefense+4; break;
+            case 3: attack = defaultAttack+2; defense = defaultDefense+2; break;
+        }
+    }
+
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1; // 1–100
 

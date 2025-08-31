@@ -55,6 +55,8 @@ public class Projectile extends Entity {
         }
     }
 
+    public void projectileBoost() {}
+
     public boolean checkResource(Entity user) {
         return false;
     }

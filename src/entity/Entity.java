@@ -256,7 +256,11 @@ public class Entity {
         }
 
         if (shotCooldownCounter < 30) {shotCooldownCounter++;}
+
+        monsterBoost();
     }
+
+    public void monsterBoost() {}
 
     public void damagePlayer(int attack) {
 
@@ -264,8 +268,14 @@ public class Entity {
             gp.soundEffect(6);
             int damage = attack - gp.player.defense;
 
-            if (damage > 0) {gp.player.life -= damage;}
-            else {gp.player.life--;}
+            if (damage > 0) {
+                gp.player.life -= damage;
+                gp.ui.addMessage("You take " + damage + " damage!");
+            }
+            else {
+                gp.player.life--;
+                gp.ui.addMessage("You take 1 damage!");
+            }
 
             gp.player.invincible = true;
         }

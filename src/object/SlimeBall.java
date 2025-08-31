@@ -13,10 +13,11 @@ public class SlimeBall extends Projectile {
         this.gp = gp;
 
         name = "Slime Ball";
-        speed = 6;
-        maxLife = 60;
+        speed = 4;
+        maxLife = 40;
         life = maxLife;
-        attack = 1;
+        defaultAttack = 1;
+        attack = defaultAttack;
         useCost = 1;
         alive = false;
         getImage();

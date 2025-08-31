@@ -55,7 +55,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        coins = 5000;
+        coins = 0;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         projectile = new Fireball(gp);
@@ -80,7 +80,7 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
-        inventory.add(new Iron_Axe(gp));
+        inventory.add(new Wood_Axe(gp));
     }
 
     public int getAttackValue() {
@@ -376,10 +376,13 @@ public class Player extends Entity {
                 int damage = gp.monster[gp.currentMap][i].attack - defense;
                 if (damage > 0) {
                     life -= damage;
+                    gp.ui.addMessage("You take " + damage + " damage!");
                 }
                 else {
                     life--;
+                    gp.ui.addMessage("You take 1 damage!");
                 }
+
                 invincible = true;
             }
         }
@@ -397,8 +400,16 @@ public class Player extends Entity {
                 }
 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;
-                gp.monster[gp.currentMap][i].life -= damage;
-                gp.ui.addMessage(damage + " damage!");
+
+                if (damage > 0) {
+                    gp.monster[gp.currentMap][i].life -= damage;
+                    gp.ui.addMessage("You deal " + damage + " damage!");
+                }
+                else {
+                    gp.monster[gp.currentMap][i].life -= damage;
+                    gp.ui.addMessage("You deal 1 damage!");
+                }
+
 
                 gp.monster[gp.currentMap][i].invincible = true;
                 gp.monster[gp.currentMap][i].damageReaction();
