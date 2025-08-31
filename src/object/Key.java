@@ -13,7 +13,7 @@ public class Key extends Entity {
         name = "Key";
         down1 = setup("/objects/key");
         description = "[" + name + "]\nA mysterious key. I wonder\nwhat it unlocks...";
-        price = 50;
+        price = 20;
         stackable = true;
     }
 

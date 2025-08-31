@@ -13,7 +13,7 @@ public class Tent extends Entity {
         name = "Tent";
         down1 = setup("/objects/tent");
         description = "[Tent]\nYou can sleep until\nnext morning.";
-        price = 30;
+        price = 25;
     }
 
     public boolean useItem(Entity entity) {

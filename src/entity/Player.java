@@ -274,7 +274,7 @@ public class Player extends Entity {
 
         if (life <= 0) {
             gp.gameState = gp.GS_GAME_OVER;
-            gp.kHandler.enterPressed = false;
+            gp.ui.cNum = -1;
             gp.soundEffect(15);
         }
 
