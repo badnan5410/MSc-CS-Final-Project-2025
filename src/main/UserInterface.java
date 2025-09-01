@@ -1023,7 +1023,7 @@ public class UserInterface {
                 gp.eManager.lighting.dayState = gp.eManager.lighting.NOON;
                 gp.eManager.lighting.dayCounter = 0;
                 gp.gameState = gp.GS_PLAY;
-                gp.player.getPlayerImage();
+                gp.player.getImage();
             }
         }
     }

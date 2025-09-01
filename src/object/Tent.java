@@ -21,7 +21,7 @@ public class Tent extends Entity {
         gp.soundEffect(18);
         gp.player.life = gp.player.maxLife;
         gp.player.mana = gp.player.maxMana;
-        gp.player.getPlayerSleepingImage(down1);
+        gp.player.getSleepingImage(down1);
         return true;
     }
 }

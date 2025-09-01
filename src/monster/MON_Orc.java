@@ -25,6 +25,7 @@ public class MON_Orc extends Entity {
         attack = defaultAttack;
         defense = defaultDefense;
         exp = 10;
+        knockBackPower = 5;
         rect.x = 4;
         rect.y = 4;
         rect.width = 40;

@@ -14,6 +14,7 @@ public class Entity {
     GamePanel gp;
     public BufferedImage up1, up2, down1, down2, right1, right2, left1, left2;
     public BufferedImage atk_up1, atk_up2, atk_down1, atk_down2, atk_right1, atk_right2, atk_left1, atk_left2;
+    public BufferedImage guardUp, guardDown, guardRight, guardLeft;
     public BufferedImage image1, image2, image3;
     public Rectangle rect = new Rectangle(0, 0, 48, 48);
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
@@ -39,6 +40,8 @@ public class Entity {
     public boolean onPath = false;
     public boolean knockback = false;
     public String knockBackDirection;
+    public boolean guarding = false;
+    public boolean transparent = false;
 
     // Counters
     public int spriteCounter = 0;
@@ -212,6 +215,7 @@ public class Entity {
     public void update() {
 
         if (knockback) {
+
             checkCollision();
 
             if (collision) {
@@ -445,8 +449,19 @@ public class Entity {
     public void damagePlayer(int attack) {
 
         if (!gp.player.invincible) {
-            gp.soundEffect(6);
             int damage = attack - gp.player.defense;
+
+            // get opposite direction of attacker
+            String guardDirection = getOppositeDirection(direction);
+
+            if (gp.player.guarding && gp.player.direction.equals(guardDirection)) {
+                damage /= 3;
+                gp.ui.addMessage("You blocked the hit!");
+                gp.soundEffect(19);
+            }
+            else {
+                gp.soundEffect(6);
+            }
 
             if (damage > 0) {
                 gp.player.life -= damage;
@@ -457,6 +472,7 @@ public class Entity {
                 gp.ui.addMessage("You take 1 damage!");
             }
 
+            setKnockBack(gp.player, this, knockBackPower);
             gp.player.invincible = true;
         }
     }
@@ -716,7 +732,8 @@ public class Entity {
         return index;
     }
 
-    public String getReverseDirection(String direction) {
+    public String getOppositeDirection(String direction) {
+
         switch (direction) {
             case "up": return "down";
             case "down": return "up";

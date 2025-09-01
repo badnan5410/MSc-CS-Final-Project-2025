@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     GamePanel gp;
 
-    public boolean upKey, downKey, leftKey, rightKey, enterPressed, shotKeyPressed;
+    public boolean upKey, downKey, leftKey, rightKey, enterPressed, shotKeyPressed, spacePressed;
 
     // Debug
     boolean toggleDebug = false;
@@ -150,6 +150,10 @@ public class KeyHandler implements KeyListener {
 
         if (keyCode == KeyEvent.VK_X) {
             gp.map.miniMapOn = !gp.map.miniMapOn;
+        }
+
+        if (keyCode == KeyEvent.VK_SPACE) {
+            spacePressed = true;
         }
 
         // Debug
@@ -358,20 +362,18 @@ public class KeyHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        if (keyCode == KeyEvent.VK_W) {
-            upKey = false;
-        }
-        if (keyCode == KeyEvent.VK_A) {
-            leftKey = false;
-        }
-        if (keyCode == KeyEvent.VK_S) {
-            downKey = false;
-        }
-        if (keyCode == KeyEvent.VK_D) {
-            rightKey = false;
-        }
-        if (keyCode == KeyEvent.VK_F) {
-            shotKeyPressed = false;
-        }
+        if (keyCode == KeyEvent.VK_W) {upKey = false;}
+
+        if (keyCode == KeyEvent.VK_A) {leftKey = false;}
+
+        if (keyCode == KeyEvent.VK_S) {downKey = false;}
+
+        if (keyCode == KeyEvent.VK_D) {rightKey = false;}
+
+        if (keyCode == KeyEvent.VK_ENTER) {enterPressed = false;}
+
+        if (keyCode == KeyEvent.VK_F) {shotKeyPressed = false;}
+
+        if (keyCode == KeyEvent.VK_SPACE) {spacePressed = false;}
     }
 }
