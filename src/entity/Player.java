@@ -223,6 +223,7 @@ public class Player extends Entity {
         }
         else if (kHandler.spacePressed) {
             guarding = true;
+            guardCounter++;
         }
         else if (kHandler.upKey || kHandler.downKey || kHandler.rightKey || kHandler.leftKey || kHandler.enterPressed) {
             if (kHandler.upKey) {
@@ -279,6 +280,7 @@ public class Player extends Entity {
             attackCancelled = false;
             gp.kHandler.enterPressed = false;
             guarding = false;
+            guardCounter = 0;
             spriteCounter++;
 
             if (spriteCounter > 10) {
@@ -384,14 +386,17 @@ public class Player extends Entity {
         if (i != -1) {
             if (!invincible && !gp.monster[gp.currentMap][i].dying) {
                 gp.soundEffect(6);
+
                 int damage = gp.monster[gp.currentMap][i].attack - defense;
+
+                // clamp: anything below 1 is 0
+                if (damage < 1) damage = 0;
+
                 if (damage > 0) {
                     life -= damage;
                     gp.ui.addMessage("You take " + damage + " damage!");
-                }
-                else {
-                    life--;
-                    gp.ui.addMessage("You take 1 damage!");
+                } else {
+                    gp.ui.addMessage("You take no damage!");
                 }
 
                 invincible = true;
@@ -409,6 +414,10 @@ public class Player extends Entity {
                 if (currentWeapon.knockBackPower > 0 && !isProjectile) {
                     setKnockBack(gp.monster[gp.currentMap][i], attacker , knockBackPower);
 
+                }
+
+                if (gp.monster[gp.currentMap][i].offBalance) {
+                    attack *= 3;
                 }
 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;

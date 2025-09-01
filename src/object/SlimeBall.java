@@ -18,6 +18,7 @@ public class SlimeBall extends Projectile {
         life = maxLife;
         defaultAttack = 1;
         attack = defaultAttack;
+        knockBackPower = 0;
         useCost = 1;
         alive = false;
         getImage();

@@ -42,6 +42,7 @@ public class Entity {
     public String knockBackDirection;
     public boolean guarding = false;
     public boolean transparent = false;
+    public boolean offBalance = false;
 
     // Counters
     public int spriteCounter = 0;
@@ -51,6 +52,8 @@ public class Entity {
     int hpBarCounter = 0;
     public int shotCooldownCounter = 0;
     int knockBackCounter = 0;
+    public int guardCounter = 0;
+    int offBallanceCounter = 0;
 
     // Character Status
     public String name;
@@ -278,8 +281,6 @@ public class Entity {
             }
         }
 
-
-
         if (invincible) {
             invincibleCounter++;
 
@@ -290,6 +291,15 @@ public class Entity {
         }
 
         if (shotCooldownCounter < 30) {shotCooldownCounter++;}
+
+        if (offBalance) {
+            offBallanceCounter++;
+
+            if (offBallanceCounter > 60) {
+                offBalance = false;
+                offBallanceCounter = 0;
+            }
+        }
     }
 
     public void monsterBoost(int rate) {
@@ -468,24 +478,44 @@ public class Entity {
             String guardDirection = getOppositeDirection(direction);
 
             if (gp.player.guarding && gp.player.direction.equals(guardDirection)) {
-                damage /= 3;
-                gp.ui.addMessage("You blocked the hit!");
-                gp.soundEffect(19);
-            }
-            else {
+
+                // parry
+                if (gp.player.guardCounter < 10) {
+                    damage = 0;
+                    gp.ui.addMessage("You parried the hit!");
+                    gp.soundEffect(20);
+                    setKnockBack(this, gp.player, knockBackPower);
+                    int parryDamage = attack/3;
+                    life -= parryDamage;
+                    gp.ui.addMessage("You reflect " + parryDamage + " damage!");
+                    offBalance = true;
+                    spriteCounter -= 60; // stun monster
+                }
+
+                // normal block
+                else {
+                    damage /= 3;
+                    gp.ui.addMessage("You blocked the hit!");
+                    gp.soundEffect(19);
+                }
+            } else {
                 gp.soundEffect(6);
             }
+
+            // clamp: anything below 1 is just 0
+            if (damage < 1) damage = 0;
 
             if (damage > 0) {
                 gp.player.life -= damage;
                 gp.ui.addMessage("You take " + damage + " damage!");
-            }
-            else {
-                gp.player.life--;
-                gp.ui.addMessage("You take 1 damage!");
+            } else {
+                gp.ui.addMessage("You take no damage!");
             }
 
-            setKnockBack(gp.player, this, knockBackPower);
+            if (knockBackPower > 0) {
+                setKnockBack(gp.player, this, knockBackPower);
+            }
+
             gp.player.invincible = true;
         }
     }

@@ -19,13 +19,13 @@ public class MON_GreenSlime extends Entity {
         speed = defaultSpeed;
         maxLife = 8;
         life = maxLife;
-        defaultAttack = 2;
-        defaultDefense = 1;
+        defaultAttack = 4;
+        defaultDefense = 2;
         attack = defaultAttack;
         defense = defaultDefense;
         exp = 2;
+        knockBackPower = 2;
         projectile = new SlimeBall(gp);
-
         rect.x = 3;
         rect.y = 18;
         rect.width = 42;
