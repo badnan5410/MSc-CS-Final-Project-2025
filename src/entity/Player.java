@@ -345,7 +345,7 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i, Entity attacker, int attack, boolean isProjectile) {
+    public void damageMonster(int i, Entity attacker, int attack, int knockBackPower, boolean isProjectile) {
 
         if (i != -1) {
 
@@ -353,7 +353,8 @@ public class Player extends Entity {
                 gp.soundEffect(5);
 
                 if (currentWeapon.knockBackPower > 0 && !isProjectile) {
-                    setKnockBack(gp.monster[gp.currentMap][i], attacker ,currentWeapon.knockBackPower);
+                    setKnockBack(gp.monster[gp.currentMap][i], attacker , knockBackPower);
+
                 }
 
                 int damage = attack - gp.monster[gp.currentMap][i].defense;

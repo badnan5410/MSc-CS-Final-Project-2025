@@ -23,7 +23,6 @@ public class MON_GreenSlime extends Entity {
         defaultDefense = 1;
         attack = defaultAttack;
         defense = defaultDefense;
-        resistance = 1;
         exp = 2;
         projectile = new SlimeBall(gp);
 

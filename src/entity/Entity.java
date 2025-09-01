@@ -64,7 +64,6 @@ public class Entity {
     public int attack;
     public int defaultDefense;
     public int defense;
-    public int resistance;
     public int exp;
     public int nextLevelExp;
     public final int baseExp = 5;
@@ -419,7 +418,7 @@ public class Entity {
 
                 // check monster collision with updated worldX/worldY and rect
                 int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
-                gp.player.damageMonster(monsterIndex, this, attack, false);
+                gp.player.damageMonster(monsterIndex, this, attack, knockBackPower, false);
 
                 int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
                 gp.player.damageInteractiveTile(iTileIndex);
@@ -465,12 +464,8 @@ public class Entity {
     public void setKnockBack(Entity target, Entity attacker, int power) {
         this.attacker = attacker;
         target.knockBackDirection = attacker.direction;
-        int totalKnockBackPower = power - target.resistance;
-
-        if (totalKnockBackPower > 0) {
-            target.speed += (totalKnockBackPower);
-            target.knockback = true;
-        }
+        target.speed += (power);
+        target.knockback = true;
     }
 
     public void draw(Graphics2D g2) {
