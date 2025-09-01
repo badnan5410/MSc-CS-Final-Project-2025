@@ -100,15 +100,16 @@ public class EventHandler {
     }
 
     public void healingPool(int gameState) {
-        if (gp.kHandler.enterPressed) {
-            gp.gameState = gameState;
-            gp.player.attackCancelled = true;
-            gp.soundEffect(11);
-            gp.ui.currentDialogue = "You drink the water. \nYour health and mana has recovered.";
-            gp.player.life = gp.player.maxLife;
-            gp.player.mana = gp.player.maxMana;
-            gp.oHandler.setMonster();
-        }
+        gp.gameState = gameState;
+        gp.player.attackCancelled = true;
+        gp.soundEffect(11);
+        gp.ui.currentDialogue = "You drink the water. \nYour health and mana has recovered.\n" + "(Your progress has been saved!)";
+        gp.player.life = gp.player.maxLife;
+        gp.player.mana = gp.player.maxMana;
+        gp.oHandler.setMonster();
+        gp.saveLoad.save();
+
+        canTouchEvent = false;
     }
 
     public void teleport(int map, int col, int row) {

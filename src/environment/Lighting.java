@@ -82,6 +82,12 @@ public class Lighting {
         g2.dispose();
     }
 
+    public void resetDay() {
+        dayState = NOON;
+        filterAlpha = 0f;
+    }
+
+    // working method
     public void update() {
 
         if (gp.player.lightUpdated) {
@@ -126,6 +132,52 @@ public class Lighting {
             }
         }
     }
+
+    //debug method
+    /*public void update() {
+
+        if (gp.player.lightUpdated) {
+            setLightSource();
+            gp.player.lightUpdated = false;
+        }
+
+        // check day state
+        if (dayState == NOON) {
+            dayCounter++;
+
+            if (dayCounter > 60) {
+                dayState = EVE;
+                dayCounter = 0;
+            }
+        }
+
+        if (dayState == EVE) {
+            filterAlpha += 0.001f;
+
+            if (filterAlpha > 1f) {
+                filterAlpha = 1f;
+                dayState = NIGHT;
+            }
+        }
+
+        if (dayState == NIGHT) {
+            dayCounter++;
+
+            if (dayCounter > 600) {
+                dayState = MORNING;
+                dayCounter = 0;
+            }
+        }
+
+        if (dayState == MORNING) {
+            filterAlpha -= 0.001f;
+
+            if (filterAlpha < 0) {
+                filterAlpha = 0;
+                dayState = NOON;
+            }
+        }
+    }*/
 
     public void draw(Graphics2D g2) {
         gp.player.changeAlpha(g2, filterAlpha);

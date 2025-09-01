@@ -7,7 +7,7 @@ public class Wood_Axe extends Entity {
 
     public Wood_Axe(GamePanel gp) {
         super(gp);
-        name = "Basic Axe";
+        name = "Wooden Axe";
         down1 = setup("/objects/axe_wooden");
         type = TYPE_AXE;
         attackValue = 3;

@@ -7,7 +7,7 @@ public class Iron_Shield extends Entity {
 
     public Iron_Shield(GamePanel gp) {
         super(gp);
-        name = "Warrior's Shield";
+        name = "Hero's Shield";
         down1 = setup("/objects/shield_iron");
         type = TYPE_SHIELD;
         defenseValue = 2;

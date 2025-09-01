@@ -43,6 +43,8 @@ public class Entity {
     public boolean guarding = false;
     public boolean transparent = false;
     public boolean offBalance = false;
+    public Entity loot;
+    public boolean opened = false;
 
     // Counters
     public int spriteCounter = 0;
@@ -137,6 +139,8 @@ public class Entity {
     public int getEndCol(Entity target) {return (target.worldX + target.rect.x)/gp.TILE_SIZE;}
 
     public int getEndRow(Entity target) {return (target.worldY + target.rect.y)/gp.TILE_SIZE;}
+
+    public void setLoot(Entity loot) {}
 
     public void setAction() {}
 

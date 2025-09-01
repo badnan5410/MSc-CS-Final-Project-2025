@@ -27,10 +27,6 @@ public class Player extends Entity {
         default_rectY = rect.y;
 
         setDefaultValues();
-        getImage();
-        getAttackImage();
-        getGuardImage();
-        setInventory();
     }
 
     public void setDefaultValues() {
@@ -59,9 +55,16 @@ public class Player extends Entity {
         coins = 0;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
+        currentLight = null;
         projectile = new Fireball(gp);
         attack = getAttackValue(); // Strength * weapon
         defense = getDefenseValue(); // Dexterity * shield
+
+        // call getter methods
+        getImage();
+        getAttackImage();
+        getGuardImage();
+        setInventory();
     }
 
     public void setDefaultPosition() {
@@ -71,10 +74,14 @@ public class Player extends Entity {
         attackCancelled = true;
     }
 
-    public void restoreLifeAndMana() {
+    public void restoreStatus() {
         life = maxLife;
         mana = maxMana;
         invincible = false;
+        attacking = false;
+        guarding = false;
+        knockback = false;
+        lightUpdated = true;
     }
 
     public void setInventory() {
@@ -82,8 +89,9 @@ public class Player extends Entity {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new Key(gp));
-        inventory.add(new Iron_Sword(gp));
+        inventory.add(new Lantern(gp));
         inventory.add(new Iron_Axe(gp));
+        inventory.add(new Iron_Shield(gp));
     }
 
     public int getAttackValue() {
@@ -95,6 +103,30 @@ public class Player extends Entity {
 
     public int getDefenseValue() {
         return defense = dexterity + currentShield.defenseValue;
+    }
+
+    public int getCurrentWeaponSlot() {
+        int currentWeaponSlot = 0;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) == currentWeapon) {
+                currentWeaponSlot = i;
+            }
+        }
+
+        return currentWeaponSlot;
+    }
+
+    public int getCurrentShieldSlot() {
+        int currentShieldSlot = 0;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) == currentShield) {
+                currentShieldSlot = i;
+            }
+        }
+
+        return currentShieldSlot;
     }
 
     public void getImage() {
@@ -144,7 +176,7 @@ public class Player extends Entity {
             }
         }
         if (currentWeapon.type == TYPE_AXE) {
-            if (currentWeapon.name == "Basic Axe") {
+            if (currentWeapon.name == "Wooden Axe") {
                 atk_up1 = setup("/player/attacking/axe/wood/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
                 atk_up2 = setup("/player/attacking/axe/wood/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
                 atk_down1 = setup("/player/attacking/axe/wood/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
@@ -174,7 +206,7 @@ public class Player extends Entity {
             guardRight = setup("/player/guarding/wooden/right_1");
             guardLeft = setup("/player/guarding/wooden/left_1");
         }
-        if (currentShield.name == "Warrior's Shield") {
+        if (currentShield.name == "Hero's Shield") {
             guardUp = setup("/player/guarding/iron/up_1");
             guardDown = setup("/player/guarding/iron/down_1");
             guardRight = setup("/player/guarding/iron/right_1");

@@ -31,7 +31,8 @@ public class ObjectHandler {
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*12;
         i++;
 
-        gp.obj[mapNum][i] = new Chest(gp, new Key(gp));
+        gp.obj[mapNum][i] = new Chest(gp);
+        gp.obj[mapNum][i].setLoot(new Key(gp));
         gp.obj[mapNum][i].worldX = gp.TILE_SIZE*30;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*29;
         i++;

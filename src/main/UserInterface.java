@@ -567,7 +567,7 @@ public class UserInterface {
             g2.drawString("->", x-47, y);
             if (gp.kHandler.enterPressed) {
                 gp.gameState = gp.GS_PLAY;
-                gp.retry();
+                gp.resetGame(false);
                 gp.playMusic(0);
             }
         }
@@ -582,7 +582,7 @@ public class UserInterface {
             if (gp.kHandler.enterPressed) {
                 gp.gameState = gp.GS_TITLE_SCREEN;
                 cNum = 0;
-                gp.restart();
+                gp.resetGame(true);
             }
         }
 
@@ -789,7 +789,7 @@ public class UserInterface {
                 settingsScreenState = 0;
                 gp.gameState = gp.GS_TITLE_SCREEN;
                 gp.stopMusic();
-                gp.restart();
+                gp.resetGame(true);
             }
         }
 

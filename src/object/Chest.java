@@ -5,13 +5,11 @@ import main.GamePanel;
 
 public class Chest extends Entity {
     GamePanel gp;
-    Entity loot;
-    boolean opened = false;
 
-    public Chest(GamePanel gp, Entity loot) {
+    public Chest(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        this.loot = loot;
+
         type = TYPE_OBSTACLE;
         name = "Chest";
         image1 = setup("/objects/chest_closed");
@@ -24,6 +22,10 @@ public class Chest extends Entity {
         rect.height = 32;
         default_rectX = rect.x;
         default_rectY = rect.y;
+    }
+
+    public void setLoot(Entity loot) {
+        this.loot = loot;
     }
 
     public void interact() {

@@ -72,7 +72,10 @@ public class KeyHandler implements KeyListener {
                     gp.ui.titleScreenState = 1;
                 }
                 if (gp.ui.cNum == 1) {
-                    // load game
+                    gp.saveLoad.load();
+                    gp.gameState = gp.GS_PLAY;
+                    gp.playMusic(0);
+
                 }
                 if (gp.ui.cNum == 2) {
                     System.exit(0);
