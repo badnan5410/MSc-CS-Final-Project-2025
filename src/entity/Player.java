@@ -310,6 +310,7 @@ public class Player extends Entity {
 
             shotCooldownCounter = 0;
             gp.soundEffect(12);
+            guarding = false;
         }
 
         // Invincible Counter
