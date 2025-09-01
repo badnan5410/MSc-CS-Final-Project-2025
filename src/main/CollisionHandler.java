@@ -38,6 +38,7 @@ public class CollisionHandler {
                 if (gp.tManager.tile[tileNum1].collision || gp.tManager.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
+
                 break;
             case "down":
                 bottomRow = (bottom_worldY + entity.speed)/ gp.TILE_SIZE;
@@ -47,6 +48,7 @@ public class CollisionHandler {
                 if (gp.tManager.tile[tileNum1].collision || gp.tManager.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
+
                 break;
             case "right":
                 rightCol = (right_worldX + entity.speed)/ gp.TILE_SIZE;
@@ -56,6 +58,7 @@ public class CollisionHandler {
                 if (gp.tManager.tile[tileNum1].collision || gp.tManager.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
+
                 break;
             case "left":
                 leftCol = (left_worldX - entity.speed)/ gp.TILE_SIZE;
@@ -65,6 +68,7 @@ public class CollisionHandler {
                 if (gp.tManager.tile[tileNum1].collision || gp.tManager.tile[tileNum2].collision) {
                     entity.checkCollision = true;
                 }
+                
                 break;
         }
     }

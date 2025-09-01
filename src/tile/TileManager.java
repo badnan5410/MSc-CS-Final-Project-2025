@@ -154,7 +154,7 @@ public class TileManager {
         }
 
         // show entity path
-        if (drawPath) {
+        /*if (drawPath) {
             g2.setColor(new Color(255, 0, 0, 70));
 
             for (int i = 0; i < gp.pFinder.pathList.size(); i++) {
@@ -165,6 +165,6 @@ public class TileManager {
 
                 g2.fillRect(screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE);
             }
-        }
+        }*/
     }
 }

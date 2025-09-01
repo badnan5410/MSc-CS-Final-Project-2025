@@ -81,7 +81,6 @@ public class Player extends Entity {
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new Key(gp));
-        inventory.add(new Wood_Axe(gp));
         inventory.add(new Iron_Sword(gp));
         inventory.add(new Iron_Axe(gp));
     }

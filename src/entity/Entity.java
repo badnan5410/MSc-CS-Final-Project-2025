@@ -231,7 +231,7 @@ public class Entity {
 
             knockBackCounter++;
 
-            if (knockBackCounter == 15) {
+            if (knockBackCounter == 10) {
                 knockBackCounter = 0;
                 knockback = false;
                 speed = defaultSpeed;

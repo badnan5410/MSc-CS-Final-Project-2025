@@ -15,7 +15,7 @@ public class Iron_Sword extends Entity {
         attackArea.height = 36;
         description = "[" + name + "]\nA powerful sword that can\nslice enemies in half.\n+" + attackValue + " ATK";
         price = 10;
-        knockBackPower = 8;
+        knockBackPower = 3;
         motion1_duration = 5;
         motion2_duration = 25;
     }
