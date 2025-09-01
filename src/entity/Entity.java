@@ -216,14 +216,27 @@ public class Entity {
 
         if (knockback) {
 
-            checkCollision();
+            // tells the collision entity is about to move
+            String prevDir = direction;
+            direction = knockBackDirection;
 
-            if (collision) {
+            // clear predictive boolean flags
+            checkCollision = false;
+            collision = false;
+
+            // Predict collision in the knockback direction
+            gp.cHandler.checkTile(this);
+            gp.cHandler.checkObject(this, true);
+            gp.cHandler.checkEntity(this, gp.npc);
+            gp.cHandler.checkEntity(this, gp.monster);
+            gp.cHandler.checkEntity(this, gp.iTile);
+
+            if (checkCollision) {
                 knockBackCounter = 0; // prevents entity from being pushed into solid object
                 knockback = false;
                 speed = defaultSpeed;
             }
-            else if (!collision) {
+            else {
                 switch(knockBackDirection) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
@@ -232,9 +245,9 @@ public class Entity {
                 }
             }
 
-            knockBackCounter++;
+            direction = prevDir;
 
-            if (knockBackCounter == 10) {
+            if (++knockBackCounter == 10) {
                 knockBackCounter = 0;
                 knockback = false;
                 speed = defaultSpeed;
@@ -422,7 +435,7 @@ public class Entity {
 
                 // check monster collision with updated worldX/worldY and rect
                 int monsterIndex = gp.cHandler.checkEntity(this, gp.monster);
-                gp.player.damageMonster(monsterIndex, this, attack, knockBackPower, false);
+                gp.player.damageMonster(monsterIndex, this, attack, currentWeapon.knockBackPower, false);
 
                 int iTileIndex = gp.cHandler.checkEntity(this, gp.iTile);
                 gp.player.damageInteractiveTile(iTileIndex);
@@ -480,7 +493,7 @@ public class Entity {
     public void setKnockBack(Entity target, Entity attacker, int power) {
         this.attacker = attacker;
         target.knockBackDirection = attacker.direction;
-        target.speed += (power);
+        target.speed += power;
         target.knockback = true;
     }
 

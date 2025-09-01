@@ -185,19 +185,22 @@ public class Player extends Entity {
     public void update() {
 
         if (knockback) {
+            String prevDir = direction;
+            direction = knockBackDirection;
             checkCollision = false;
+            collision = false;
             gp.cHandler.checkTile(this);
             gp.cHandler.checkObject(this, true);
             gp.cHandler.checkEntity(this, gp.npc);
             gp.cHandler.checkEntity(this, gp.monster);
             gp.cHandler.checkEntity(this, gp.iTile);
 
-            if (collision) {
+            if (checkCollision) {
                 knockBackCounter = 0; // prevents entity from being pushed into solid object
                 knockback = false;
                 speed = defaultSpeed;
             }
-            else if (!collision) {
+            else {
                 switch(knockBackDirection) {
                     case "up": worldY -= speed; break;
                     case "down": worldY += speed; break;
@@ -206,9 +209,9 @@ public class Player extends Entity {
                 }
             }
 
-            knockBackCounter++;
+            direction = prevDir;
 
-            if (knockBackCounter == 10) {
+            if (++knockBackCounter == 10) {
                 knockBackCounter = 0;
                 knockback = false;
                 speed = defaultSpeed;
