@@ -24,6 +24,7 @@ public class Entity {
     Color brightRed = new Color(255, 0, 30);
     Color darkGrey = new Color(35, 35, 35);
     public Entity attacker;
+    public Entity linkedEntity;
 
     // State
     public int worldX, worldY;
@@ -112,6 +113,7 @@ public class Entity {
     public final int TYPE_PICKUP = 7;
     public final int TYPE_OBSTACLE = 8;
     public final int TYPE_LIGHT = 9;
+    public final int TYPE_PICKAXE = 10;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -156,6 +158,8 @@ public class Entity {
     public void setLoot(Entity loot) {}
 
     public void setAction() {}
+
+    public void move(String direction) {}
 
     public void damageReaction() {}
 

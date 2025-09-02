@@ -193,7 +193,7 @@ public class KeyHandler implements KeyListener {
 
         if (keyCode == KeyEvent.VK_ENTER) {
             gp.soundEffect(10);
-            gp.player.selectItem();
+            gp.player.selectItemInInventory();
         }
         playerInventory(keyCode);
     }

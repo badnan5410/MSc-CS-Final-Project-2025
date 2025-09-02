@@ -36,6 +36,38 @@ public class ObjectHandler {
         gp.obj[mapNum][i].worldX = gp.TILE_SIZE*30;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*29;
         i++;
+
+        mapNum = 2; // dungeon floor 1
+        i = 0; // index reset to 0
+
+        gp.obj[mapNum][i] = new Chest(gp);
+        gp.obj[mapNum][i].setLoot(new Iron_Pickaxe(gp));
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*40;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*41;
+        i++;
+
+        gp.obj[mapNum][i] = new Chest(gp);
+        gp.obj[mapNum][i].setLoot(new Potion_Red(gp));
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*13;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*16;
+        i++;
+
+        gp.obj[mapNum][i] = new Chest(gp);
+        gp.obj[mapNum][i].setLoot(new Potion_Red(gp));
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*26;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*34;
+        i++;
+
+        gp.obj[mapNum][i] = new Chest(gp);
+        gp.obj[mapNum][i].setLoot(new Potion_Red(gp));
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*27;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*15;
+        i++;
+
+        gp.obj[mapNum][i] = new Iron_Door(gp);
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*18;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*23;
+        i++;
     }
 
     public void setNPC() {
@@ -45,12 +77,33 @@ public class ObjectHandler {
         gp.npc[mapNum][i] = new NPC_Wizard(gp);
         gp.npc[mapNum][i].worldX = gp.TILE_SIZE*21;
         gp.npc[mapNum][i].worldY = gp.TILE_SIZE*21;
+        i++;
 
-        mapNum++;
+        mapNum = 1; // merchant's store
+        i = 0; // index reset to 0
 
         gp.npc[mapNum][i] = new NPC_Merchant(gp);
         gp.npc[mapNum][i].worldX = gp.TILE_SIZE*12;
         gp.npc[mapNum][i].worldY = gp.TILE_SIZE*7;
+        i++;
+
+        mapNum = 2; // dungeon floor 1
+        i = 0;
+
+        gp.npc[mapNum][i] = new NPC_Rock(gp);
+        gp.npc[mapNum][i].worldX = gp.TILE_SIZE*20;
+        gp.npc[mapNum][i].worldY = gp.TILE_SIZE*25;
+        i++;
+
+        gp.npc[mapNum][i] = new NPC_Rock(gp);
+        gp.npc[mapNum][i].worldX = gp.TILE_SIZE*11;
+        gp.npc[mapNum][i].worldY = gp.TILE_SIZE*18;
+        i++;
+
+        gp.npc[mapNum][i] = new NPC_Rock(gp);
+        gp.npc[mapNum][i].worldX = gp.TILE_SIZE*23;
+        gp.npc[mapNum][i].worldY = gp.TILE_SIZE*14;
+        i++;
     }
 
     public void setMonster() {
@@ -118,6 +171,33 @@ public class ObjectHandler {
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 13, 41); i++;
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 13, 40); i++;
         gp.iTile[mapNum][i] = new IT_Drytree(gp, 14, 40); i++;
+
+        mapNum = 2; // dungeon floor 1
+        i = 0; // index reset to 0
+
+        // breakable walls all over the map
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 18, 30); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 17, 31); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 17, 32); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 17, 34); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 18, 34); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 18, 33); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 10, 22); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 10, 24); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 38, 18); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 38, 19); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 38, 20); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 38, 21); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 18, 13); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 18, 14); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 22, 28); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 30, 28); i++;
+        gp.iTile[mapNum][i] = new IT_DestructibleWall(gp, 32, 28); i++;
+
+        // 3 pressure plates
+        gp.iTile[mapNum][i] = new IT_PressurePlate(gp, 20, 22); i++;
+        gp.iTile[mapNum][i] = new IT_PressurePlate(gp, 8, 17); i++;
+        gp.iTile[mapNum][i] = new IT_PressurePlate(gp, 39, 31); i++;
     }
 }
 

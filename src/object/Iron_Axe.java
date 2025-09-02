@@ -14,11 +14,11 @@ public class Iron_Axe extends Entity {
         attackValue = 6;
         value = 4;
         attackArea.width = 32;
-        attackArea.height = 32;
+        attackArea.height = 30;
         description  = "[" + name + "]\nA powerful axe that can cut\ndown the tallest tree.\n+" + attackValue + " ATK";
         price = 12;
         knockBackPower = 10;
-        motion1_duration = 10;
-        motion2_duration = 30;
+        motion1_duration = 30;
+        motion2_duration = 50;
     }
 }

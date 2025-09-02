@@ -3,18 +3,16 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-import java.awt.*;
-
-public class Door extends Entity {
+public class Iron_Door extends Entity {
     GamePanel gp;
-    public static final String objName = "Door";
+    public static final String objName = "Iron Door";
 
-    public Door(GamePanel gp) {
+    public Iron_Door(GamePanel gp) {
         super(gp);
         this.gp = gp;
         type = TYPE_OBSTACLE;
         name = objName;
-        down1 = setup("/objects/door_normal");
+        down1 = setup("/objects/door_iron");
         collision = true;
         rect.x = 0;
         rect.y = 16;
@@ -26,7 +24,7 @@ public class Door extends Entity {
     }
 
     public void setDialogue() {
-        dialogues[0][0] = "You need a key to open this door." + "\n\n\n[press enter]";
+        dialogues[0][0] = "It wont' budge." + "\n\n\n[press enter]";
     }
 
     public void interact() {

@@ -40,8 +40,8 @@ public class Player extends Entity {
         worldY = gp.TILE_SIZE * 12;
         gp.currentMap = 1;*/
 
-        /*worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
-        worldY = gp.TILE_SIZE * 9;
+        /*worldX = gp.TILE_SIZE * 18; // dungeon 1 center
+        worldY = gp.TILE_SIZE * 25;
         gp.currentMap = 2;*/
 
         defaultSpeed = 4;
@@ -105,6 +105,8 @@ public class Player extends Entity {
         inventory.add(new Lantern(gp));
         inventory.add(new Iron_Axe(gp));
         inventory.add(new Iron_Shield(gp));
+        inventory.add(new Iron_Pickaxe(gp));
+        inventory.add(new Iron_Sword(gp));
     }
 
     public int getAttackValue() {
@@ -167,16 +169,6 @@ public class Player extends Entity {
     public void getAttackImage() {
 
         if (currentWeapon.type == TYPE_SWORD) {
-            if (currentWeapon.name == "Hero's Sword") {
-                atk_up1 = setup("/player/attacking/sword/iron/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_up2 = setup("/player/attacking/sword/iron/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_down1 = setup("/player/attacking/sword/iron/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_down2 = setup("/player/attacking/sword/iron/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
-                atk_right1 = setup("/player/attacking/sword/iron/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
-                atk_right2 = setup("/player/attacking/sword/iron/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
-                atk_left1 = setup("/player/attacking/sword/iron/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
-                atk_left2 = setup("/player/attacking/sword/iron/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
-            }
             if (currentWeapon.name == "Wooden Sword") {
                 atk_up1 = setup("/player/attacking/sword/wood/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
                 atk_up2 = setup("/player/attacking/sword/wood/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
@@ -187,7 +179,19 @@ public class Player extends Entity {
                 atk_left1 = setup("/player/attacking/sword/wood/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
                 atk_left2 = setup("/player/attacking/sword/wood/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
             }
+
+            if (currentWeapon.name == "Hero's Sword") {
+                atk_up1 = setup("/player/attacking/sword/iron/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_up2 = setup("/player/attacking/sword/iron/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down1 = setup("/player/attacking/sword/iron/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_down2 = setup("/player/attacking/sword/iron/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+                atk_right1 = setup("/player/attacking/sword/iron/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_right2 = setup("/player/attacking/sword/iron/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left1 = setup("/player/attacking/sword/iron/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+                atk_left2 = setup("/player/attacking/sword/iron/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            }
         }
+
         if (currentWeapon.type == TYPE_AXE) {
             if (currentWeapon.name == "Wooden Axe") {
                 atk_up1 = setup("/player/attacking/axe/wood/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
@@ -199,6 +203,7 @@ public class Player extends Entity {
                 atk_left1 = setup("/player/attacking/axe/wood/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
                 atk_left2 = setup("/player/attacking/axe/wood/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
             }
+
             if (currentWeapon.name == "Woodcutter's Axe") {
                 atk_up1 = setup("/player/attacking/axe/iron/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
                 atk_up2 = setup("/player/attacking/axe/iron/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
@@ -210,9 +215,21 @@ public class Player extends Entity {
                 atk_left2 = setup("/player/attacking/axe/iron/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
             }
         }
+
+        if (currentWeapon.type == TYPE_PICKAXE) {
+            atk_up1 = setup("/player/attacking/pickaxe/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+            atk_up2 = setup("/player/attacking/pickaxe/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+            atk_down1 = setup("/player/attacking/pickaxe/down_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
+            atk_down2 = setup("/player/attacking/pickaxe/down_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
+            atk_right1 = setup("/player/attacking/pickaxe/right_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            atk_right2 = setup("/player/attacking/pickaxe/right_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            atk_left1 = setup("/player/attacking/pickaxe/left_1", gp.TILE_SIZE*2, gp.TILE_SIZE);
+            atk_left2 = setup("/player/attacking/pickaxe/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
+        }
     }
 
     public void getGuardImage() {
+
         if (currentShield.name == "Wooden Shield") {
             guardUp = setup("/player/guarding/wooden/up_1");
             guardDown = setup("/player/guarding/wooden/down_1");
@@ -419,11 +436,13 @@ public class Player extends Entity {
 
     public void npcInteraction(int i) {
 
-        if (gp.kHandler.enterPressed) {
-            if (i != -1) {
+        if (i != -1) {
+            if (gp.kHandler.enterPressed) {
                 attackCancelled = true;
                 gp.npc[gp.currentMap][i].speak();
             }
+
+            gp.npc[gp.currentMap][i].move(direction);
         }
     }
 
@@ -493,14 +512,15 @@ public class Player extends Entity {
     }
 
     public void damageInteractiveTile(int i) {
+
         if (i != -1 && gp.iTile[gp.currentMap][i].destructible && gp.iTile[gp.currentMap][i].checkTool(this) && !gp.iTile[gp.currentMap][i].invincible) {
             gp.iTile[gp.currentMap][i].soundEffect();
             gp.iTile[gp.currentMap][i].life -= currentWeapon.value;
             gp.iTile[gp.currentMap][i].invincible = true;
-
             generateParticle(gp.iTile[gp.currentMap][i], gp.iTile[gp.currentMap][i]);
 
             if (gp.iTile[gp.currentMap][i].life <= 0) {
+                gp.iTile[gp.currentMap][i].checkDrop();
                 gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedImage();
             }
         }
@@ -535,13 +555,13 @@ public class Player extends Entity {
         }
     }
 
-    public void selectItem() {
+    public void selectItemInInventory() {
         int itemIndex = gp.ui.getSlotIndex(gp.ui.playerSlotCol, gp.ui.playerSlotRow);
 
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex);
 
-            if (selectedItem.type == TYPE_SWORD || selectedItem.type == TYPE_AXE) {
+            if (selectedItem.type == TYPE_SWORD || selectedItem.type == TYPE_AXE || selectedItem.type == TYPE_PICKAXE) {
                 currentWeapon = selectedItem;
                 attack = getAttackValue();
                 getAttackImage();
@@ -550,6 +570,7 @@ public class Player extends Entity {
             if (selectedItem.type == TYPE_SHIELD) {
                 currentShield = selectedItem;
                 defense = getDefenseValue();
+                getGuardImage();
             }
 
             if (selectedItem.type == TYPE_LIGHT) {

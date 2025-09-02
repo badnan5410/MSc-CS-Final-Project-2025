@@ -115,6 +115,7 @@ public class SaveLoad {
             gp.player.getAttackValue();
             gp.player.getDefenseValue();
             gp.player.getAttackImage();
+            gp.player.getGuardImage();
 
             // objects on map
             for (int mapNum = 0; mapNum < gp.maxMap; mapNum++) {

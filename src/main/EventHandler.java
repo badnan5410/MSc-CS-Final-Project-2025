@@ -79,11 +79,11 @@ public class EventHandler {
             else if (hit(2, 7, 42, "left")) { // teleport back to main map
                 teleport(0, 13, 8, gp.AREA_MAIN);
             }
-            else if (hit(2, 10, 7, "right")) { // teleport dungeon floor 2
+            else if (hit(2, 11, 7, "right")) { // teleport dungeon floor 2
                 teleport(3, 24, 41, gp.AREA_DUNGEON);
             }
             else if (hit(3, 24, 41, "left")) { // teleport back to dungeon floor 1
-                teleport(2, 10, 7, gp.AREA_DUNGEON);
+                teleport(2, 11, 7, gp.AREA_DUNGEON);
             }
         }
     }

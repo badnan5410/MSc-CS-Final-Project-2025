@@ -356,6 +356,8 @@ public class GamePanel extends JPanel implements Runnable {
                 case AREA_STORE: playMusic(22); break;
                 case AREA_DUNGEON: playMusic(23); break;
             }
+
+            oHandler.setNPC();
         }
 
         currentArea = nextArea;
