@@ -197,6 +197,7 @@ public class UserInterface {
     }
 
     public void drawTitleScreen() {
+
         // Check titleScreenState
         if (titleScreenState == 0) {
             // Background Colour
@@ -217,6 +218,18 @@ public class UserInterface {
             g2.setColor(Color.white);
             g2.drawString(text, x, y);
 
+            // Credits
+            g2.setFont(g2.getFont().deriveFont(24f));
+            text = "By Ali Ansari";
+
+            // Shadow Colour
+            g2.setColor(Color.gray);
+            g2.drawString(text, x+2, y+38);
+
+            // Main Colour
+            g2.setColor(Color.white);
+            g2.drawString(text, x, y+35);
+
             // Player Image
             x = gp.SCREEN_WIDTH/2 - (gp.TILE_SIZE*2)/2;
             y += gp.TILE_SIZE*2;
@@ -224,7 +237,7 @@ public class UserInterface {
 
             // Menu
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            text = "NEW GAME";
+            text = "New Game";
             x = centerX(text);
             y += gp.TILE_SIZE*3.5;
             g2.drawString(text, x, y);
@@ -233,7 +246,7 @@ public class UserInterface {
             }
 
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            text = "LOAD GAME";
+            text = "Load Game";
             x = centerX(text);
             y += gp.TILE_SIZE;
             g2.drawString(text, x, y);
@@ -242,7 +255,7 @@ public class UserInterface {
             }
 
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-            text = "QUIT";
+            text = "Quit";
             x = centerX(text);
             y += gp.TILE_SIZE;
             g2.drawString(text, x, y);

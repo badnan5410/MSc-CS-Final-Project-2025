@@ -33,16 +33,16 @@ public class Player extends Entity {
         worldX = gp.TILE_SIZE * 23; // starting pos
         worldY = gp.TILE_SIZE * 21;
 
-        worldX = gp.TILE_SIZE * 11; // dungeon 1 entrance
-        worldY = gp.TILE_SIZE * 8;
-
-        /*worldX = gp.TILE_SIZE * 12; // inside shop
-        worldY = gp.TILE_SIZE * 12;
-        gp.currentMap = 1;*/
-
-        /*worldX = gp.TILE_SIZE * 18; // dungeon 1 center
-        worldY = gp.TILE_SIZE * 25;
-        gp.currentMap = 2;*/
+//        worldX = gp.TILE_SIZE * 11; // dungeon 1 entrance
+//        worldY = gp.TILE_SIZE * 8;
+//
+//        worldX = gp.TILE_SIZE * 12; // inside shop
+//        worldY = gp.TILE_SIZE * 12;
+//        gp.currentMap = 1;
+//
+//        worldX = gp.TILE_SIZE * 18; // dungeon 1 center
+//        worldY = gp.TILE_SIZE * 25;
+//        gp.currentMap = 2;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
