@@ -7,12 +7,13 @@ import java.awt.*;
 
 public class Door extends Entity {
     GamePanel gp;
+    public static final String objName = "Door";
 
     public Door(GamePanel gp) {
         super(gp);
         this.gp = gp;
         type = TYPE_OBSTACLE;
-        name = "Door";
+        name = objName;
         down1 = setup("/objects/door");
         collision = true;
         rect.x = 0;

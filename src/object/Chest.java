@@ -5,13 +5,14 @@ import main.GamePanel;
 
 public class Chest extends Entity {
     GamePanel gp;
+    public static final String objName = "Chest";
 
     public Chest(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
         type = TYPE_OBSTACLE;
-        name = "Chest";
+        name = objName;
         image1 = setup("/objects/chest_closed");
         image2 = setup("/objects/chest_opened");
         down1 = image1;

@@ -5,13 +5,14 @@ import main.GamePanel;
 
 public class Mana extends Entity {
     GamePanel gp;
+    public static final String objName = "Mana";
 
     public Mana(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
         type = TYPE_PICKUP;
-        name = "Mana";
+        name = objName;
         value = 1;
         down1 = setup("/objects/mana_pickup");
         image1 = setup("/objects/mana_full");

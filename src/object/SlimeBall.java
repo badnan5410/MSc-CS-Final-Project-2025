@@ -7,12 +7,13 @@ import java.awt.*;
 
 public class SlimeBall extends Projectile {
     GamePanel gp;
+    public static final String objName = "Slime Ball";
 
     public SlimeBall(GamePanel gp) {
         super(gp);
         this.gp = gp;
 
-        name = "Slime Ball";
+        name = objName;
         speed = 6;
         maxLife = 30;
         life = maxLife;

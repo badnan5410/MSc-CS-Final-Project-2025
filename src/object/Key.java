@@ -5,12 +5,13 @@ import main.GamePanel;
 
 public class Key extends Entity {
     GamePanel gp;
+    public static final String objName = "Key";
 
     public Key(GamePanel gp) {
         super(gp);
         this.gp = gp;
         type = TYPE_CONSUMABLE;
-        name = "Key";
+        name = objName;
         down1 = setup("/objects/key");
         description = "[" + name + "]\nA mysterious key. I wonder\nwhat it unlocks...";
         price = 20;

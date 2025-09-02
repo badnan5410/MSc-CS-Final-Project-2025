@@ -5,12 +5,13 @@ import main.GamePanel;
 
 public class Tent extends Entity {
     GamePanel gp;
+    public static final String objName = "Tent";
 
     public Tent(GamePanel gp) {
         super(gp);
         this.gp = gp;
         type = TYPE_CONSUMABLE;
-        name = "Tent";
+        name = objName;
         down1 = setup("/objects/tent");
         description = "[Tent]\nYou can sleep until\nnext morning.";
         price = 25;

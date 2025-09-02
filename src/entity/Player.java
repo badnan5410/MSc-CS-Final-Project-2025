@@ -33,9 +33,9 @@ public class Player extends Entity {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
 
-        /*worldX = gp.TILE_SIZE * 12;
+        worldX = gp.TILE_SIZE * 12;
         worldY = gp.TILE_SIZE * 12;
-        gp.currentMap = 1;*/
+        gp.currentMap = 1;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -52,7 +52,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        coins = 0;
+        coins = 500;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         currentLight = null;
@@ -479,7 +479,7 @@ public class Player extends Entity {
                     gp.soundEffect(1);
                     gp.ui.addMessage("Exp " + gp.monster[gp.currentMap][i].exp);
                     exp += gp.monster[gp.currentMap][i].exp;
-                    checkLevelUp();
+                    checkIfPlayerLevelUp();
                 }
             }
         }
@@ -508,7 +508,8 @@ public class Player extends Entity {
         }
     }
 
-    public void checkLevelUp() {
+    public void checkIfPlayerLevelUp() {
+
         if (exp >= nextLevelExp) {
             level++;
             nextLevelExp = (int)(5 * Math.pow(1.3, level));
@@ -520,8 +521,9 @@ public class Player extends Entity {
             dexterity++;
             attack = getAttackValue();
             defense = getDefenseValue();
-
             gp.soundEffect(8);
+
+            setDialogue();
             startDialogue(this, 0);
         }
     }
@@ -573,10 +575,11 @@ public class Player extends Entity {
 
     public boolean isItemObtainable(Entity item) {
         boolean itemObtainable = false;
+        Entity newItem = gp.eGenerator.getObject(item.name);
 
         // check if item stackable
-        if (item.stackable) {
-            int index = searchInventory(item.name);
+        if (newItem.stackable) {
+            int index = searchInventory(newItem.name);
 
             if (index != -1) {
                 inventory.get(index).amount++;
@@ -584,14 +587,14 @@ public class Player extends Entity {
             }
             else { // this is new item, check vacancy
                 if (inventory.size() != INVENTORY_CAPACITY) {
-                    inventory.add(item);
+                    inventory.add(newItem);
                     itemObtainable = true;
                 }
             }
         }
         else { // item not stackable, check vacancy
             if (inventory.size() != INVENTORY_CAPACITY) {
-                inventory.add(item);
+                inventory.add(newItem);
                 itemObtainable = true;
             }
         }

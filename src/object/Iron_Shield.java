@@ -4,10 +4,11 @@ import entity.Entity;
 import main.GamePanel;
 
 public class Iron_Shield extends Entity {
+    public static final String objName = "Hero's Shield";
 
     public Iron_Shield(GamePanel gp) {
         super(gp);
-        name = "Hero's Shield";
+        name = objName;
         down1 = setup("/objects/shield_iron");
         type = TYPE_SHIELD;
         defenseValue = 2;

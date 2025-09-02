@@ -4,10 +4,11 @@ import entity.Entity;
 import main.GamePanel;
 
 public class Iron_Sword extends Entity {
+    public static final String objName = "Hero's Sword";
 
     public Iron_Sword(GamePanel gp) {
         super(gp);
-        name = "Hero's Sword";
+        name = objName;
         down1 = setup("/objects/sword_iron");
         type = TYPE_SWORD;
         attackValue = 4;
