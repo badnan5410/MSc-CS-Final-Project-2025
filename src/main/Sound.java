@@ -36,6 +36,7 @@ public class Sound {
         soundURL[18] = getClass().getResource("/sound/sleep.wav");
         soundURL[19] = getClass().getResource("/sound/attack_block.wav");
         soundURL[20] = getClass().getResource("/sound/attack_parry.wav");
+        soundURL[21] = getClass().getResource("/sound/speak.wav");
     }
 
     public void fileSetter(int i) {

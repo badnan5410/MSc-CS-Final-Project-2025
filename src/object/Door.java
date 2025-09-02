@@ -21,11 +21,14 @@ public class Door extends Entity {
         rect.height = 32;
         default_rectX = rect.x;
         default_rectY = rect.y;
+        setDialogue();
+    }
+
+    public void setDialogue() {
+        dialogues[0][0] = "You need a key to open this door." + "\n\n\n[press enter]";
     }
 
     public void interact() {
-        gp.gameState = gp.GS_DIALOGUE;
-        gp.ui.currentDialogue = "You need a key to open this door.";
+        startDialogue(this, 0);
     }
-
 }

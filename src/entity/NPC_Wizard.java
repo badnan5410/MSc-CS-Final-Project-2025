@@ -11,16 +11,16 @@ public class NPC_Wizard extends Entity {
         direction = "down";
         speed = 1;
         type = TYPE_NPC;
-
-        getImage();
-        setDialogue();
-
         rect.x = 0;
-        rect.y = 16;
-        rect.width = 32;
-        rect.height = 32;
+        rect.y = 0;
+        rect.width = 40;
+        rect.height = 40;
         default_rectX = rect.x;
         default_rectY = rect.y;
+
+        dialogueSet = -1;
+        getImage();
+        setDialogue();
     }
 
     public void getImage() {
@@ -35,10 +35,16 @@ public class NPC_Wizard extends Entity {
     }
 
     public void setDialogue() {
-        dialogues[0] = "Hello there, young adventurer! Follow me!";
-        dialogues[1] = "So you've come to this island to find \ntreasure?";
-        dialogues[2] = "I used to be a great wizard but now... \nI'm a bit too old for an adventure.";
-        dialogues[3] = "Well, good luck to you!";
+        dialogues[0][0] = "Greetings, young adventurer!" + "\n\n\n[press enter]";
+        dialogues[0][1] = "So you've come to this island to find \ntreasure?" + "\n\n[press enter]";
+        dialogues[0][2] = "I used to be a great wizard but now... \nI'm a bit too old for an adventure." + "\n\n[press enter]";
+        dialogues[0][3] = "Well, good luck to you!" + "\n\n\n[press enter]";
+
+        dialogues[1][0] = "If you're low on health or mana, recover it at the\npool." + "\n\n[press enter]";
+        dialogues[1][1] = "Be careful, the monster's will respawn if you\nrecover from the pool." + "\n\n[press enter]";
+        dialogues[1][2] = "In any case, try not to push yourself too hard." + "\n\n\n[press enter]";
+
+        dialogues[2][0] = "I wonder how you unlock that door..." + "\n\n\n[press enter]";
     }
 
     @Override
@@ -84,7 +90,19 @@ public class NPC_Wizard extends Entity {
 
     @Override
     public void speak() {
-        super.speak();
-        onPath = true;
+        faceThePlayer();
+        startDialogue(this, dialogueSet);
+        dialogueSet++;
+
+        if (dialogues[dialogueSet][0] == null) {
+            dialogueSet--;
+        }
+
+        /*if (gp.player.life <= gp.player.maxLife/3) {
+            dialogueSet = 1;
+        }*/
+
+
+        //onPath = true;
     }
 }

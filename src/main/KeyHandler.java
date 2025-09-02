@@ -179,8 +179,9 @@ public class KeyHandler implements KeyListener {
     }
 
     public void dialogueState(int keyCode) {
+
         if (keyCode == KeyEvent.VK_ENTER) {
-            gp.gameState = gp.GS_PLAY;
+            enterPressed = true;
         }
     }
 

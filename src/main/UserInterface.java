@@ -32,7 +32,9 @@ public class UserInterface {
     public int npcSlotCol = 0;
     public int npcSlotRow = 0;
     int counter = 0;
-    public Entity merchant;
+    public Entity npc;
+    int charIndex = 0;
+    String combinedText = "";
 
     public UserInterface(GamePanel gp) {
         this.gp = gp;
@@ -322,6 +324,34 @@ public class UserInterface {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.TILE_SIZE;
         y += gp.TILE_SIZE;
+
+        // check if any text in dialogue array
+        if (npc.dialogues[npc.dialogueSet][npc.dialogueIndex] != null) {
+            char characters[] = npc.dialogues[npc.dialogueSet][npc.dialogueIndex].toCharArray();
+
+            if (charIndex < characters.length) {
+                gp.soundEffect(21);
+                String s = String.valueOf(characters[charIndex]);
+                combinedText += s;
+                currentDialogue = combinedText;
+                charIndex++;
+            }
+
+            if (gp.kHandler.enterPressed) {
+                charIndex = 0;
+                combinedText = "";
+
+                if (gp.gameState == gp.GS_DIALOGUE) {
+                    npc.dialogueIndex++;
+                    gp.kHandler.enterPressed = false;
+                }
+            }
+        }
+        else { // if no text in the array
+            npc.dialogueIndex = 0;
+
+            if (gp.gameState == gp.GS_DIALOGUE) {gp.gameState = gp.GS_PLAY;}
+        }
 
         for (String line : currentDialogue.split("\n")) {
             g2.drawString(line, x, y);
@@ -833,6 +863,7 @@ public class UserInterface {
     }
 
     public void trade_select() {
+        npc.dialogueSet = 0;
         drawDialogueScreen();
         cNumMax = 2;
 
@@ -870,13 +901,12 @@ public class UserInterface {
         if (cNum == 2) {
             g2.drawString("->", x-32, y);
             if (gp.kHandler.enterPressed) {
-                gp.gameState = gp.GS_DIALOGUE;
-                currentDialogue = "Come again, hehe!";
+                npc.startDialogue(npc, 1);
                 cNum = 0;
             }
         }
-        y += gp.TILE_SIZE;
 
+        y += gp.TILE_SIZE;
     }
 
     public void trade_buy() {
@@ -885,7 +915,7 @@ public class UserInterface {
         drawInventory(gp.player, false);
 
         // draw merchant inventory
-        drawInventory(merchant, true);
+        drawInventory(npc, true);
 
         // draw price window
         int x = gp.TILE_SIZE/2;
@@ -894,11 +924,11 @@ public class UserInterface {
         int height = gp.TILE_SIZE+24;
         int itemIndex = getSlotIndex(npcSlotCol, npcSlotRow);
 
-        if (itemIndex < merchant.inventory.size()) {
+        if (itemIndex < npc.inventory.size()) {
             drawMiniWindow(x, y, width, height);
             g2.drawString("Price: ", x+20, y+45);
             g2.drawImage(coin, x+65, y+12, gp.TILE_SIZE, gp.TILE_SIZE, null);
-            int price = merchant.inventory.get(itemIndex).price;
+            int price = npc.inventory.get(itemIndex).price;
             String text = "" + price;
             g2.drawString(text, x+(gp.TILE_SIZE*2)+15, y+45);
 
@@ -906,32 +936,17 @@ public class UserInterface {
             if (gp.kHandler.enterPressed) {
                 if (price > gp.player.coins) {
                     tradeScreenState = 0;
-                    gp.gameState = gp.GS_DIALOGUE;
-                    currentDialogue = "You need more coins to buy that!";
-                    drawDialogueScreen();
+                    npc.startDialogue(npc, 2);
                 }
                 else {
-                    if (gp.player.isItemObtainable(merchant.inventory.get(itemIndex))) {
+                    if (gp.player.isItemObtainable(npc.inventory.get(itemIndex))) {
                         gp.player.coins -= price;
                     }
                     else {
                         tradeScreenState = 0;
-                        gp.gameState = gp.GS_DIALOGUE;
-                        currentDialogue = "Your inventory is already full!";
+                        npc.startDialogue(npc, 3);
                     }
                 }
-
-                /*else if (gp.player.inventory.size() == gp.player.INVENTORY_CAPACITY) {
-                    tradeScreenState = 0;
-                    gp.gameState = gp.GS_DIALOGUE;
-                    currentDialogue = "Your inventory is already full!";
-                    drawDialogueScreen();
-                }
-                else {
-                    gp.soundEffect(17);
-
-                    gp.player.inventory.add(merchant.inventory.get(itemIndex));
-                }*/
             }
         }
 
@@ -942,7 +957,6 @@ public class UserInterface {
         height = gp.TILE_SIZE+24;
         drawMiniWindow(x, y, width, height);
         g2.drawString("Your coins: " + gp.player.coins, x+24, y+45);
-
     }
 
     public void trade_sell() {
@@ -978,8 +992,7 @@ public class UserInterface {
             if (gp.kHandler.enterPressed) {
                 if (gp.player.inventory.get(itemIndex) == gp.player.currentWeapon || gp.player.inventory.get(itemIndex) == gp.player.currentShield) {
                     tradeScreenState = 0;
-                    gp.gameState = gp.GS_DIALOGUE;
-                    currentDialogue = "You cannot sell an equipped item!\nPlease unequip the item before selling it.";
+                    npc.startDialogue(npc, 4);
                 }
                 else {
                     if (gp.player.inventory.get(itemIndex).amount > 1) {

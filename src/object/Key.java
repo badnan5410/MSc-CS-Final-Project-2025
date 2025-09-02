@@ -15,20 +15,26 @@ public class Key extends Entity {
         description = "[" + name + "]\nA mysterious key. I wonder\nwhat it unlocks...";
         price = 20;
         stackable = true;
+        setDialogue();
+    }
+
+    public void setDialogue() {
+        dialogues[0][0] = "You unlocked the door using the key!" + "\n\n\n[press enter]";
+
+        dialogues[1][0] = "What are you doing?" + "\n\n\n[press enter]";
     }
 
     public boolean useItem(Entity entity) {
-        gp.gameState = gp.GS_DIALOGUE;
         int objIndex = getDetected(entity, gp.obj, "Door");
 
         if (objIndex != -1) {
-            gp.ui.currentDialogue = "You unlocked the door using the key!";
+            startDialogue(this, 0);
             gp.soundEffect(3);
             gp.obj[gp.currentMap][objIndex] = null;
             return true;
         }
         else {
-            gp.ui.currentDialogue = "What are you doing?";
+            startDialogue(this, 1);
             return false;
         }
     }

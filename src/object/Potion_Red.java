@@ -16,13 +16,17 @@ public class Potion_Red extends Entity {
         description = "[" + name + "]\nDrink this potion to recover\nyour health.\n+" + value + " HP";
         price = 16;
         stackable = true;
+        setDialogue();
+    }
+
+    public void setDialogue() {
+        dialogues[0][0] = "You drink the " + name + "!\n You have recovered " + value + " HP!" + "\ns\n[press enter]";
     }
 
     public boolean useItem(Entity entity) {
         gp.soundEffect(11);
-        gp.gameState = gp.GS_DIALOGUE;
         entity.life += value;
-        gp.ui.currentDialogue = "You drink the " + name + "!\n You have recovered " + value + " HP!";
+        startDialogue(this, 0);
         return true;
     }
 }
