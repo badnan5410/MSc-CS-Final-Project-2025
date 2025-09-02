@@ -62,6 +62,8 @@ public class TileManager {
 
         mapLoader("/maps/world_03.txt", 0);
         mapLoader("/maps/interior_02.txt", 1);
+        mapLoader("/maps/dungeon_01.txt", 2);
+        mapLoader("/maps/dungeon_02.txt", 3);
     }
 
     public void getTileImage() {

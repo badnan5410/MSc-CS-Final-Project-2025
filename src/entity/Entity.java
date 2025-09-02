@@ -175,7 +175,6 @@ public class Entity {
         gp.gameState = gp.GS_DIALOGUE;
         gp.ui.npc = entity;
         dialogueSet = setNum;
-
     }
 
     public void interact() {}

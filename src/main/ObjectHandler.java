@@ -76,6 +76,16 @@ public class ObjectHandler {
         gp.monster[mapNum][i].worldX = gp.TILE_SIZE*12;
         gp.monster[mapNum][i].worldY = gp.TILE_SIZE*31;
         i++;
+
+        gp.monster[mapNum][i] = new MON_RedSlime(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*40;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*7;
+        i++;
+
+        gp.monster[mapNum][i] = new MON_RedSlime(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*35;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*11;
+        i++;
     }
 
     public void setInteractiveTile() {

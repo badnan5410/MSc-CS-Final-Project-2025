@@ -15,7 +15,7 @@ public class Sound {
     float volume;
 
     public Sound() {
-        soundURL[0] = getClass().getResource("/sound/main_bgm.wav");
+        soundURL[0] = getClass().getResource("/sound/bgm_main.wav");
         soundURL[1] = getClass().getResource("/sound/coin.wav");
         soundURL[2] = getClass().getResource("/sound/powerup.wav");
         soundURL[3] = getClass().getResource("/sound/door_unlock.wav");
@@ -37,6 +37,8 @@ public class Sound {
         soundURL[19] = getClass().getResource("/sound/attack_block.wav");
         soundURL[20] = getClass().getResource("/sound/attack_parry.wav");
         soundURL[21] = getClass().getResource("/sound/speak.wav");
+        soundURL[22] = getClass().getResource("/sound/bgm_store.wav");
+        soundURL[23] = getClass().getResource("/sound/bgm_dungeon.wav");
     }
 
     public void fileSetter(int i) {

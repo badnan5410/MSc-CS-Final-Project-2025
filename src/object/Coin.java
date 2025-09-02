@@ -15,7 +15,6 @@ public class Coin extends Entity {
         name = objName;
         value = 5;
         down1 = setup("/objects/coin_gold");
-
     }
 
     public boolean useItem(Entity entity) {

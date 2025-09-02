@@ -12,7 +12,6 @@ public class MON_GreenSlime extends Entity {
     public MON_GreenSlime(GamePanel gp) {
         super(gp);
         this.gp = gp;
-
         name = "Green Slime";
         type = TYPE_MONSTER;
         defaultSpeed = 1;
@@ -25,7 +24,7 @@ public class MON_GreenSlime extends Entity {
         defense = defaultDefense;
         exp = 2;
         knockBackPower = 2;
-        projectile = new SlimeBall(gp);
+        projectile = new Slimeball_Green(gp);
         rect.x = 3;
         rect.y = 18;
         rect.width = 42;

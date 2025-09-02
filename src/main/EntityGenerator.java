@@ -29,7 +29,8 @@ public class EntityGenerator {
             case Chest.objName: obj = new Chest(gp); break;
             case Coin.objName: obj = new Coin(gp); break;
             case Fireball.objName: obj = new Fireball(gp); break;
-            case SlimeBall.objName: obj = new SlimeBall(gp); break;
+            case Slimeball_Green.objName: obj = new Slimeball_Green(gp); break;
+            case Slimeball_Red.objName: obj = new Slimeball_Red(gp); break;
             case Heart.objName: obj = new Heart(gp); break;
             case Mana.objName: obj = new Mana(gp); break;
             case Icon_Fighter.objName: obj = new Icon_Fighter(gp); break;

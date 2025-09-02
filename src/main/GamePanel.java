@@ -84,6 +84,13 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_SLEEP = 9;
     public final int GS_MAP = 10;
 
+    // area state
+    public int currentArea;
+    public int nextArea;
+    public final int AREA_MAIN = 0;
+    public final int AREA_STORE = 1;
+    public final int AREA_DUNGEON = 2;
+
     // Class constructor
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -102,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
         oHandler.setMonster();
         oHandler.setInteractiveTile();
         eManager.setup();
+        currentArea = AREA_MAIN;
 
         if (fullScreenOn) {setFullScreen();}
     }
@@ -336,5 +344,21 @@ public class GamePanel extends JPanel implements Runnable {
     public void soundEffect(int i) {
         se.fileSetter(i);
         se.playAudio();
+    }
+
+    public void changeArea() {
+
+        if (nextArea != currentArea) {
+            stopMusic();
+
+            switch (nextArea) {
+                case AREA_MAIN: playMusic(0); break;
+                case AREA_STORE: playMusic(22); break;
+                case AREA_DUNGEON: playMusic(23); break;
+            }
+        }
+
+        currentArea = nextArea;
+        oHandler.setMonster();
     }
 }

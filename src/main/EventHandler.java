@@ -57,23 +57,35 @@ public class EventHandler {
         int distanceX = Math.abs(gp.player.worldX - previousEventX);
         int distanceY = Math.abs(gp.player.worldY - previousEventY);
         int distance = Math.max(distanceX, distanceY);
-        if (distance > gp.TILE_SIZE) {
-            canTouchEvent = true;
-        }
+        if (distance > gp.TILE_SIZE) {canTouchEvent = true;}
 
         if (canTouchEvent) {
-            if (hit(0, 23, 12, "up")) {healingPool(gp.GS_DIALOGUE);}
-            else if (hit(0, 10, 39, "any")) {
-                teleport(1, 12, 13);
-                gp.soundEffect(16);
+            if (hit(0, 23, 12, "up")) {
+                healingPool(gp.GS_DIALOGUE);
             }
-            else if (hit(1, 12, 13, "any")) {
-                teleport(0, 10, 39);
-                gp.soundEffect(16);
+            else if (hit(0, 10, 39, "any")) { // teleport to merchant store
+                teleport(1, 12, 13, gp.AREA_STORE);
             }
-            else if (hit(1, 12, 9, "up")) {speak(gp.npc[1][0]);}
-        }
+            else if (hit(1, 12, 13, "any")) { // teleport back to main map
+                teleport(0, 10, 39, gp.AREA_MAIN);
 
+            }
+            else if (hit(1, 12, 9, "up")) {
+                speak(gp.npc[1][0]);
+            }
+            else if (hit(0, 13, 8, "right")) { // teleport dungeon floor 1
+                teleport(2, 7, 42, gp.AREA_DUNGEON);
+            }
+            else if (hit(2, 7, 42, "left")) { // teleport back to main map
+                teleport(0, 13, 8, gp.AREA_MAIN);
+            }
+            else if (hit(2, 10, 7, "right")) { // teleport dungeon floor 2
+                teleport(3, 24, 41, gp.AREA_DUNGEON);
+            }
+            else if (hit(3, 24, 41, "left")) { // teleport back to dungeon floor 1
+                teleport(2, 10, 7, gp.AREA_DUNGEON);
+            }
+        }
     }
 
     public boolean hit(int map, int col, int row, String reqDirection) {
@@ -121,8 +133,10 @@ public class EventHandler {
         canTouchEvent = false;
     }
 
-    public void teleport(int map, int col, int row) {
+    public void teleport(int map, int col, int row, int area) {
         gp.gameState = gp.GS_TRANSITION;
+        gp.nextArea = area;
+        gp.soundEffect(16);
         tempMap = map;
         tempCol = col;
         tempRow = row;

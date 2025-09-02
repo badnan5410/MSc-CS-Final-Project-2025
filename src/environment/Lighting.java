@@ -134,7 +134,7 @@ public class Lighting {
     }
 
     //debug method
-    /*public void update() {
+/*    public void update() {
 
         if (gp.player.lightUpdated) {
             setLightSource();
@@ -180,8 +180,15 @@ public class Lighting {
     }*/
 
     public void draw(Graphics2D g2) {
-        gp.player.changeAlpha(g2, filterAlpha);
-        g2.drawImage(darkness, 0, 0, null);
+
+        if (gp.currentArea == gp.AREA_MAIN) {
+            gp.player.changeAlpha(g2, filterAlpha);
+        }
+
+        if (gp.currentArea == gp.AREA_MAIN || gp.currentArea == gp.AREA_DUNGEON) {
+            g2.drawImage(darkness, 0, 0, null);
+        }
+
         gp.player.changeAlpha(g2, 1f);
 
         // debug
