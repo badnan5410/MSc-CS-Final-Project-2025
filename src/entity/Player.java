@@ -33,9 +33,9 @@ public class Player extends Entity {
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
 
-        worldX = gp.TILE_SIZE * 12;
+        /*worldX = gp.TILE_SIZE * 12;
         worldY = gp.TILE_SIZE * 12;
-        gp.currentMap = 1;
+        gp.currentMap = 1;*/
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -52,7 +52,7 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity =  less damage received
         exp = 0;
         nextLevelExp = 4;
-        coins = 500;
+        coins = 0;
         currentWeapon = new Wood_Sword(gp);
         currentShield = new Wood_Shield(gp);
         currentLight = null;
