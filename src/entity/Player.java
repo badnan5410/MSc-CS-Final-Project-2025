@@ -35,18 +35,18 @@ public class Player extends Entity {
 
 //        worldX = gp.TILE_SIZE * 11; // dungeon 1 entrance
 //        worldY = gp.TILE_SIZE * 8;
-//
+
 //        worldX = gp.TILE_SIZE * 12; // inside shop
 //        worldY = gp.TILE_SIZE * 12;
 //        gp.currentMap = 1;
-//
+
 //        worldX = gp.TILE_SIZE * 18; // dungeon 1 center
 //        worldY = gp.TILE_SIZE * 25;
 //        gp.currentMap = 2;
 
-        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
-        worldY = gp.TILE_SIZE * 7;
-        gp.currentMap = 2;
+//        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
+//        worldY = gp.TILE_SIZE * 7;
+//        gp.currentMap = 2;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -108,9 +108,8 @@ public class Player extends Entity {
         inventory.add(new Key(gp));
         inventory.add(new Lantern(gp));
         inventory.add(new Iron_Axe(gp));
-        inventory.add(new Iron_Shield(gp));
-        inventory.add(new Iron_Pickaxe(gp));
-        inventory.add(new Iron_Sword(gp));
+//        inventory.add(new Iron_Pickaxe(gp));
+//        inventory.add(new Iron_Sword(gp));
     }
 
     public int getAttackValue() {

@@ -30,7 +30,7 @@ public class Lighting {
         Graphics2D g2 = (Graphics2D) darkness.getGraphics();
 
         if (gp.player.currentLight == null) {
-            g2.setColor(new Color(0, 0, 0, 0.96f));
+            g2.setColor(new Color(0, 0, 0, 0.94f));
         }
         else {
             // get the coordinates of the light circle
@@ -134,7 +134,7 @@ public class Lighting {
     }
 
     //debug method
-/*    public void update() {
+    /*public void update() {
 
         if (gp.player.lightUpdated) {
             setLightSource();
