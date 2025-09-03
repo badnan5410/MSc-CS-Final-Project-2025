@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class MON_Boss extends Entity {
     GamePanel gp;
-    public static final String monName = "Skeleton King";
+    public static final String monName = "Umberos, Skeleton King";
 
     public MON_Boss(GamePanel gp) {
         super(gp);
