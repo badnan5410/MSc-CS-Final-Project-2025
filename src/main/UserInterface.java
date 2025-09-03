@@ -310,9 +310,7 @@ public class UserInterface {
             if (cNum == 3) {
                 g2.drawString("->", x-gp.TILE_SIZE, y);
             }
-
         }
-
     }
 
     public void drawPauseScreen() {

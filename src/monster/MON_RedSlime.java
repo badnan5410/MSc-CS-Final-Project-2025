@@ -65,7 +65,7 @@ public class MON_RedSlime extends Entity {
             checkIfPlayerInAggro(gp.player, 10, 100);
 
             // get a random direction if its not onPath
-            getRandomDirection();
+            getRandomDirection(80);
         }
     }
 

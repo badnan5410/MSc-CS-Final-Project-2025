@@ -79,7 +79,7 @@ public class MON_Orc extends Entity {
             checkIfPlayerInAggro(gp.player, 5, 100);
 
             // get a random direction if it's not onPath
-            getRandomDirection();
+            getRandomDirection(100);
         }
 
         // check if it attacks

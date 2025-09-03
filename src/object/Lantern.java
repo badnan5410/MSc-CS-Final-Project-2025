@@ -13,6 +13,6 @@ public class Lantern extends Entity {
         down1 = setup("/objects/lantern");
         description = "[Lantern]\nIlluminate your surroundings.";
         price = 30;
-        lightRadius = 500;
+        lightRadius = 550;
     }
 }

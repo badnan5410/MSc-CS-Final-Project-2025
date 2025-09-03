@@ -44,6 +44,10 @@ public class Player extends Entity {
 //        worldY = gp.TILE_SIZE * 25;
 //        gp.currentMap = 2;
 
+        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
+        worldY = gp.TILE_SIZE * 7;
+        gp.currentMap = 2;
+
         defaultSpeed = 4;
         speed = defaultSpeed;
         direction = "down";
@@ -76,10 +80,10 @@ public class Player extends Entity {
     }
 
     public void setDefaultPosition() {
+        gp.currentMap = 0;
         worldX = gp.TILE_SIZE * 23;
         worldY = gp.TILE_SIZE * 21;
         direction = "down";
-        attackCancelled = true;
     }
 
     public void setDialogue() {
@@ -390,10 +394,12 @@ public class Player extends Entity {
 
         if (mana > maxMana) {mana = maxMana;}
 
-        if (life <= 0) {
-            gp.gameState = gp.GS_GAME_OVER;
-            gp.ui.cNum = -1;
-            gp.soundEffect(15);
+        if (!kHandler.godMode) {
+            if (life <= 0) {
+                gp.gameState = gp.GS_GAME_OVER;
+                gp.ui.cNum = -1;
+                gp.soundEffect(15);
+            }
         }
 
         if (maxLife > 12) {maxLife = 12;}

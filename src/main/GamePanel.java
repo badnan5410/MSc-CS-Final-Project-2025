@@ -115,6 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void resetGame(boolean restart) {
+        currentArea = AREA_MAIN;
         player.setDefaultPosition();
         player.restoreStatus();
         player.resetCounter();
@@ -167,6 +168,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+
         if (gameState == GS_PLAY) {
             player.update();
 
@@ -321,6 +323,10 @@ public class GamePanel extends JPanel implements Runnable {
             y += lineHeight;
             g2.drawString("Tile: (" + (player.worldX + player.rect.x)/TILE_SIZE + ", " + (player.worldY + player.rect.y)/TILE_SIZE + ")", x, y);
             y += lineHeight;
+
+            g2.drawString("God Mode On: " + kHandler.godMode, x, y);
+            y += lineHeight;
+
         }
 
     }

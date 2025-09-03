@@ -30,7 +30,7 @@ public class Lighting {
         Graphics2D g2 = (Graphics2D) darkness.getGraphics();
 
         if (gp.player.currentLight == null) {
-            g2.setColor(new Color(0, 0, 0, 0.98f));
+            g2.setColor(new Color(0, 0, 0, 0.96f));
         }
         else {
             // get the coordinates of the light circle
@@ -52,9 +52,9 @@ public class Lighting {
             gradientColour[6] = new Color(0, 0, 0, 0.82f);
             gradientColour[7] = new Color(0, 0, 0, 0.87f);
             gradientColour[8] = new Color(0, 0, 0, 0.91f);
-            gradientColour[9] = new Color(0, 0, 0, 0.94f);
-            gradientColour[10] = new Color(0, 0, 0, 0.96f);
-            gradientColour[11] = new Color(0, 0, 0, 0.98f);
+            gradientColour[9] = new Color(0, 0, 0, 0.92f);
+            gradientColour[10] = new Color(0, 0, 0, 0.93f);
+            gradientColour[11] = new Color(0, 0, 0, 0.94f);
 
             // set the distance between each colour
             gradientDistance[0] = 0f;

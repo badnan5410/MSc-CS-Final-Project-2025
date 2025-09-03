@@ -110,6 +110,7 @@ public class ObjectHandler {
         int i = 0;
         int mapNum = 0;
 
+        // main map
         gp.monster[mapNum][i] = new MON_GreenSlime(gp);
         gp.monster[mapNum][i].worldX = gp.TILE_SIZE*21;
         gp.monster[mapNum][i].worldY = gp.TILE_SIZE*38;
@@ -138,6 +139,44 @@ public class ObjectHandler {
         gp.monster[mapNum][i] = new MON_RedSlime(gp);
         gp.monster[mapNum][i].worldX = gp.TILE_SIZE*35;
         gp.monster[mapNum][i].worldY = gp.TILE_SIZE*11;
+        i++;
+
+        mapNum = 2;
+        i = 0;
+
+        // dungeon map 1
+        gp.monster[mapNum][i] = new MON_Bat(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*34;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*39;
+        i++;
+
+        gp.monster[mapNum][i] = new MON_Bat(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*36;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*25;
+        i++;
+
+        gp.monster[mapNum][i] = new MON_Bat(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*39;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*26;
+        i++;
+
+        gp.monster[mapNum][i] = new MON_Bat(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*28;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*11;
+        i++;
+
+        gp.monster[mapNum][i] = new MON_Bat(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*10;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*19;
+        i++;
+
+        mapNum = 3;
+        i = 0;
+
+        // dungeon map 2
+        gp.monster[mapNum][i] = new MON_Boss(gp);
+        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*23;
+        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*16;
         i++;
     }
 
