@@ -40,13 +40,9 @@ public class Player extends Entity {
 //        worldY = gp.TILE_SIZE * 12;
 //        gp.currentMap = 1;
 
-//        worldX = gp.TILE_SIZE * 18; // dungeon 1 center
-//        worldY = gp.TILE_SIZE * 25;
-//        gp.currentMap = 2;
-
-//        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
-//        worldY = gp.TILE_SIZE * 7;
-//        gp.currentMap = 2;
+        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
+        worldY = gp.TILE_SIZE * 7;
+        gp.currentMap = 2;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -79,6 +75,32 @@ public class Player extends Entity {
         setDialogue();
     }
 
+    public void playerClassBonus() {
+
+        switch (playerClass) {
+            case "Fighter":
+                maxLife = 8;
+                life = maxLife;
+                strength = 2;
+                attack = getAttackValue();
+                break;
+            case "Magician":
+                maxMana = 6;
+                mana = maxMana;
+                projectile.attack = 4;
+                projectile.speed = 7;
+                projectile.maxLife = 80;
+                break;
+            case "Thief":
+                defaultSpeed = 5;
+                speed = defaultSpeed;
+                dexterity = 2;
+                defense = getDefenseValue();
+                coins = 5;
+                break;
+        }
+    }
+
     public void setDefaultPosition() {
         gp.currentMap = 0;
         worldX = gp.TILE_SIZE * 23;
@@ -108,8 +130,8 @@ public class Player extends Entity {
         inventory.add(new Key(gp));
         inventory.add(new Lantern(gp));
         inventory.add(new Iron_Axe(gp));
-//        inventory.add(new Iron_Pickaxe(gp));
-//        inventory.add(new Iron_Sword(gp));
+        inventory.add(new Iron_Pickaxe(gp));
+        inventory.add(new Iron_Sword(gp));
     }
 
     public int getAttackValue() {
@@ -401,7 +423,7 @@ public class Player extends Entity {
             }
         }
 
-        if (maxLife > 12) {maxLife = 12;}
+        if (maxLife > 32) {maxLife = 32;}
     }
 
     public void objectPickup(int i) {

@@ -16,9 +16,9 @@ public class Fireball extends Projectile {
 
         name = objName;
         speed = 5;
-        maxLife = 80;
+        maxLife = 60;
         life = maxLife;
-        attack = 3;
+        attack = 2;
         useCost = 1;
         alive = false;
         getImage();

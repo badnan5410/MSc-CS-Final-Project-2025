@@ -23,7 +23,7 @@ public class Projectile extends Entity {
         if (user == gp.player) {
             int i = gp.cHandler.checkEntity(this, gp.monster);
             if (i != -1) {
-                gp.player.damageMonster(i, this, attack, knockBackPower, true);
+                gp.player.damageMonster(i, this, attack*(gp.player.level/2), knockBackPower, true);
                 generateParticle(user.projectile, gp.monster[gp.currentMap][i]);
                 alive = false;
             }

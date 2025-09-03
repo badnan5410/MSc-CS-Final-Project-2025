@@ -105,6 +105,7 @@ public class KeyHandler implements KeyListener {
 
                 if (gp.ui.cNum >= 0 && gp.ui.cNum <= 2) {
                     gp.player.playerClass = classes[gp.ui.cNum];
+                    gp.player.playerClassBonus();
                     gp.gameState = gp.GS_PLAY;
                     gp.playMusic(0);
                 }

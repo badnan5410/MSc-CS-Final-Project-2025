@@ -37,7 +37,7 @@ public class Entity {
     public boolean attacking = false;
     public boolean alive = true;
     public boolean dying = false;
-    boolean hpBarOn = false;
+    public boolean hpBarOn = false;
     public boolean destructible = false;
     public boolean onPath = false;
     public boolean knockback = false;
@@ -54,7 +54,7 @@ public class Entity {
     public int movementCounter = 0;
     public int invincibleCounter = 0;
     public int dyingCounter = 0;
-    int hpBarCounter = 0;
+    public int hpBarCounter = 0;
     public int shotCooldownCounter = 0;
     int knockBackCounter = 0;
     public int guardCounter = 0;
@@ -86,6 +86,7 @@ public class Entity {
     public Entity currentShield;
     public Entity currentLight;
     public Projectile projectile;
+    public boolean isBossMonster = true;
 
     // Item Properties
     public ArrayList<Entity> inventory = new ArrayList<>();
@@ -119,6 +120,10 @@ public class Entity {
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
+
+    public int getScreenX() {return worldX - gp.player.worldX + gp.player.screenX;}
+
+    public int getScreenY() {return worldY - gp.player.worldY + gp.player.screenY;}
 
     public int getLeftX() {return worldX + rect.x;}
 
@@ -574,17 +579,24 @@ public class Entity {
         target.knockback = true;
     }
 
-    public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
+    public boolean entityIsInCamera() {
+        boolean isInCamera = false;
         int i = 5;
 
         if (worldX + gp.TILE_SIZE*i > gp.player.worldX - gp.player.screenX && worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX && worldY + gp.TILE_SIZE*i > gp.player.worldY - gp.player.screenY && worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
+            isInCamera = true;
+        }
 
-            int tempScreenX = screenX;
-            int tempScreenY = screenY;
+        return isInCamera;
+    }
+
+    public void draw(Graphics2D g2) {
+        BufferedImage image = null;
+
+        if (entityIsInCamera()) {
+
+            int tempScreenX = getScreenX();
+            int tempScreenY = getScreenY();
 
             switch (direction) {
                 case "up":
@@ -593,7 +605,7 @@ public class Entity {
                         if (spriteNum == 2) {image = up2;}
                     }
                     if (attacking) {
-                        tempScreenY = screenY - up1.getHeight();
+                        tempScreenY = getScreenY() - up1.getHeight();
                         if (spriteNum == 1) {image = atk_up1;}
                         if (spriteNum == 2) {image = atk_up2;}
                     }
@@ -624,7 +636,7 @@ public class Entity {
                         if (spriteNum == 2) {image = left2;}
                     }
                     if (attacking) {
-                        tempScreenX = screenX - left1.getWidth();
+                        tempScreenX = getScreenX() - left1.getWidth();
                         if (spriteNum == 1) {image = atk_left1;}
                         if (spriteNum == 2) {image = atk_left2;}
                     }
@@ -632,20 +644,7 @@ public class Entity {
             }
 
             // monster HP bar
-            if (type == TYPE_MONSTER && hpBarOn) {
-                double oneScale = (double)gp.TILE_SIZE/maxLife;
-                double hpBarValue = oneScale*life;
-                g2.setColor(darkGrey);
-                g2.fillRect(screenX-1, screenY-16, gp.TILE_SIZE+2, 12);
-                g2.setColor(brightRed);
-                g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
-                hpBarCounter++;
 
-                if (hpBarCounter > 600) {
-                    hpBarCounter = 0;
-                    hpBarOn = false;
-                }
-            }
 
             if (invincible && !destructible) {
                 hpBarOn = true;

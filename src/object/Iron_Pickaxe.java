@@ -15,7 +15,7 @@ public class Iron_Pickaxe extends Entity {
         value = 8;
         attackArea.width = 32;
         attackArea.height = 30;
-        description = "[" + name + "]\nThe perfect tool to break down the toughest walls.\n+" + attackValue + " ATK";
+        description = "[" + name + "]\nThe perfect tool to break\ndown the toughest walls.\n+" + attackValue + " ATK";
         price = 50;
         knockBackPower = 2;
         motion1_duration = 10;

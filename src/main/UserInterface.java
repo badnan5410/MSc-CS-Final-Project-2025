@@ -88,14 +88,15 @@ public class UserInterface {
 
         // player state
         if (gp.gameState == gp.GS_PLAY) {
-            drawPlayerLife();
+            drawPlayerLifeAndMana();
+            drawMonsterLife();
             drawMessage();
         }
 
         // pause state
         if (gp.gameState == gp.GS_PAUSE) {
             drawPauseScreen();
-            drawPlayerLife();
+            drawPlayerLifeAndMana();
         }
 
         // dialogue state
@@ -123,53 +124,103 @@ public class UserInterface {
         if (gp.gameState == gp.GS_SLEEP) {drawSleepScreen();}
     }
 
-    public void drawPlayerLife() {
-        int x = gp.TILE_SIZE/2;
-        int y = gp.TILE_SIZE/2;
-        int i = 0;
+    public void drawPlayerLifeAndMana() {
+        final int iconSize = 32;                 // 32x32 icons
+        final int startX   = gp.TILE_SIZE / 2;
+        final int startY   = gp.TILE_SIZE / 2;
+        final int perRow   = 8;
 
-        // draw max life
-        while (i < gp.player.maxLife/2) {
-            g2.drawImage(heartEmpty, x, y, null);
-            i++;
-            x += gp.TILE_SIZE + 4;
+        // ----- HEARTS -----
+        int hearts  = gp.player.maxLife / 2;                     // 1 heart = 2 HP
+        int curLife = Math.min(gp.player.life, gp.player.maxLife);
+
+        // empties
+        for (int slot = 0; slot < hearts; slot++) {
+            int x = startX + (slot % perRow) * iconSize;
+            int y = startY + (slot / perRow) * iconSize;
+            g2.drawImage(heartEmpty, x, y, iconSize, iconSize, null);
         }
 
-        // reset values
-        x = gp.TILE_SIZE/2;
-        y = gp.TILE_SIZE/2;
-        i = 0;
+        // overlay full/half
+        for (int slot = 0; slot < hearts; slot++) {
+            int x = startX + (slot % perRow) * iconSize;
+            int y = startY + (slot / perRow) * iconSize;
 
-        // draw current life
-        while (i < gp.player.life) {
-            g2.drawImage(heartHalf, x, y, null);
-            i++;
-            if (i < gp.player.life) {
-                g2.drawImage(heartFull, x, y, null);
+            int heartStart = slot * 2 + 1;   // first HP in this heart
+            int heartEnd   = slot * 2 + 2;   // second HP in this heart
+
+            if (curLife >= heartEnd) {
+                g2.drawImage(heartFull, x, y, iconSize, iconSize, null);
+            } else if (curLife == heartStart) {
+                g2.drawImage(heartHalf, x, y, iconSize, iconSize, null);
             }
-            i++;
-            x += gp.TILE_SIZE + 4;
         }
 
-        // draw max mana
-        x = gp.TILE_SIZE/2;
-        y = gp.TILE_SIZE + 20;
-        i = 0;
-        while (i < gp.player.maxMana) {
-            g2.drawImage(manaEmpty, x, y, null);
-            i++;
-            x += gp.TILE_SIZE + 4;
+        // ----- MANA (below heart rows, wrap at 8) -----
+        int heartRows  = (hearts + perRow - 1) / perRow;         // ceil
+        int manaStartX = startX;
+        int manaStartY = startY + heartRows * iconSize;
+
+        // empties
+        for (int i = 0; i < gp.player.maxMana; i++) {
+            int x = manaStartX + (i % perRow) * iconSize;
+            int y = manaStartY + (i / perRow) * iconSize;
+            g2.drawImage(manaEmpty, x, y, iconSize, iconSize, null);
         }
 
-        // draw mana
-        x = gp.TILE_SIZE/2;
-        y = gp.TILE_SIZE + 20;
-        i = 0;
-        while (i < gp.player.mana) {
-            g2.drawImage(manaFull, x, y, null);
-            i++;
-            x += gp.TILE_SIZE + 4;
+        // filled
+        for (int i = 0; i < gp.player.mana; i++) {
+            int x = manaStartX + (i % perRow) * iconSize;
+            int y = manaStartY + (i / perRow) * iconSize;
+            g2.drawImage(manaFull, x, y, iconSize, iconSize, null);
         }
+    }
+
+    public void drawMonsterLife() {
+
+        for (int i = 0; i < gp.monster[1].length; i++) {
+            Entity monster = gp.monster[gp.currentMap][i];
+
+            if (monster != null && monster.entityIsInCamera()) {
+
+                if (monster.hpBarOn && !monster.isBossMonster) {
+                    double oneScale = (double)gp.TILE_SIZE/monster.maxLife;
+                    double hpBarValue = oneScale*monster.life;
+
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(monster.getScreenX()-1, monster.getScreenY()-16, gp.TILE_SIZE+2, 12);
+
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(monster.getScreenX(), monster.getScreenY()-15, (int)hpBarValue, 10);
+
+                    monster.hpBarCounter++;
+
+                    if (monster.hpBarCounter > 600) {
+                        monster.hpBarCounter = 0;
+                        monster.hpBarOn = false;
+                    }
+                }
+                else if (monster.isBossMonster) {
+                    double oneScale = (double)gp.TILE_SIZE*8/monster.maxLife;
+                    double hpBarValue = oneScale*monster.life;
+
+                    int x = gp.SCREEN_WIDTH/2 - gp.TILE_SIZE*4;
+                    int y = gp.TILE_SIZE*10;
+
+                    g2.setColor(new Color(35, 35, 35));
+                    g2.fillRect(x-1, y-1, (gp.TILE_SIZE*8)+2, 22);
+
+                    g2.setColor(new Color(255, 0, 30));
+                    g2.fillRect(x, y, (int)hpBarValue, 20);
+
+                    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24f));
+                    g2.setColor(Color.white);
+                    g2.drawString(monster.name, x+4, y-10);
+                }
+            }
+        }
+
+
     }
 
     public void drawMessage() {
@@ -562,7 +613,7 @@ public class UserInterface {
             // Description Text
             int textX = dFrameX + 20;
             int textY = dFrameY + gp.TILE_SIZE;
-            g2.setFont(g2.getFont().deriveFont(24F));
+            g2.setFont(g2.getFont().deriveFont(24f));
 
             int itemIndex = getSlotIndex(slotCol, slotRow);
             if (itemIndex < entity.inventory.size()) {
