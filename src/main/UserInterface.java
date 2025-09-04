@@ -219,8 +219,6 @@ public class UserInterface {
                 }
             }
         }
-
-
     }
 
     public void drawMessage() {
@@ -403,7 +401,7 @@ public class UserInterface {
                 charIndex = 0;
                 combinedText = "";
 
-                if (gp.gameState == gp.GS_DIALOGUE) {
+                if (gp.gameState == gp.GS_DIALOGUE || gp.gameState == gp.GS_CUTSCENE) {
                     npc.dialogueIndex++;
                     gp.kHandler.enterPressed = false;
                 }
@@ -413,6 +411,7 @@ public class UserInterface {
             npc.dialogueIndex = 0;
 
             if (gp.gameState == gp.GS_DIALOGUE) {gp.gameState = gp.GS_PLAY;}
+            if (gp.gameState == gp.GS_CUTSCENE) {gp.cManager.scenePhase++;}
         }
 
         for (String line : currentDialogue.split("\n")) {

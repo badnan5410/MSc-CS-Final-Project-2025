@@ -42,6 +42,8 @@ public class Sound {
         soundURL[24] = getClass().getResource("/sound/wall_breaking.wav");
         soundURL[25] = getClass().getResource("/sound/metal_door_unlock.wav");
         soundURL[26] = getClass().getResource("/sound/pressure_plate.wav");
+        soundURL[27] = getClass().getResource("/sound/door_closing.wav");
+        soundURL[28] = getClass().getResource("/sound/bgm_boss_fight.wav");
     }
 
     public void fileSetter(int i) {

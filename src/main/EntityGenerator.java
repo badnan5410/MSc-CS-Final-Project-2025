@@ -22,6 +22,7 @@ public class EntityGenerator {
             case Iron_Axe.objName: obj = new Iron_Axe(gp); break;
             case Iron_Pickaxe.objName: obj = new Iron_Pickaxe(gp); break;
             case Potion_Red.objName: obj = new Potion_Red(gp); break;
+            case Potion_Blue.objName: obj = new Potion_Blue(gp); break;
             case Key.objName: obj = new Key(gp); break;
             case Lantern.objName: obj = new Lantern(gp); break;
             case Tent.objName: obj = new Tent(gp); break;
@@ -38,6 +39,7 @@ public class EntityGenerator {
             case Icon_Fighter.objName: obj = new Icon_Fighter(gp); break;
             case Icon_Magician.objName: obj = new Icon_Magician(gp); break;
             case Icon_Thief.objName: obj = new Icon_Thief(gp); break;
+            case Treasure.objName: obj = new Treasure(gp); break;
         }
 
         return obj;

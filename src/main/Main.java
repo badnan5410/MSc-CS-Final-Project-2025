@@ -1,6 +1,6 @@
 package main;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class Main {
     public static JFrame window;
@@ -11,6 +11,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Pixel Adventure Quest");
+        new Main().setGameWindowIcon();
 
         GamePanel gp = new GamePanel();
         window.add(gp);
@@ -25,4 +26,19 @@ public class Main {
         gp.gameSetup();
         gp.startGameLoop();
     }
+
+    public void setGameWindowIcon() {
+        // Option A: Class.getResource — leading slash for absolute path
+        java.net.URL url = Main.class.getResource("/player/walking/down_1.png");
+
+        // Option B: ClassLoader.getResource — NO leading slash
+        // java.net.URL url = Main.class.getClassLoader().getResource("player/walking/down_1.png");
+
+        if (url == null) {
+            System.err.println("Icon not found on classpath: /player/walking/down_1.png");
+            return;
+        }
+        window.setIconImage(new javax.swing.ImageIcon(url).getImage());
+    }
+
 }

@@ -1,5 +1,6 @@
 package main;
 
+import data.Progress;
 import entity.*;
 import monster.*;
 import object.*;
@@ -67,6 +68,25 @@ public class ObjectHandler {
         gp.obj[mapNum][i] = new Iron_Door(gp);
         gp.obj[mapNum][i].worldX = gp.TILE_SIZE*18;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*23;
+        i++;
+
+        gp.obj[mapNum][i] = new Chest(gp);
+        gp.obj[mapNum][i].setLoot(new Iron_Pickaxe(gp));
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*40;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*41;
+        i++;
+
+        mapNum = 3; // dungeon floor 2
+        i = 0; // index reset to 0
+
+        gp.obj[mapNum][i] = new Iron_Door(gp);
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*25;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*15;
+        i++;
+
+        gp.obj[mapNum][i] = new Treasure(gp);
+        gp.obj[mapNum][i].worldX = gp.TILE_SIZE*25;
+        gp.obj[mapNum][i].worldY = gp.TILE_SIZE*8;
         i++;
     }
 
@@ -170,14 +190,15 @@ public class ObjectHandler {
         gp.monster[mapNum][i].worldY = gp.TILE_SIZE*19;
         i++;
 
-        mapNum = 3;
+        mapNum = 3; // dungeon map 2
         i = 0;
 
-        // dungeon map 2
-        gp.monster[mapNum][i] = new MON_Boss(gp);
-        gp.monster[mapNum][i].worldX = gp.TILE_SIZE*23;
-        gp.monster[mapNum][i].worldY = gp.TILE_SIZE*16;
-        i++;
+        if (!Progress.bossMonsterDefeated) {
+            gp.monster[mapNum][i] = new MON_Boss(gp);
+            gp.monster[mapNum][i].worldX = gp.TILE_SIZE*23;
+            gp.monster[mapNum][i].worldY = gp.TILE_SIZE*16;
+            i++;
+        }
     }
 
     public void setInteractiveTile() {

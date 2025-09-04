@@ -31,8 +31,10 @@ public class KeyHandler implements KeyListener {
         // Pause State
         else if (gp.gameState == gp.GS_PAUSE) {pauseState(keyCode);}
 
-        // Dialogue State
-        else if (gp.gameState == gp.GS_DIALOGUE) {dialogueState(keyCode);}
+        // Dialogue or Cutscene States
+        else if (gp.gameState == gp.GS_DIALOGUE || gp.gameState == gp.GS_CUTSCENE) {
+            dialogueState(keyCode);
+        }
 
         // Character State
         else if (gp.gameState == gp.GS_INVENTORY) {characterState(keyCode);}

@@ -22,7 +22,7 @@ public class Player extends Entity {
         screenX = (gp.SCREEN_WIDTH/2) - (gp.TILE_SIZE /2);
         screenY = (gp.SCREEN_HEIGHT/2) - (gp.TILE_SIZE /2);
 
-        rect = new Rectangle(16, 19, 22, 22);
+        rect = new Rectangle(16, 19, 25, 22);
         default_rectX = rect.x;
         default_rectY = rect.y;
 
@@ -40,9 +40,13 @@ public class Player extends Entity {
 //        worldY = gp.TILE_SIZE * 12;
 //        gp.currentMap = 1;
 
-        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
-        worldY = gp.TILE_SIZE * 7;
-        gp.currentMap = 2;
+//        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
+//        worldY = gp.TILE_SIZE * 7;
+//        gp.currentMap = 2;
+
+        worldX = gp.TILE_SIZE * 25; // starting pos
+        worldY = gp.TILE_SIZE * 10;
+        gp.currentMap = 3;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -127,11 +131,11 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
-        inventory.add(new Key(gp));
         inventory.add(new Lantern(gp));
-        inventory.add(new Iron_Axe(gp));
         inventory.add(new Iron_Pickaxe(gp));
         inventory.add(new Iron_Sword(gp));
+        inventory.add(new Iron_Shield(gp));
+        inventory.add(new Potion_Blue(gp));
     }
 
     public int getAttackValue() {
@@ -424,6 +428,7 @@ public class Player extends Entity {
         }
 
         if (maxLife > 32) {maxLife = 32;}
+        if (maxLife > 8) {maxMana = 8;}
     }
 
     public void objectPickup(int i) {
@@ -570,6 +575,7 @@ public class Player extends Entity {
             exp = 0;
             maxLife += 2;
             life = maxLife;
+            maxMana++;
             mana = maxMana;
             strength++;
             dexterity++;
@@ -718,7 +724,10 @@ public class Player extends Entity {
         if (invincible) {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         }
-        g2.drawImage(image, tempScreenX, tempScreenY, null);
+
+        if (isDrawing) {
+            g2.drawImage(image, tempScreenX, tempScreenY, null);
+        }
 
         // Reset alpha transparency
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));

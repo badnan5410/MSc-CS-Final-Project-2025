@@ -25,6 +25,7 @@ public class Entity {
     Color darkGrey = new Color(35, 35, 35);
     public Entity attacker;
     public Entity linkedEntity;
+    public boolean temp = false;
 
     // State
     public int worldX, worldY;
@@ -48,6 +49,8 @@ public class Entity {
     public Entity loot;
     public boolean opened = false;
     public boolean enraged = false;
+    public boolean isSleeping = false;
+    public boolean isDrawing = true;
 
     // Counters
     public int spriteCounter = 0;
@@ -86,7 +89,7 @@ public class Entity {
     public Entity currentShield;
     public Entity currentLight;
     public Projectile projectile;
-    public boolean isBossMonster = true;
+    public boolean isBossMonster = false;
 
     // Item Properties
     public ArrayList<Entity> inventory = new ArrayList<>();
@@ -251,87 +254,89 @@ public class Entity {
 
     public void update() {
 
-        if (knockback) {
+        if (!isSleeping) {
+            if (knockback) {
 
-            // tells the collision entity is about to move
-            String prevDir = direction;
-            direction = knockBackDirection;
+                // tells the collision entity is about to move
+                String prevDir = direction;
+                direction = knockBackDirection;
 
-            // clear predictive boolean flags
-            checkCollision = false;
-            collision = false;
+                // clear predictive boolean flags
+                checkCollision = false;
+                collision = false;
 
-            // Predict collision in the knockback direction
-            gp.cHandler.checkTile(this);
-            gp.cHandler.checkObject(this, true);
-            gp.cHandler.checkEntity(this, gp.npc);
-            gp.cHandler.checkEntity(this, gp.monster);
-            gp.cHandler.checkEntity(this, gp.iTile);
+                // Predict collision in the knockback direction
+                gp.cHandler.checkTile(this);
+                gp.cHandler.checkObject(this, true);
+                gp.cHandler.checkEntity(this, gp.npc);
+                gp.cHandler.checkEntity(this, gp.monster);
+                gp.cHandler.checkEntity(this, gp.iTile);
 
-            if (checkCollision) {
-                knockBackCounter = 0; // prevents entity from being pushed into solid object
-                knockback = false;
-                speed = defaultSpeed;
+                if (checkCollision) {
+                    knockBackCounter = 0; // prevents entity from being pushed into solid object
+                    knockback = false;
+                    speed = defaultSpeed;
+                }
+                else {
+                    switch(knockBackDirection) {
+                        case "up": worldY -= speed; break;
+                        case "down": worldY += speed; break;
+                        case "right": worldX += speed; break;
+                        case "left": worldX -= speed; break;
+                    }
+                }
+
+                direction = prevDir;
+
+                if (++knockBackCounter == 10) {
+                    knockBackCounter = 0;
+                    knockback = false;
+                    speed = defaultSpeed;
+                }
             }
+            else if (attacking) {attacking();}
             else {
-                switch(knockBackDirection) {
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "right": worldX += speed; break;
-                    case "left": worldX -= speed; break;
+                setAction();
+                checkCollision();
+
+                if (!checkCollision) {
+
+                    switch(direction) {
+                        case "up": worldY -= speed; break;
+                        case "down": worldY += speed; break;
+                        case "right": worldX += speed; break;
+                        case "left": worldX -= speed; break;
+                    }
+                }
+
+                spriteCounter++;
+
+                if (spriteCounter > 24) {
+                    if (spriteNum == 1) {spriteNum = 2;}
+                    else if (spriteNum == 2) {spriteNum = 1;}
+
+                    spriteCounter = 0;
                 }
             }
 
-            direction = prevDir;
+            if (invincible) {
+                invincibleCounter++;
 
-            if (++knockBackCounter == 10) {
-                knockBackCounter = 0;
-                knockback = false;
-                speed = defaultSpeed;
-            }
-        }
-        else if (attacking) {attacking();}
-        else {
-            setAction();
-            checkCollision();
-
-            if (!checkCollision) {
-
-                switch(direction) {
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "right": worldX += speed; break;
-                    case "left": worldX -= speed; break;
+                if (invincibleCounter > 40) {
+                    invincible = false;
+                    invincibleCounter = 0;
                 }
             }
 
-            spriteCounter++;
+            if (shotCooldownCounter < 30) {shotCooldownCounter++;}
 
-            if (spriteCounter > 24) {
-                if (spriteNum == 1) {spriteNum = 2;}
-                else if (spriteNum == 2) {spriteNum = 1;}
+            if (offBalance) {
+                offBallanceCounter++;
 
-                spriteCounter = 0;
-            }
-        }
-
-        if (invincible) {
-            invincibleCounter++;
-
-            if (invincibleCounter > 40) {
-                invincible = false;
-                invincibleCounter = 0;
-            }
-        }
-
-        if (shotCooldownCounter < 30) {shotCooldownCounter++;}
-
-        if (offBalance) {
-            offBallanceCounter++;
-
-            if (offBallanceCounter > 60) {
-                offBalance = false;
-                offBallanceCounter = 0;
+                if (offBallanceCounter > 60) {
+                    offBalance = false;
+                    offBallanceCounter = 0;
+                }
             }
         }
     }
@@ -642,9 +647,6 @@ public class Entity {
                     }
                     break;
             }
-
-            // monster HP bar
-
 
             if (invincible && !destructible) {
                 hpBarOn = true;

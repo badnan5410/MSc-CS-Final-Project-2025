@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     Map map = new Map(this);
     SaveLoad saveLoad = new SaveLoad(this);
     public EntityGenerator eGenerator = new EntityGenerator(this);
+    public CutsceneManager cManager = new CutsceneManager(this);
     Thread gameLoop;
 
     // Entity and Object
@@ -83,6 +84,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int GS_TRADE = 8;
     public final int GS_SLEEP = 9;
     public final int GS_MAP = 10;
+    public final int GS_CUTSCENE = 11;
+
+    // others
+    public boolean bossBattleOn = false;
 
     // area state
     public int currentArea;
@@ -115,7 +120,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void resetGame(boolean restart) {
+        stopMusic();
         currentArea = AREA_MAIN;
+        removeTempEntity();
+        bossBattleOn = false;
         player.setDefaultPosition();
         player.restoreStatus();
         player.resetCounter();
@@ -224,6 +232,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void drawTempScreen() {
+
         // Debug
         long drawStart = 0;
         if (kHandler.toggleDebug) {
@@ -307,6 +316,9 @@ public class GamePanel extends JPanel implements Runnable {
             // mini map
             map.drawMiniMap(g2);
 
+            // cutscene
+            cManager.draw(g2);
+
             // User Interface
             ui.draw(g2);
         }
@@ -368,5 +380,18 @@ public class GamePanel extends JPanel implements Runnable {
 
         currentArea = nextArea;
         oHandler.setMonster();
+    }
+
+    public void removeTempEntity() {
+
+        // scan the obj array and remove all entities that have the temp flag as true
+        for (int mapNum = 0; mapNum < maxMap; mapNum++) {
+
+            for (int i = 0; i < obj[1].length; i++) {
+                if (obj[mapNum][i] != null && obj[mapNum][i].temp) {
+                    obj[mapNum][i] = null;
+                }
+            }
+        }
     }
 }

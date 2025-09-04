@@ -1,9 +1,11 @@
 package monster;
 
+import data.Progress;
 import entity.Entity;
 import main.GamePanel;
 import object.Coin;
 import object.Heart;
+import object.Iron_Door;
 import object.Mana;
 
 import java.util.Random;
@@ -28,6 +30,7 @@ public class MON_Boss extends Entity {
         defense = defaultDefense;
         exp = 500;
         knockBackPower = 5;
+        isSleeping = true;
 
         int size = gp.TILE_SIZE*5;
         rect.x = gp.TILE_SIZE;
@@ -43,6 +46,7 @@ public class MON_Boss extends Entity {
 
         getImage();
         getAttackImage();
+        setDialogue();
     }
 
     public void getImage() {
@@ -97,6 +101,12 @@ public class MON_Boss extends Entity {
 
     }
 
+    public void setDialogue() {
+        dialogues[0][0] = "No one can steal my treasure!" + "\n\n\n[press enter]";
+        dialogues[0][1] = "You will die here, just like all the heroes who have\ncome before you!" + "\n\n[press enter]";
+        dialogues[0][2] = "WELCOME TO YOUR DOOM!" + "\n\n\n[press enter]";
+    }
+
     public void setAction() {
 
         if (!enraged && life < maxLife/2) {
@@ -127,6 +137,23 @@ public class MON_Boss extends Entity {
     }
 
     public void checkDrop() {
+
+        gp.bossBattleOn = false;
+        Progress.bossMonsterDefeated = true;
+
+        // restore the previous music
+        gp.stopMusic();
+        gp.playMusic(23);
+
+        // search the iron doors in the current map and remove them
+        for (int i = 0; i < gp.obj[1].length; i++) {
+
+            if (gp.obj[gp.currentMap][i] != null && gp.obj[gp.currentMap][i].name.equals(Iron_Door.objName)) {
+                gp.soundEffect(25);
+                gp.obj[gp.currentMap][i] = null;
+            }
+        }
+
         int i = new Random().nextInt(100) + 1; // 1–100
 
         if (i <= 80) {dropItem(new Coin(gp));}

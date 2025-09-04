@@ -1,5 +1,6 @@
 package main;
 
+import data.Progress;
 import entity.Entity;
 
 public class EventHandler {
@@ -85,6 +86,9 @@ public class EventHandler {
             else if (hit(3, 24, 41, "left")) { // teleport back to dungeon floor 1
                 teleport(2, 11, 7, gp.AREA_DUNGEON);
             }
+            else if (hit(3, 24, 27, "any") || hit(3, 25, 27, "any") || hit(3, 26, 27, "any")) { // initiate cutscene
+                bossEvent();
+            }
         }
     }
 
@@ -151,4 +155,11 @@ public class EventHandler {
         }
     }
 
+    public void bossEvent() {
+
+        if (!gp.bossBattleOn && !Progress.bossMonsterDefeated) {
+            gp.gameState = gp.GS_CUTSCENE;
+            gp.cManager.sceneNum = gp.cManager.BOSS_MONSTER;
+        }
+    }
 }
