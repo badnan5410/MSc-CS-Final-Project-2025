@@ -13,6 +13,6 @@ public class Wood_Shield extends Entity {
         type = TYPE_SHIELD;
         defenseValue = 1;
         description = "[" + name + "]\nJust a wooden shield.\n+" + defenseValue + " DEF";
-        price = 3;
+        price = 10;
     }
 }

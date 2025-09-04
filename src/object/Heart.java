@@ -13,7 +13,6 @@ public class Heart extends Entity {
 
         type = TYPE_PICKUP;
         name = objName;
-        value = 2;
         down1 = setup("/objects/heart_pickup");
         image1 = setup("/objects/heart_full");
         image2 = setup("/objects/heart_half");
@@ -22,8 +21,8 @@ public class Heart extends Entity {
 
     public boolean useItem(Entity entity) {
         gp.soundEffect(2);
-        entity.life += value;
-        gp.ui.addMessage("You have recovered " + value + " HP!");
+        entity.life = entity.maxLife;
+        gp.ui.addMessage("You have regained full health!");
         return true;
     }
 }

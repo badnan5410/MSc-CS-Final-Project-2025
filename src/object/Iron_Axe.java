@@ -11,14 +11,14 @@ public class Iron_Axe extends Entity {
         name = objName;
         down1 = setup("/objects/axe_iron");
         type = TYPE_AXE;
-        attackValue = 6;
-        value = 4;
-        attackArea.width = 32;
-        attackArea.height = 30;
+        attackValue = 5;
+        value = 3;
+        attackArea.width = 25;
+        attackArea.height = 25;
         description  = "[" + name + "]\nA powerful axe that can cut\ndown the tallest tree.\n+" + attackValue + " ATK";
-        price = 12;
-        knockBackPower = 10;
-        motion1_duration = 30;
-        motion2_duration = 50;
+        price = 250;
+        knockBackPower = 3;
+        motion1_duration = 15;
+        motion2_duration = 30;
     }
 }

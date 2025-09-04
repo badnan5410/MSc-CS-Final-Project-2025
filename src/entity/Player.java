@@ -44,9 +44,9 @@ public class Player extends Entity {
 //        worldY = gp.TILE_SIZE * 7;
 //        gp.currentMap = 2;
 
-        worldX = gp.TILE_SIZE * 25; // starting pos
-        worldY = gp.TILE_SIZE * 10;
-        gp.currentMap = 3;
+//        worldX = gp.TILE_SIZE * 25; // starting pos
+//        worldY = gp.TILE_SIZE * 10;
+//        gp.currentMap = 3;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -131,11 +131,6 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
-        inventory.add(new Lantern(gp));
-        inventory.add(new Iron_Pickaxe(gp));
-        inventory.add(new Iron_Sword(gp));
-        inventory.add(new Iron_Shield(gp));
-        inventory.add(new Potion_Blue(gp));
     }
 
     public int getAttackValue() {
@@ -428,7 +423,19 @@ public class Player extends Entity {
         }
 
         if (maxLife > 32) {maxLife = 32;}
-        if (maxLife > 8) {maxMana = 8;}
+
+        if (playerClass.equals("Magician")) {
+            if (maxMana > 16) {
+                maxMana = 16;
+            }
+        }
+        else {
+            if (maxMana > 8) {
+                maxMana = 8;
+            }
+        }
+
+
     }
 
     public void objectPickup(int i) {
@@ -483,17 +490,12 @@ public class Player extends Entity {
             if (!invincible && !gp.monster[gp.currentMap][i].dying) {
                 gp.soundEffect(6);
 
-                int damage = gp.monster[gp.currentMap][i].attack - defense;
+                int damage = (gp.monster[gp.currentMap][i].attack - defense)/3;
 
-                // clamp: anything below 1 is 0
-                if (damage < 1) damage = 0;
+                if (damage < 1) {damage = 1;}
 
-                if (damage > 0) {
-                    life -= damage;
-                    gp.ui.addMessage("You take " + damage + " damage!");
-                } else {
-                    gp.ui.addMessage("You take no damage!");
-                }
+                gp.player.life -= damage;
+                gp.ui.addMessage("You take " + damage + " damage!");
 
                 invincible = true;
             }
@@ -575,7 +577,7 @@ public class Player extends Entity {
             exp = 0;
             maxLife += 2;
             life = maxLife;
-            maxMana++;
+            maxMana += 1;
             mana = maxMana;
             strength++;
             dexterity++;

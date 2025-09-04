@@ -11,14 +11,14 @@ public class Wood_Axe extends Entity {
         name = objName;
         down1 = setup("/objects/axe_wooden");
         type = TYPE_AXE;
-        attackValue = 3;
+        attackValue = 1;
         value = 2;
-        attackArea.width = 30;
-        attackArea.height = 30;
+        attackArea.width = 25;
+        attackArea.height = 25;
         description = "[" + name + "]\nJust a wooden axe.\n+" + attackValue + " ATK";
-        price = 6;
-        knockBackPower = 4;
-        motion1_duration = 5;
-        motion2_duration = 25;
+        price = 25;
+        knockBackPower = 2;
+        motion1_duration = 15;
+        motion2_duration = 30;
     }
 }

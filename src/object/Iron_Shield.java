@@ -11,9 +11,9 @@ public class Iron_Shield extends Entity {
         name = objName;
         down1 = setup("/objects/shield_iron");
         type = TYPE_SHIELD;
-        defenseValue = 6;
+        defenseValue = 3;
         description = "[" + name + "]\nA tough shield, perfect for a\nwarrior.\n+" + defenseValue + " DEF";
-        price = 8;
+        price = 150;
     }
 }
 

@@ -14,12 +14,11 @@ public class Slimeball_Green extends Projectile {
         this.gp = gp;
         name = objName;
         speed = 6;
-        maxLife = 30;
+        maxLife = 90;
         life = maxLife;
-        defaultAttack = 1;
+        defaultAttack = 2;
         attack = defaultAttack;
         knockBackPower = 0;
-        useCost = 1;
         alive = false;
         getImage();
     }

@@ -3,10 +3,7 @@ package monster;
 import data.Progress;
 import entity.Entity;
 import main.GamePanel;
-import object.Coin;
-import object.Heart;
-import object.Iron_Door;
-import object.Mana;
+import object.*;
 
 import java.util.Random;
 
@@ -20,16 +17,16 @@ public class MON_Boss extends Entity {
         name = monName;
         type = TYPE_MONSTER;
         isBossMonster = true;
-        defaultSpeed = 1;
+        defaultSpeed = 2;
         speed = defaultSpeed;
-        maxLife = 50;
+        maxLife = 80;
         life = maxLife;
-        defaultAttack = 12;
-        defaultDefense = 2;
+        defaultAttack = 10;
+        defaultDefense = 4;
         attack = defaultAttack;
         defense = defaultDefense;
-        exp = 500;
-        knockBackPower = 5;
+        exp = 200;
+        knockBackPower = 4;
         isSleeping = true;
 
         int size = gp.TILE_SIZE*5;
@@ -41,8 +38,8 @@ public class MON_Boss extends Entity {
         default_rectY = rect.y;
         attackArea.width = 170;
         attackArea.height = 170;
-        motion1_duration = 25;
-        motion2_duration = 50;
+        motion1_duration = 30;
+        motion2_duration = 45;
 
         getImage();
         getAttackImage();
@@ -115,12 +112,16 @@ public class MON_Boss extends Entity {
             getAttackImage();
             defaultSpeed++;
             speed = defaultSpeed;
-            attack += 2;
+            attack += 4;
             defense += 2;
+            motion1_duration = 20;
+            motion2_duration = 35;
+            gp.ui.addMessage(name + " becomes enraged!");
         }
 
         if (getTileDistance(gp.player) < 10) {
-            moveTowardsThePlayer(60);
+            int interval = enraged ? 30 : 60;
+            moveTowardsThePlayer(interval);
         }
         else {
             getRandomDirection(100);
@@ -128,7 +129,10 @@ public class MON_Boss extends Entity {
 
         // check if it attacks
         if (!attacking) {
-            checkIfMonsterAttack(60, gp.TILE_SIZE*7, gp.TILE_SIZE*5);
+            int attackRate = enraged ? 40 : 60;
+            int verRange = enraged ? gp.TILE_SIZE * 9 : gp.TILE_SIZE * 7; // larger vertical reach
+            int horRange = enraged ? gp.TILE_SIZE * 7 : gp.TILE_SIZE * 5;
+            checkIfMonsterAttack(attackRate, verRange, horRange);
         }
     }
 
@@ -137,27 +141,22 @@ public class MON_Boss extends Entity {
     }
 
     public void checkDrop() {
+        int i = new Random().nextInt(1000) + 1; // 1–1000 pool
 
-        gp.bossBattleOn = false;
-        Progress.bossMonsterDefeated = true;
+        // Guaranteed drops (boss always gives big loot)
+        dropItem(new Coin_Gold(gp));            // Always at least 1 gold
+        dropItem(new Potion_Red(gp));           // Always 1 healing potion
+        dropItem(new Potion_Blue(gp));          // Always 1 mana potion
 
-        // restore the previous music
-        gp.stopMusic();
-        gp.playMusic(23);
-
-        // search the iron doors in the current map and remove them
-        for (int i = 0; i < gp.obj[1].length; i++) {
-
-            if (gp.obj[gp.currentMap][i] != null && gp.obj[gp.currentMap][i].name.equals(Iron_Door.objName)) {
-                gp.soundEffect(25);
-                gp.obj[gp.currentMap][i] = null;
-            }
-        }
-
-        int i = new Random().nextInt(100) + 1; // 1–100
-
-        if (i <= 80) {dropItem(new Coin(gp));}
-        else if (i <= 90) {dropItem(new Mana(gp));}
-        else if (i < 100) {dropItem(new Heart(gp));}
+        // Bonus RNG drops
+        if (i <= 200) {dropItem(new Coin_Gold(gp));}          // 20% extra gold
+        else if (i <= 400) {dropItem(new Tent(gp));}          // 20%
+        else if (i <= 550) {dropItem(new Lantern(gp));}       // 15%
+        else if (i <= 700) {dropItem(new Iron_Shield(gp));}   // 15%
+        else if (i <= 850) {dropItem(new Iron_Sword(gp));}    // 15%
+        else if (i <= 950) {dropItem(new Iron_Axe(gp));}      // 10%
+        else if (i <= 990) {dropItem(new Key(gp));}           // 4%
+        else if (i <= 999) {dropItem(new Coin_Gold(gp));}     // 0.9% jackpot
+        else if (i == 1000) {dropItem(new Lantern(gp));}      // 0.1% ultra-rare duplicate
     }
 }

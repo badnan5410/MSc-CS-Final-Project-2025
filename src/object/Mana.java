@@ -13,7 +13,7 @@ public class Mana extends Entity {
 
         type = TYPE_PICKUP;
         name = objName;
-        value = 1;
+        value = 4;
         down1 = setup("/objects/mana_pickup");
         image1 = setup("/objects/mana_full");
         image2 = setup("/objects/mana_empty");
@@ -21,8 +21,8 @@ public class Mana extends Entity {
 
     public boolean useItem(Entity entity) {
         gp.soundEffect(2);
-        entity.mana += value;
-        gp.ui.addMessage("You have recovered " + value + " MP!");
+        entity.mana = entity.maxMana;
+        gp.ui.addMessage("You have regained full mana!");
         return true;
     }
 }

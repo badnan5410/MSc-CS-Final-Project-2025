@@ -11,13 +11,13 @@ public class Iron_Sword extends Entity {
         name = objName;
         down1 = setup("/objects/sword_iron");
         type = TYPE_SWORD;
-        attackValue = 5;
-        attackArea.width = 36;
-        attackArea.height = 36;
+        attackValue = 4;
+        attackArea.width = 30;
+        attackArea.height = 30;
         description = "[" + name + "]\nA powerful sword that can\nslice enemies in half.\n+" + attackValue + " ATK";
-        price = 10;
-        knockBackPower = 8;
+        price = 200;
+        knockBackPower = 2;
         motion1_duration = 5;
-        motion2_duration = 20;
+        motion2_duration = 25;
     }
 }

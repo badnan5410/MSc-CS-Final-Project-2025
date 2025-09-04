@@ -68,8 +68,8 @@ public class UserInterface {
         manaFull = mana.image1;
         manaEmpty = mana.image2;
 
-        Entity goldCoin = new Coin(gp);
-        coin = goldCoin.down1;
+        Entity copperCoin = new Coin_Copper(gp);
+        coin = copperCoin.down1;
     }
 
     public void addMessage(String text) {

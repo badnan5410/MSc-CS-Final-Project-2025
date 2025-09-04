@@ -170,8 +170,8 @@ public class KeyHandler implements KeyListener {
 
         if (keyCode == KeyEvent.VK_R) {
             switch(gp.currentMap) {
-                case 0: gp.tManager.mapLoader("/maps/world_02.txt", gp.currentMap); break;
-                case 1: gp.tManager.mapLoader("/maps/interior_01.txt", gp.currentMap); break;
+                case 0: gp.tManager.mapLoader("/maps/world_03.txt", gp.currentMap); break;
+                case 1: gp.tManager.mapLoader("/maps/interior_02.txt", gp.currentMap); break;
                 case 2: gp.tManager.mapLoader("/maps/dungeon_01.txt", gp.currentMap); break;
                 case 3: gp.tManager.mapLoader("/maps/dungeon_02.txt", gp.currentMap); break;
             }

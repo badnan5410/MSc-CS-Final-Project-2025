@@ -30,7 +30,9 @@ public class EntityGenerator {
             case Door.objName: obj = new Door(gp); break;
             case Iron_Door.objName: obj = new Iron_Door(gp); break;
             case Chest.objName: obj = new Chest(gp); break;
-            case Coin.objName: obj = new Coin(gp); break;
+            case Coin_Copper.objName: obj = new Coin_Copper(gp); break;
+            case Coin_Silver.objName: obj = new Coin_Silver(gp); break;
+            case Coin_Gold.objName: obj = new Coin_Gold(gp); break;
             case Fireball.objName: obj = new Fireball(gp); break;
             case Slimeball_Green.objName: obj = new Slimeball_Green(gp); break;
             case Slimeball_Red.objName: obj = new Slimeball_Red(gp); break;

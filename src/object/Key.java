@@ -14,7 +14,7 @@ public class Key extends Entity {
         name = objName;
         down1 = setup("/objects/key");
         description = "[" + name + "]\nA mysterious key. I wonder\nwhat it unlocks...";
-        price = 20;
+        price = 50;
         stackable = true;
         setDialogue();
     }

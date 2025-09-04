@@ -559,15 +559,10 @@ public class Entity {
                 gp.soundEffect(6);
             }
 
-            // clamp: anything below 1 is just 0
-            if (damage < 1) damage = 0;
+            if (damage < 1) {damage = 1;}
 
-            if (damage > 0) {
-                gp.player.life -= damage;
-                gp.ui.addMessage("You take " + damage + " damage!");
-            } else {
-                gp.ui.addMessage("You take no damage!");
-            }
+            gp.player.life -= damage;
+            gp.ui.addMessage("You take " + damage + " damage!");
 
             if (knockBackPower > 0) {
                 setKnockBack(gp.player, this, knockBackPower);
@@ -834,6 +829,10 @@ public class Entity {
             case "left": return "right";
             default: return "";
         }
+    }
+
+    public int getCoinValue() {
+        return 0;
     }
 
 }

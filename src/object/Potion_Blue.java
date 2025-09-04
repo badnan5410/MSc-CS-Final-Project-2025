@@ -5,7 +5,7 @@ import main.GamePanel;
 
 public class Potion_Blue extends Entity {
     GamePanel gp;
-    public static final String objName = "Blue Potion";
+    public static final String objName = "Mana Potion";
 
     public Potion_Blue(GamePanel gp) {
         super(gp);
@@ -13,9 +13,8 @@ public class Potion_Blue extends Entity {
         name = objName;
         down1 = setup("/objects/potion_blue");
         type = TYPE_CONSUMABLE;
-        value = 4;
-        description = "[" + name + "]\nDrink this potion to recover\nyour mana.\n+" + value + " MP";
-        price = 20;
+        description = "[" + name + "]\nDrink this potion to recover\nyour mana.\n+ 1/2 max MP";
+        price = 15;
         stackable = true;
         setDialogue();
     }
@@ -25,6 +24,7 @@ public class Potion_Blue extends Entity {
     }
 
     public boolean useItem(Entity entity) {
+        value = entity.maxMana/2;
         gp.soundEffect(11);
         entity.mana += value;
         startDialogue(this, 0);

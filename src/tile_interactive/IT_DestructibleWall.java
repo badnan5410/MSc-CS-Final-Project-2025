@@ -2,7 +2,7 @@ package tile_interactive;
 
 import entity.Entity;
 import main.GamePanel;
-import object.Coin;
+import object.Coin_Copper;
 import object.Heart;
 import object.Mana;
 
@@ -48,6 +48,6 @@ public class IT_DestructibleWall extends InteractiveTile {
     public void checkDrop() {
         int i = new Random().nextInt(200) + 1; // 1–100
 
-        if (i == 1) {dropItem(new Coin(gp));}
+        if (i == 1) {dropItem(new Coin_Copper(gp));}
     }
 }

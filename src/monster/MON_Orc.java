@@ -2,9 +2,7 @@ package monster;
 
 import entity.Entity;
 import main.GamePanel;
-import object.Coin;
-import object.Heart;
-import object.Mana;
+import object.*;
 
 import java.util.Random;
 
@@ -16,16 +14,16 @@ public class MON_Orc extends Entity {
         this.gp = gp;
         name = "Orc";
         type = TYPE_MONSTER;
-        defaultSpeed = 1;
+        defaultSpeed = 2;
         speed = defaultSpeed;
-        maxLife = 20;
+        maxLife = 40;
         life = maxLife;
-        defaultAttack = 8;
-        defaultDefense = 10;
+        defaultAttack = 6;
+        defaultDefense = 3;
         attack = defaultAttack;
         defense = defaultDefense;
-        exp = 10;
-        knockBackPower = 5;
+        exp = 20;
+        knockBackPower = 3;
         rect.x = 4;
         rect.y = 4;
         rect.width = 40;
@@ -34,8 +32,8 @@ public class MON_Orc extends Entity {
         default_rectY = rect.y;
         attackArea.width = gp.TILE_SIZE;
         attackArea.height = gp.TILE_SIZE;
-        motion1_duration = 40;
-        motion2_duration = 85;
+        motion1_duration = 20;
+        motion2_duration = 30;
         getImage();
         getAttackImage();
     }
@@ -68,7 +66,7 @@ public class MON_Orc extends Entity {
         if (onPath) {
 
             // check if it stops chasing
-            checkIfPlayerOutOfAggro(gp.player, 10, 100);
+            checkIfPlayerOutOfAggro(gp.player, 8, 4);
 
             // search the direction to go
             searchPath(getEndCol(gp.player), getEndRow(gp.player));
@@ -76,15 +74,15 @@ public class MON_Orc extends Entity {
         else {
 
             // check if it starts chasing
-            checkIfPlayerInAggro(gp.player, 5, 100);
+            checkIfPlayerInAggro(gp.player, 4, 80);
 
             // get a random direction if it's not onPath
-            getRandomDirection(100);
+            getRandomDirection(120);
         }
 
         // check if it attacks
         if (!attacking) {
-            checkIfMonsterAttack(30, gp.TILE_SIZE*4, gp.TILE_SIZE);
+            checkIfMonsterAttack(25, gp.TILE_SIZE*3, gp.TILE_SIZE);
         }
     }
 
@@ -94,11 +92,20 @@ public class MON_Orc extends Entity {
     }
 
     public void checkDrop() {
-        int i = new Random().nextInt(100) + 1; // 1–100
+        int i = new Random().nextInt(1000) + 1; // 1–1000 pool
 
-        if (i <= 80) {dropItem(new Coin(gp));}
-        else if (i <= 90) {dropItem(new Mana(gp));}
-        else if (i < 100) {dropItem(new Heart(gp));}
+        if (i <= 300) {dropItem(new Coin_Silver(gp));}         // 30%
+        else if (i <= 550) {dropItem(new Coin_Gold(gp));}      // 25%
+        else if (i <= 700) {dropItem(new Potion_Red(gp));}     // 15%
+        else if (i <= 800) {dropItem(new Potion_Blue(gp));}    // 10%
+        else if (i <= 880) {dropItem(new Heart(gp));}          // 8%
+        else if (i <= 940) {dropItem(new Mana(gp));}           // 6%
+        else if (i <= 970) {dropItem(new Tent(gp));}           // 3%
+        else if (i <= 985) {dropItem(new Lantern(gp));}        // 1.5%
+        else if (i <= 995) {dropItem(new Iron_Shield(gp));}    // 1%
+        else if (i <= 998) {dropItem(new Iron_Sword(gp));}     // 0.3%
+        else if (i == 999) {dropItem(new Iron_Axe(gp));}       // 0.1%
+        else if (i == 1000) {dropItem(new Key(gp));}           // 0.1% (super rare bonus)
     }
 }
 

@@ -1,6 +1,7 @@
 package environment;
 
 import main.GamePanel;
+import main.Main;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,8 +27,13 @@ public class Lighting {
     public void setLightSource() {
 
         // instantiate buffered image
-        darkness = new BufferedImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D) darkness.getGraphics();
+//        darkness = new BufferedImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g2 = (Graphics2D) darkness.getGraphics();
+
+        // test
+        GraphicsConfiguration gc = Main.window.getGraphicsConfiguration();
+        darkness = gc.createCompatibleImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, Transparency.TRANSLUCENT);
+        Graphics2D g2 = darkness.createGraphics();
 
         if (gp.player.currentLight == null) {
             g2.setColor(new Color(0, 0, 0, 0.94f));

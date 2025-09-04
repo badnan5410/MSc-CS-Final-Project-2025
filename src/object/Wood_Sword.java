@@ -12,11 +12,11 @@ public class Wood_Sword extends Entity {
         down1 = setup("/objects/sword_wooden");
         type = TYPE_SWORD;
         attackValue = 2;
-        attackArea.width = 34;
-        attackArea.height = 34;
+        attackArea.width = 30;
+        attackArea.height = 30;
         description = "[" + name + "]\nJust a wooden sword.\n+" + attackValue + " ATK";
-        price = 4;
-        knockBackPower = 2;
+        price = 10;
+        knockBackPower = 1;
         motion1_duration = 5;
         motion2_duration = 25;
     }
