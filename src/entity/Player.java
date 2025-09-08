@@ -735,6 +735,10 @@ public class Player extends Entity {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
         // Debug
+//        g2.setColor(Color.red);
+//        g2.setStroke(new BasicStroke(4));
+//        g2.drawRect(screenX + rect.x, screenY + rect.y, rect.width, rect.height);
+
         /*g2.setFont(new Font("Arial", Font.PLAIN, 26));
         g2.setColor(Color.white);
         g2.drawString("Invincible:"+invincibleCounter, 10, 400);*/
