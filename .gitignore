@@ -1,0 +1,6 @@
+
+# IDE/build + runtime
+.idea/
+out/
+save.dat
+
