@@ -7,6 +7,11 @@ import object.Treasure;
 
 import java.awt.*;
 
+/**
+ * Creates a small cutscene.
+ * Runs them as simple phases on every frame and draw directly to the same Graphics2D the game uses.
+ * Scenes are selected by {@code sceneNum}. Progress is tracked by {@code scenePhase}.
+ */
 public class CutsceneManager {
     GamePanel gp;
     Graphics2D g2;
@@ -22,6 +27,11 @@ public class CutsceneManager {
     public final int BOSS_MONSTER = 1;
     public final int GAME_ENDING = 2;
 
+    /**
+     * Keep a handle to the game and seed the end-credits text.
+     *
+     * @param gp
+     */
     public CutsceneManager(GamePanel gp) {
         this.gp = gp;
 
@@ -44,6 +54,11 @@ public class CutsceneManager {
                 "Thank you for playing my game!";
     }
 
+    /**
+     * Entry point each frame. I dispatch to the active scene.
+     *
+     * @param g2
+     */
     public void draw(Graphics2D g2) {
         this.g2 = g2;
 
@@ -54,6 +69,16 @@ public class CutsceneManager {
         }
     }
 
+    /**
+     * Boss battle cutscene:
+     *  - Phase 0: flag boss battle, close the door behind the player, spawn a decoy, hide the real player sprite.
+     *  - Phase 1: pan the camera by moving the real player up to the arena.
+     *  - Phase 2: wake the boss and hand its dialogue to the UI.
+     *  - Phase 3: let the UI run the dialogue.
+     *  - Phase 4: snap camera back to the decoy, remove decoy, resume play, start boss music.
+     *
+     * Dialogue advances under the "cutscene" game state.
+     */
     public void finalBossScene() {
 
         if (scenePhase == 0) {
@@ -83,7 +108,6 @@ public class CutsceneManager {
                     break;
                 }
             }
-
 
             gp.player.isDrawing = false;
             scenePhase++;
@@ -147,6 +171,15 @@ public class CutsceneManager {
         }
     }
 
+    /**
+     * End credits sequence:
+     *  - Phases 0–2: stop music, show treasure dialogue, play a sting.
+     *  - Phase 3: short delay to let audio breathe.
+     *  - Phases 4–5: fade to black, then fade in an end message.
+     *  - Phase 6: show the game title.
+     *  - Phase 7: draw credits static.
+     *  - Phase 8: scroll credits upward, then exit.
+     */
     public void endingScene() {
 
         if (scenePhase == 0) {
@@ -199,7 +232,9 @@ public class CutsceneManager {
             // display end message, making it gradually appear
             alpha += 0.005f;
 
-            if (alpha > 1f) {alpha = 1f;}
+            if (alpha > 1f) {
+                alpha = 1f;
+            }
 
             String message = "After the fierce battle with the Skeleton King,\n" +
                     "our hero has finally discovered the legendary treasure.\n" +
@@ -257,6 +292,11 @@ public class CutsceneManager {
         }
     }
 
+    /**
+     * Simple frame counter. It uses this as a delay gate in scenes.
+     *
+     * @return true once the counter passes the target, then it resets it.
+     */
     public boolean counterReached(int targetNumber) {
         boolean counterReached = false;
         counter++;
@@ -269,12 +309,18 @@ public class CutsceneManager {
         return counterReached;
     }
 
+    /**
+     * Fill the screen with a black rectangle at the given alpha.
+     */
     public void drawBlackBackground(float alpha) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.setColor(Color.black);
         g2.fillRect(0, 0, gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT);
     }
 
+    /**
+     * Draw multi-line centered text with alpha and a font size, starting at y, stepping by lineHeight.
+     */
     public void drawString(float alpha, float fontSize, int y, String text, int lineHeight) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2.setColor(Color.white);

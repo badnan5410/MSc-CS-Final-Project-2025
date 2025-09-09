@@ -6,13 +6,28 @@ import monster.*;
 import object.*;
 import tile_interactive.*;
 
+/**
+ * Populates the world with static objects, NPCs, monsters, and interactive tiles.
+ * All placements are hard-coded by map and grid position. Coordinates are stored in tile units and converted via {@code gp.TILE_SIZE}.
+ */
 public class ObjectHandler {
     GamePanel gp;
 
+    /**
+     * Creates an object spawner bound to the given {@link GamePanel}.
+     *
+     * @param gp owning game panel
+     */
     public ObjectHandler(GamePanel gp) {
         this.gp = gp;
     }
 
+    /**
+     * Places chests, doors, tools, consumables, and special objects by map.
+     * Notes: Resets local index {@code i} when switching {@code mapNum}
+     * All world positions are assigned in tiles: {@code worldX = TILE_SIZE * col} and {@code worldY = TILE_SIZE * row}.
+     *Chests may be preloaded with loot via {@code setLoot(...)}
+     */
     public void setObject() {
         int i = 0;
         int mapNum = 0;
@@ -116,6 +131,11 @@ public class ObjectHandler {
         i++;
     }
 
+    /**
+     * Spawns NPCs by map (wizard on the main map, merchant in the store,
+     * rocks/puzzle elements in dungeon maps).
+     * Resets the per-map index when changing {@code mapNum}.
+     */
     public void setNPC() {
         int i = 0;
         int mapNum = 0;
@@ -152,6 +172,11 @@ public class ObjectHandler {
         i++;
     }
 
+    /**
+     * Spawns monsters by map with fixed positions.
+     * Boss appears on dungeon floor 2 only if not already defeated
+     * ({@link data.Progress#bossMonsterDefeated}).
+     */
     public void setMonster() {
         int i = 0;
         int mapNum = 0;
@@ -302,6 +327,10 @@ public class ObjectHandler {
         }
     }
 
+    /**
+     * Places interactive/destructible tiles (dry trees, breakable walls, pressure plates) by map and grid location.
+     * Each interactive tile is constructed with column/row indices and manages its own behavior (e.g., tool checks, destruction animation).
+     */
     public void setInteractiveTile() {
         int i = 0;
         int mapNum = 0;

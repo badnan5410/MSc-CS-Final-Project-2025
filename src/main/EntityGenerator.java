@@ -3,13 +3,30 @@ package main;
 import entity.Entity;
 import object.*;
 
+/**
+ * Builds Entity instances by name. This is the simple factory for items, projectiles, pickups, and special objects.
+ *
+ * Depends on each class exposing a unique {@code objName} constant.
+ */
 public class EntityGenerator {
     GamePanel gp;
 
+    /**
+     * Keep a handle to the game so it can pass it into new entities.
+     *
+     * @param gp
+     */
     public EntityGenerator(GamePanel gp) {
         this.gp = gp;
     }
 
+    /**
+     * Returns a new Entity for the given name, or {@code null} if it doesn't recognise it.
+     * The names are the static {@code objName} fields on each class.
+     *
+     * @param itemName the object key (e.g., {@code Iron_Sword.objName})
+     * @return a fresh Entity bound to this GamePanel, or {@code null} if unknown
+     */
     public Entity getObject(String itemName) {
         Entity obj = null;
 
