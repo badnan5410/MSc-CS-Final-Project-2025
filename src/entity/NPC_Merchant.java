@@ -3,18 +3,25 @@ package entity;
 import main.GamePanel;
 import object.*;
 
+/**
+ * Shopkeeper NPC that opens the trade UI.
+ *
+ * Loads static two-frame sprites (uses "down" frames for all directions), seeds a fixed inventory, and provides simple dialogue lines used by the trade screens. Collision box is 48×32 at (0,16).
+ */
 public class NPC_Merchant extends Entity {
 
+    /**
+     * Initializes base NPC fields, sprites, dialogue, items, and hitbox.
+     * Default facing is down; speed is 1.
+     */
     public NPC_Merchant(GamePanel gp) {
         super(gp);
         direction = "down";
         speed = 1;
         type = TYPE_NPC;
-
         getImage();
         setDialogue();
         setItems();
-
         rect.x = 0;
         rect.y = 16;
         rect.width = 48;
@@ -23,6 +30,9 @@ public class NPC_Merchant extends Entity {
         default_rectY = rect.y;
     }
 
+    /**
+     * Loads merchant frames (reuses down_1/down_2 for all directions).
+     */
     public void getImage() {
         up1 = setup("/npc/merchant/down_1");
         up2 = setup("/npc/merchant/down_2");
@@ -34,6 +44,9 @@ public class NPC_Merchant extends Entity {
         left2 = setup("/npc/merchant/down_2");
     }
 
+    /**
+     * Defines dialogue pages used during trading flow.
+     */
     public void setDialogue() {
         dialogues[0][0] = "He he, so you found me? I have some good stuff." + "\n\n\n[press enter]";
         dialogues[0][1] = "Are interested in trading with me?" + "\n\n\n[press enter]";
@@ -48,6 +61,9 @@ public class NPC_Merchant extends Entity {
         dialogues[4][1] = "Please unequip the item before selling it." + "\n\n\n[press enter]";
     }
 
+    /**
+     * Populates the merchant’s inventory with consumables and gear.
+     */
     public void setItems() {
         inventory.add(new Potion_Red(gp));
         inventory.add(new Potion_Blue(gp));
@@ -59,6 +75,9 @@ public class NPC_Merchant extends Entity {
         inventory.add(new Iron_Axe(gp));
     }
 
+    /**
+     * Enters the trade state and registers this NPC with the UI.
+     */
     @Override
     public void speak() {
         gp.gameState = gp.GS_TRADE;

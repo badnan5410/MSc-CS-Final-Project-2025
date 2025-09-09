@@ -4,8 +4,18 @@ import main.GamePanel;
 
 import java.util.Random;
 
+/**
+ * Simple wandering NPC wizard.
+ *
+ * Loads two-frame walk sprites per direction, holds multi-page dialogue, and either wanders randomly or follows a path when {@code onPath} is true.
+ * Collision box is 40×40 and default facing is down.
+ */
 public class NPC_Wizard extends Entity {
 
+    /**
+     * Initializes type, speed, collision bounds, sprites, and dialogue.
+     * Starts with {@code dialogueSet = -1} so the first speak() shows set 0.
+     */
     public NPC_Wizard(GamePanel gp) {
         super(gp);
         direction = "down";
@@ -17,12 +27,14 @@ public class NPC_Wizard extends Entity {
         rect.height = 40;
         default_rectX = rect.x;
         default_rectY = rect.y;
-
         dialogueSet = -1;
         getImage();
         setDialogue();
     }
 
+    /**
+     * Loads directional walking frames from resources.
+     */
     public void getImage() {
         up1 = setup("/npc/wizard/wizard_up_1");
         up2 = setup("/npc/wizard/wizard_up_2");
@@ -34,6 +46,9 @@ public class NPC_Wizard extends Entity {
         left2 = setup("/npc/wizard/wizard_left_2");
     }
 
+    /**
+     * Defines the wizard’s dialogue pages, grouped by {@code dialogueSet}.s
+     */
     public void setDialogue() {
         dialogues[0][0] = "Greetings, young adventurer!" + "\n\n\n[press enter]";
         dialogues[0][1] = "So you've come to this island to find \ntreasure?" + "\n\n[press enter]";
@@ -47,11 +62,15 @@ public class NPC_Wizard extends Entity {
         dialogues[2][0] = "I wonder how you unlock that door..." + "\n\n\n[press enter]";
     }
 
+    /**
+     * AI tick: if {@code onPath}, uses A* to move toward a fixed target tile; otherwise, picks a random direction at intervals to wander.
+     */
     @Override
     public void setAction() {
 
         if (onPath) {
             int endCol, endRow;
+
             // wizard's house position
             endCol = 10;
             endRow = 10;
@@ -62,6 +81,7 @@ public class NPC_Wizard extends Entity {
 
             searchPath(endCol, endRow);
         }
+
         else {
             movementCounter++;
 
@@ -72,12 +92,15 @@ public class NPC_Wizard extends Entity {
                 if (i <= 25) {
                     direction = "up";
                 }
+
                 if (i > 25 && i <= 50) {
                     direction = "down";
                 }
+
                 if (i > 50 && i <= 75) {
                     direction = "right";
                 }
+
                 if (i > 75 && i <= 100) {
                     direction = "left";
                 }
@@ -85,9 +108,11 @@ public class NPC_Wizard extends Entity {
                 movementCounter = 0;
             }
         }
-
     }
 
+    /**
+     * Faces the player and advances the dialogue set, clamping at the last page.
+     */
     @Override
     public void speak() {
         faceThePlayer();
@@ -97,12 +122,5 @@ public class NPC_Wizard extends Entity {
         if (dialogues[dialogueSet][0] == null) {
             dialogueSet--;
         }
-
-        /*if (gp.player.life <= gp.player.maxLife/3) {
-            dialogueSet = 1;
-        }*/
-
-
-        //onPath = true;
     }
 }
