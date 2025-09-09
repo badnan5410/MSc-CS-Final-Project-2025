@@ -6,6 +6,10 @@ import main.Main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Renders a full-screen darkness overlay and day/night cycle.
+ * Also draws a radial light around the player if a light is equipped.
+ */
 public class Lighting {
     GamePanel gp;
     BufferedImage darkness;
@@ -19,18 +23,23 @@ public class Lighting {
     public final int MORNING = 3;
     public int dayState = NOON;
 
+    /**
+     * Constructs the lighting system and builds the first overlay.
+     *
+     * @param gp game context
+     */
     public Lighting(GamePanel gp) {
         this.gp = gp;
         setLightSource();
     }
 
+    /**
+     * Rebuilds the darkness overlay.
+     * Uses a radial gradient if the player has a light,
+     * otherwise fills with near-black.
+     * Called on startup and whenever the light changes.
+     */
     public void setLightSource() {
-
-        // instantiate buffered image
-//        darkness = new BufferedImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D g2 = (Graphics2D) darkness.getGraphics();
-
-        // test
         GraphicsConfiguration gc = Main.window.getGraphicsConfiguration();
         darkness = gc.createCompatibleImage(gp.SCREEN_WIDTH, gp.SCREEN_HEIGHT, Transparency.TRANSLUCENT);
         Graphics2D g2 = darkness.createGraphics();
@@ -38,6 +47,7 @@ public class Lighting {
         if (gp.player.currentLight == null) {
             g2.setColor(new Color(0, 0, 0, 0.94f));
         }
+
         else {
             // get the coordinates of the light circle
             int circleCenterX = gp.player.screenX + (gp.TILE_SIZE)/2;
@@ -88,12 +98,19 @@ public class Lighting {
         g2.dispose();
     }
 
+    /**
+     * Resets the day cycle to noon and clears darkness.
+     */
     public void resetDay() {
         dayState = NOON;
         filterAlpha = 0f;
     }
 
-    // working method
+    /**
+     * Advances the day/night cycle and refreshes the light overlay
+     * when the player’s light changes.
+     * Called from the main update loop when playing.
+     */
     public void update() {
 
         if (gp.player.lightUpdated) {
@@ -139,52 +156,12 @@ public class Lighting {
         }
     }
 
-    //debug method
-    /*public void update() {
-
-        if (gp.player.lightUpdated) {
-            setLightSource();
-            gp.player.lightUpdated = false;
-        }
-
-        // check day state
-        if (dayState == NOON) {
-            dayCounter++;
-
-            if (dayCounter > 60) {
-                dayState = EVE;
-                dayCounter = 0;
-            }
-        }
-
-        if (dayState == EVE) {
-            filterAlpha += 0.001f;
-
-            if (filterAlpha > 1f) {
-                filterAlpha = 1f;
-                dayState = NIGHT;
-            }
-        }
-
-        if (dayState == NIGHT) {
-            dayCounter++;
-
-            if (dayCounter > 600) {
-                dayState = MORNING;
-                dayCounter = 0;
-            }
-        }
-
-        if (dayState == MORNING) {
-            filterAlpha -= 0.001f;
-
-            if (filterAlpha < 0) {
-                filterAlpha = 0;
-                dayState = NOON;
-            }
-        }
-    }*/
-
+    /**
+     * Draws the darkness overlay and applies player sprite alpha
+     * based on the current area and time of day.
+     *
+     * @param g2 target graphics
+     */
     public void draw(Graphics2D g2) {
 
         if (gp.currentArea == gp.AREA_MAIN) {
