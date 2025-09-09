@@ -6,14 +6,21 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
+/**
+ * Loads and plays short audio clips (WAV) using Java Sound.
+ * Clips are addressed by index in {@code soundURL}. Call {@link #fileSetter(int)} before starting playback.
+ */
 public class Sound {
-
     Clip clip;
     URL soundURL[] = new URL[30];
     FloatControl fc;
     int volumeScale = 3;
     float volume;
 
+    /**
+     * Initializes resource URLs for all known sounds and music tracks.
+     * The indices in {@code soundURL} are used by {@link #fileSetter(int)}.
+     */
     public Sound() {
         soundURL[0] = getClass().getResource("/sound/bgm_main.wav");
         soundURL[1] = getClass().getResource("/sound/coin.wav");
@@ -46,7 +53,14 @@ public class Sound {
         soundURL[28] = getClass().getResource("/sound/bgm_boss_fight.wav");
     }
 
+    /**
+     * Loads the audio clip at the given index and prepares it for playback.
+     * Also acquires the master gain control and applies the current volume.
+     * @param i index into {@code soundURL} for the desired resource
+     * @throws RuntimeException if the resource cannot be loaded or opened
+     */
     public void fileSetter(int i) {
+
         try{
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
@@ -54,24 +68,43 @@ public class Sound {
             fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
             checkVolume();
 
-        } catch (Exception e) {
+        }
+
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Starts playback of the current clip from its current position.
+     * Call {@link #fileSetter(int)} before this.
+     */
     public void playAudio() {
         clip.start();
     }
 
+    /**
+     * Loops the current clip continuously.
+     * Call {@link #fileSetter(int)} before this.
+     */
     public void loopAudio() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Stops playback of the current clip.
+     */
     public void stopAudio() {
         clip.stop();
     }
 
+    /**
+     * Applies the current {@code volumeScale} to the clip's master gain in dB.
+     * Scale: 0=-80, 1=-20, 2=-12, 3=-5, 4=+1, 5=+6.
+     * Call after changing {@code volumeScale}.
+     */
     public void checkVolume() {
+
         switch(volumeScale) {
             case 0: volume = -80f; break;
             case 1: volume = -20f; break;
@@ -80,6 +113,7 @@ public class Sound {
             case 4: volume = 1f; break;
             case 5: volume = 6f; break;
         }
+
         fc.setValue(volume);
     }
 }
