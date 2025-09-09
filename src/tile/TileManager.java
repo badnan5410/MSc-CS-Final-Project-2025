@@ -13,6 +13,10 @@ import java.io.InputStreamReader;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 
+
+/**
+ * Loads tile sprites/metadata, parses map text files into a 3D map array, and draws the visible tiles relative to the player.
+ */
 public class TileManager {
     GamePanel gp;
     public Tile[] tile;
@@ -21,6 +25,11 @@ public class TileManager {
     ArrayList<String> fileNames = new ArrayList<>();
     ArrayList<String> collisionStatus = new ArrayList<>();
 
+    /**
+     * Reads tile metadata, loads tile images, derives world dimensions from a reference map, allocates the map array, and loads all maps into memory.
+     *
+     * @param gp game panel
+     */
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
@@ -32,13 +41,16 @@ public class TileManager {
         String line;
 
         try {
+
             while ((line = br.readLine()) != null) {
                 fileNames.add(line);
                 collisionStatus.add(br.readLine());
             }
 
             br.close();
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -56,7 +68,9 @@ public class TileManager {
             gp.MAX_WORLD_COL = maxTile.length;
             gp.MAX_WORLD_ROW = maxTile.length;
             mapArray = new int[gp.maxMap][gp.MAX_WORLD_COL][gp.MAX_WORLD_ROW];
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
             System.out.println("Exception!");
         }
 
@@ -66,6 +80,10 @@ public class TileManager {
         mapLoader("/maps/dungeon_02.txt", 3);
     }
 
+    /**
+     * Loads and scales each tile image once, and records its collision flag.
+     * Index matches the ID used in map text files.
+     */
     public void getTileImage() {
 
         for (int i = 0; i < fileNames.size(); i++) {
@@ -76,15 +94,25 @@ public class TileManager {
             // get collision status
             boolean collision;
 
-            if (collisionStatus.get(i).equals("true")) {collision = true;}
-            else {collision = false;}
+            if (collisionStatus.get(i).equals("true")) {
+                collision = true;
+            }
+
+            else {
+                collision = false;
+            }
 
             setup(i, fileName, collision);
         }
-
-
     }
 
+    /**
+     * Populates a single tile entry with its scaled sprite and collision setting.
+     *
+     * @param i tile id
+     * @param imageName filename under /tiles/
+     * @param collision true if this tile blocks movement
+     */
     public void setup(int i, String imageName, boolean collision) {
         UtilityTool uTool = new UtilityTool();
 
@@ -93,11 +121,19 @@ public class TileManager {
             tile[i].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName));
             tile[i].image = uTool.scaleImage(tile[i].image, gp.TILE_SIZE, gp.TILE_SIZE);
             tile[i].collision = collision;
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Parses a whitespace-separated map text file into {@link #mapArray} for a given map index.
+     *
+     * @param filepath classpath to the map file
+     * @param map map index to fill
+     */
     public void mapLoader(String filepath, int map) {
         try {
             InputStream is = getClass().getResourceAsStream(filepath);
@@ -128,6 +164,11 @@ public class TileManager {
         }
     }
 
+    /**
+     * Draws tiles that are within the camera viewport around the player.
+     *
+     * @param g2 target graphics
+     */
     public void draw(Graphics2D g2) {
         int col = 0;
         int row = 0;

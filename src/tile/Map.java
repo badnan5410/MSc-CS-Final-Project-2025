@@ -5,17 +5,30 @@ import main.GamePanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Renders full-map and mini-map views.
+ * Extends {@link TileManager} to reuse tile sprites and the loaded map arrays.
+ */
 public class Map extends TileManager {
     GamePanel gp;
     BufferedImage worldMap[];
     public boolean miniMapOn = false;
 
+    /**
+     * Creates the map renderer and prebuilds world images from the current map data.
+     *
+     * @param gp game context
+     */
     public Map(GamePanel gp) {
         super(gp);
         this.gp = gp;
         createWorldMap();
     }
 
+    /**
+     * Pre-renders each map into a single BufferedImage for cheap scaling/drawing.
+     * Uses {@code mapArray} and {@code tile[]} from {@link TileManager}.
+     */
     public void createWorldMap() {
         worldMap = new BufferedImage[gp.maxMap];
         int worldMapWidth = gp.TILE_SIZE * gp.MAX_WORLD_COL;
@@ -44,6 +57,11 @@ public class Map extends TileManager {
         }
     }
 
+    /**
+     * Draws a centered, large map screen with the player marker and a close hint.
+     *
+     * @param g2 target graphics
+     */
     public void drawFullMapScreen(Graphics2D g2) {
 
         // background colour
@@ -71,6 +89,11 @@ public class Map extends TileManager {
         g2.drawString("Press M to close", 740, 550);
     }
 
+    /**
+     * Draws the semi-transparent mini-map HUD in the top-right corner (when enabled).
+     *
+     * @param g2 target graphics
+     */
     public void drawMiniMap(Graphics2D g2) {
 
         if (miniMapOn) {
