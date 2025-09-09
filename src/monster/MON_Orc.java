@@ -6,9 +6,23 @@ import object.*;
 
 import java.util.Random;
 
+/**
+ * Orc enemy.
+ *
+ * Heavier melee monster with a large hit box and strong knockback.
+ * - Scales attack/defense with time of day via monsterBoost.
+ * - Chases the player using pathfinding when aggroed.
+ * - Performs short-range melee attacks with a two-phase animation.
+ * - Drops mid-tier coins, potions, and occasionally iron gear.
+ */
 public class MON_Orc extends Entity {
     GamePanel gp;
 
+    /**
+     * Builds an Orc with default stats, hit box, attack area, and animations.
+     *
+     * @param gp game context
+     */
     public MON_Orc(GamePanel gp) {
         super(gp);
         this.gp = gp;
@@ -38,6 +52,9 @@ public class MON_Orc extends Entity {
         getAttackImage();
     }
 
+    /**
+     * Loads the walking frames for all directions.
+     */
     public void getImage() {
         up1 = setup("/monster/orc/walking/up_1");
         up2 = setup("/monster/orc/walking/up_2");
@@ -49,6 +66,10 @@ public class MON_Orc extends Entity {
         left2 = setup("/monster/orc/walking/left_2");
     }
 
+    /**
+     * Loads the attack frames for all directions.
+     * Uses tall sprites for vertical swings and wide sprites for horizontal swings.
+     */
     public void getAttackImage() {
         atk_up1 = setup("/monster/orc/attacking/up_1", gp.TILE_SIZE, gp.TILE_SIZE*2);
         atk_up2 = setup("/monster/orc/attacking/up_2", gp.TILE_SIZE, gp.TILE_SIZE*2);
@@ -60,6 +81,13 @@ public class MON_Orc extends Entity {
         atk_left2 = setup("/monster/orc/attacking/left_2", gp.TILE_SIZE*2, gp.TILE_SIZE);
     }
 
+    /**
+     * Orc AI:
+     * - Boosts stats based on day phase.
+     * - If currently pathing, may give up chase and continues A* toward the player.
+     * - If not pathing, may aggro if the player is near and otherwise wanders.
+     * - Tries a melee attack when in front of the player within a narrow cone.
+     */
     public void setAction() {
         monsterBoost(4);
 
@@ -71,6 +99,7 @@ public class MON_Orc extends Entity {
             // search the direction to go
             searchPath(getEndCol(gp.player), getEndRow(gp.player));
         }
+
         else {
 
             // check if it starts chasing
@@ -86,11 +115,31 @@ public class MON_Orc extends Entity {
         }
     }
 
+    /**
+     * On taking damage, immediately commits to chasing the player.
+     */
     public void damageReaction() {
         movementCounter = 0;
         onPath = true;
     }
 
+    /**
+     * Randomized drop table using a 1–1000 roll.
+     *
+     * Rates:
+     * - 1–300   : Silver Coin (30.0%)
+     * - 301–550 : Gold Coin (25.0%)
+     * - 551–700 : Red Potion (15.0%)
+     * - 701–800 : Blue Potion (10.0%)
+     * - 801–880 : Heart (8.0%)
+     * - 881–940 : Mana (6.0%)
+     * - 941–970 : Tent (3.0%)
+     * - 971–985 : Lantern (1.5%)
+     * - 986–995 : Iron Shield (1.0%)
+     * - 996–998 : Iron Sword (0.3%)
+     * - 999     : Iron Axe (0.1%)
+     * - 1000    : Key (0.1%)
+     */
     public void checkDrop() {
         int i = new Random().nextInt(1000) + 1; // 1–1000 pool
 

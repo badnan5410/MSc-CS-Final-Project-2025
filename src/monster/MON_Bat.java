@@ -6,9 +6,21 @@ import object.*;
 
 import java.util.Random;
 
+/**
+ * Bat enemy.
+ *
+ * Fast, low-health flier that darts toward the player and attempts short,
+ * frequent melee swipes. Scales minimally with day/night (no boost).
+ * Uses simple pursuit (no projectile).
+ */
 public class MON_Bat extends Entity {
     GamePanel gp;
 
+    /**
+     * Constructs a Bat with default stats, hit box, and sprites.
+     *
+     * @param gp game context
+     */
     public MON_Bat(GamePanel gp) {
         super(gp);
         this.gp = gp;
@@ -33,6 +45,9 @@ public class MON_Bat extends Entity {
         getImage();
     }
 
+    /**
+     * Loads animation frames (bat shares the same down frames for all directions).
+     */
     public void getImage() {
         up1 = setup("/monster/bat/down_1");
         up2 = setup("/monster/bat/down_2");
@@ -44,16 +59,23 @@ public class MON_Bat extends Entity {
         left2 = setup("/monster/bat/down_2");
     }
 
+    /**
+     * Bat AI:
+     * - No day/night boost.
+     * - If pathing, will sometimes drop aggro and then home toward the player.
+     * - If not pathing, may aggro when the player is close and otherwise wanders.
+     * - Attempts frequent short-range melee attacks in a wide cone.
+     */
     public void setAction() {
-        monsterBoost(1);
+        monsterBoost(0);
 
         if (onPath) {
             checkIfPlayerOutOfAggro(gp.player, 8, 100);
             moveTowardsThePlayer(20);
         }
+
         else {
             checkIfPlayerInAggro(gp.player, 4, 50);
-
             getRandomDirection(40);
         }
 
@@ -62,11 +84,31 @@ public class MON_Bat extends Entity {
         }
     }
 
+    /**
+     * On taking damage, immediately resumes pursuit.
+     */
     public void damageReaction() {
         movementCounter = 0;
         onPath = true;
     }
 
+    /**
+     * Randomized drop table using a 1–1000 roll.
+     *
+     * Rates:
+     * - 1–400    : Copper Coin (40.0%)
+     * - 401–600  : Silver Coin (20.0%)
+     * - 601–750  : Heart (15.0%)
+     * - 751–850  : Mana (10.0%)
+     * - 851–930  : Red Potion (8.0%)
+     * - 931–980  : Blue Potion (5.0%)
+     * - 981–995  : Tent (1.5%)
+     * - 996      : Lantern (0.1%)
+     * - 997      : Iron Shield (0.1%)
+     * - 998      : Iron Sword (0.1%)
+     * - 999      : Iron Axe (0.1%)
+     * - 1000     : Key (0.1%)
+     */
     public void checkDrop() {
         int i = new Random().nextInt(1000) + 1; // 1–1000 pool
 
@@ -83,5 +125,4 @@ public class MON_Bat extends Entity {
         else if (i == 999) {dropItem(new Iron_Axe(gp));}      // 0.1%
         else if (i == 1000) {dropItem(new Key(gp));}          // 0.1% jackpot
     }
-
 }

@@ -7,10 +7,29 @@ import object.*;
 
 import java.util.Random;
 
+/**
+ * Boss monster: Umberos, the Skeleton King.
+ *
+ * Behavior:
+ * - Starts asleep until the cutscene triggers the fight.
+ * - Enrages at 50% HP: swaps to alternate sprites, moves faster, and hits harder.
+ * - Uses large hitbox and extended attack area suitable for a multi-tile boss.
+ * - Shows a dedicated boss HP bar via the UI.
+ *
+ * Notes:
+ * - This class intentionally does not apply day/night scaling; it manages its
+ *   own phase-based difficulty through the enraged state.
+ */
 public class MON_Boss extends Entity {
     GamePanel gp;
     public static final String monName = "Umberos, Skeleton King";
 
+    /**
+     * Initializes the boss with base stats, large collision box,
+     * and attack frames. Starts in a sleeping state.
+     *
+     * @param gp game context
+     */
     public MON_Boss(GamePanel gp) {
         super(gp);
         this.gp = gp;
@@ -28,7 +47,6 @@ public class MON_Boss extends Entity {
         exp = 200;
         knockBackPower = 4;
         isSleeping = true;
-
         int size = gp.TILE_SIZE*5;
         rect.x = gp.TILE_SIZE;
         rect.y = gp.TILE_SIZE;
@@ -40,12 +58,14 @@ public class MON_Boss extends Entity {
         attackArea.height = 170;
         motion1_duration = 30;
         motion2_duration = 45;
-
         getImage();
         getAttackImage();
         setDialogue();
     }
 
+    /**
+     * Loads walking sprites. Uses an alternate set when enraged.
+     */
     public void getImage() {
         int i = 5; // scale
 
@@ -59,6 +79,7 @@ public class MON_Boss extends Entity {
             left1 = setup("/monster/boss/walking/left_1", gp.TILE_SIZE*i, gp.TILE_SIZE*i);
             left2 = setup("/monster/boss/walking/left_2", gp.TILE_SIZE*i, gp.TILE_SIZE*i);
         }
+
         else {
             up1 = setup("/monster/boss/walking2/up_1", gp.TILE_SIZE*i, gp.TILE_SIZE*i);
             up2 = setup("/monster/boss/walking2/up_2", gp.TILE_SIZE*i, gp.TILE_SIZE*i);
@@ -69,9 +90,11 @@ public class MON_Boss extends Entity {
             left1 = setup("/monster/boss/walking2/left_1", gp.TILE_SIZE*i, gp.TILE_SIZE*i);
             left2 = setup("/monster/boss/walking2/left_2", gp.TILE_SIZE*i, gp.TILE_SIZE*i);
         }
-
     }
 
+    /**
+     * Loads attack sprites. Uses an alternate set when enraged.
+     */
     public void getAttackImage() {
         int i = 5; // scale
 
@@ -85,6 +108,7 @@ public class MON_Boss extends Entity {
             atk_left1 = setup("/monster/boss/attacking/left_1", gp.TILE_SIZE*2*i, gp.TILE_SIZE*i);
             atk_left2 = setup("/monster/boss/attacking/left_2", gp.TILE_SIZE*2*i, gp.TILE_SIZE*i);
         }
+
         else {
             atk_up1 = setup("/monster/boss/attacking2/up_1", gp.TILE_SIZE*i, gp.TILE_SIZE*2*i);
             atk_up2 = setup("/monster/boss/attacking2/up_2", gp.TILE_SIZE*i, gp.TILE_SIZE*2*i);
@@ -95,15 +119,23 @@ public class MON_Boss extends Entity {
             atk_left1 = setup("/monster/boss/attacking2/left_1", gp.TILE_SIZE*2*i, gp.TILE_SIZE*i);
             atk_left2 = setup("/monster/boss/attacking2/left_2", gp.TILE_SIZE*2*i, gp.TILE_SIZE*i);
         }
-
     }
 
+    /**
+     * Initializes the boss dialogue lines shown during the encounter.
+     */
     public void setDialogue() {
         dialogues[0][0] = "No one can steal my treasure!" + "\n\n\n[press enter]";
         dialogues[0][1] = "You will die here, just like all the heroes who have\ncome before you!" + "\n\n[press enter]";
         dialogues[0][2] = "WELCOME TO YOUR DOOM!" + "\n\n\n[press enter]";
     }
 
+    /**
+     * Boss AI:
+     * - Enrage trigger at half HP: swaps sprites, buffs stats, shortens attack windup.
+     * - If the player is within 10 tiles, pursues; otherwise wanders.
+     * - Attack rate and range increase while enraged.
+     */
     public void setAction() {
 
         if (!enraged && life < maxLife/2) {
@@ -136,10 +168,19 @@ public class MON_Boss extends Entity {
         }
     }
 
+    /**
+     * On taking damage, cancel any wander delay so the boss can react instantly.
+     */
     public void damageReaction() {
         movementCounter = 0;
     }
 
+    /**
+     * Drop table:
+     * - Guaranteed: 1 gold coin, 1 red potion, 1 blue potion.
+     * - Bonus roll (1–1000) for extra rewards such as more gold, tent, lantern,
+     *   and iron-tier equipment, with very rare outcomes near the top end.
+     */
     public void checkDrop() {
         int i = new Random().nextInt(1000) + 1; // 1–1000 pool
 

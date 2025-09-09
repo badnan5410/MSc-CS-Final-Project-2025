@@ -6,9 +6,23 @@ import object.*;
 
 import java.util.Random;
 
+/**
+ * Red Slime enemy.
+ *
+ * Stronger and more aggressive than the Green Slime:
+ * - Higher speed, life, and knockback.
+ * - Tends to aggro from farther away and wander more nervously.
+ * - Frequently fires red slime projectiles while chasing.
+ * - Attack and defense scale with time-of-day via monsterBoost(int).
+ */
 public class MON_RedSlime extends Entity {
     GamePanel gp;
 
+    /**
+     * Constructs a Red Slime with default stats, hit box, and projectile.
+     *
+     * @param gp game context
+     */
     public MON_RedSlime(GamePanel gp) {
         super(gp);
         this.gp = gp;
@@ -34,6 +48,10 @@ public class MON_RedSlime extends Entity {
         getImage();
     }
 
+    /**
+     * Loads walk-cycle frames.
+     * Reuses the "down" frames for all directions.
+     */
     public void getImage() {
         up1 = setup("/monster/red_slime/down_1");
         up2 = setup("/monster/red_slime/down_2");
@@ -45,6 +63,18 @@ public class MON_RedSlime extends Entity {
         left2 = setup("/monster/red_slime/down_2");
     }
 
+    /**
+     * AI tick.
+     *
+     * When on a path:
+     * - Less likely to give up the chase.
+     * - Pathfinds toward the player.
+     * - Frequently shoots with a short cooldown.
+     *
+     * When wandering:
+     * - 25% chance to aggro if the player is within 8 tiles.
+     * - Changes direction more often than the green slime.
+     */
     public void setAction() {
         monsterBoost(3); // Stronger scaling than green slime
 
@@ -68,11 +98,32 @@ public class MON_RedSlime extends Entity {
         }
     }
 
+    /**
+     * On damage, immediately switches to pathing toward the player.
+     */
     public void damageReaction() {
         movementCounter = 0;
         onPath = true;
     }
 
+    /**
+     * Randomized drop table based on a 1–1000 roll.
+     *
+     * Rates:
+     * - 1–300   : Copper Coin (30.0%)
+     * - 301–550 : Silver Coin (25.0%)
+     * - 551–650 : Gold Coin (10.0%)
+     * - 651–750 : Heart (10.0%)
+     * - 751–830 : Mana (8.0%)
+     * - 831–900 : Red Potion (7.0%)
+     * - 901–950 : Blue Potion (5.0%)
+     * - 951–970 : Tent (2.0%)
+     * - 971–972 : Lantern (0.2%)
+     * - 973     : Iron Shield (0.1%)
+     * - 974     : Iron Sword (0.1%)
+     * - 975     : Iron Axe (0.1%)
+     * - 976–1000: Key (2.5%)
+     */
     public void checkDrop() {
         int i = new Random().nextInt(1000) + 1; // 1–1000 pool
 
