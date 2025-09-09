@@ -3,9 +3,17 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
+/**
+ * Iron-tier axe used as both a weapon and a tool.
+ */
 public class Iron_Axe extends Entity {
     public static final String objName = "Woodcutter's Axe";
 
+    /**
+     * Creates the iron axe and initializes its sprite and stats.
+     *
+     * @param gp game context
+     */
     public Iron_Axe(GamePanel gp) {
         super(gp);
         name = objName;

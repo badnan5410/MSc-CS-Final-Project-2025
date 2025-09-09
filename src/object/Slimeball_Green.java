@@ -5,10 +5,20 @@ import main.GamePanel;
 
 import java.awt.*;
 
+
+/**
+ * Projectile used by Green Slimes.
+ * Slower than the red variant, with lighter damage. Uses a single sprite for all directions.
+ */
 public class Slimeball_Green extends Projectile {
     GamePanel gp;
     public static final String objName = "Green Slime Ball";
 
+    /**
+     * Creates a green slimeball projectile and initializes its stats and sprites.
+     *
+     * @param gp the game panel context
+     */
     public Slimeball_Green(GamePanel gp) {
         super(gp);
         this.gp = gp;
@@ -23,6 +33,9 @@ public class Slimeball_Green extends Projectile {
         getImage();
     }
 
+    /**
+     * Loads the projectile sprite. Same texture is reused for all directions.
+     */
     public void getImage() {
         up1 = setup("/projectiles/slimeball_green");
         up2 = setup("/projectiles/slimeball_green");
@@ -34,11 +47,39 @@ public class Slimeball_Green extends Projectile {
         left2 = setup("/projectiles/slimeball_green");
     }
 
-    public Color getParticleColor() {return new Color(106, 193, 127);}
+    /**
+     * Particle color emitted on impact.
+     *
+     * @return particle color
+     */
+    public Color getParticleColor() {
+        return new Color(106, 193, 127);
+    }
 
-    public int getParticleSize() {return 10;}
+    /**
+     * Particle square size in pixels.
+     *
+     * @return particle size
+     */
+    public int getParticleSize() {
+        return 10;
+    }
 
-    public int getParticleSpeed() {return 1;}
+    /**
+     * Particle movement speed multiplier.
+     *
+     * @return particle speed
+     */
+    public int getParticleSpeed() {
+        return 1;
+    }
 
-    public int getParticleMaxLife() {return 20;}
+    /**
+     * Particle lifetime in ticks.
+     *
+     * @return particle max life
+     */
+    public int getParticleMaxLife() {
+        return 20;
+    }
 }

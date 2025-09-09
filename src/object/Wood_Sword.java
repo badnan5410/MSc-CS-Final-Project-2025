@@ -3,9 +3,18 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
+/**
+ * Wooden starter sword item.
+ * Provides light damage and a small knockback. Intended as the player's early weapon.
+ */
 public class Wood_Sword extends Entity {
     public static final String objName = "Wooden Sword";
 
+    /**
+     * Constructs the Wooden Sword and initializes all item stats and visuals.
+     *
+     * @param gp game context
+     */
     public Wood_Sword(GamePanel gp) {
         super(gp);
         name = objName;

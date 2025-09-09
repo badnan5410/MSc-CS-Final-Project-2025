@@ -3,9 +3,17 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
+/**
+ * High-tier sword the player can equip.
+ */
 public class Iron_Sword extends Entity {
     public static final String objName = "Hero's Sword";
 
+    /**
+     * Constructs the Hero's Sword and initializes its sprite and stats.
+     *
+     * @param gp game context
+     */
     public Iron_Sword(GamePanel gp) {
         super(gp);
         name = objName;

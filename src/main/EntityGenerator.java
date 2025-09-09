@@ -43,7 +43,6 @@ public class EntityGenerator {
             case Key.objName: obj = new Key(gp); break;
             case Lantern.objName: obj = new Lantern(gp); break;
             case Tent.objName: obj = new Tent(gp); break;
-            case Boots.objName: obj = new Boots(gp); break;
             case Door.objName: obj = new Door(gp); break;
             case Iron_Door.objName: obj = new Iron_Door(gp); break;
             case Chest.objName: obj = new Chest(gp); break;
