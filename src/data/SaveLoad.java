@@ -1,19 +1,30 @@
 package data;
 
-import entity.Entity;
 import main.GamePanel;
-import object.*;
-
-import javax.xml.crypto.Data;
 import java.io.*;
 
+/**
+ * Saves and loads a minimal snapshot of game state.
+ * Uses {@link DataStorage} as a DTO and Java serialization to "save.dat".
+ */
 public class SaveLoad {
     GamePanel gp;
 
+    /**
+     * Links this saver/loader to the running game.
+     *
+     * @param gp game context
+     */
     public SaveLoad(GamePanel gp) {
         this.gp = gp;
     }
 
+    /**
+     * Serializes the current game state to disk.
+     * Captures player stats, inventory (names + amounts),
+     * equipped slots, and per-map placed objects (position, loot, opened).
+     * Output file: {@code save.dat} in the working directory.
+     */
     public void save() {
 
         try {
@@ -54,9 +65,11 @@ public class SaveLoad {
             for (int mapNum = 0; mapNum < gp.maxMap; mapNum++) {
 
                 for (int i = 0; i < gp.obj[1].length; i++) {
+
                     if (gp.obj[mapNum][i] == null) {
                         ds.mapObjectNames[mapNum][i] = "N/a";
                     }
+
                     else {
                         ds.mapObjectNames[mapNum][i] = gp.obj[mapNum][i].name;
                         ds.mapObjectWorldX[mapNum][i] = gp.obj[mapNum][i].worldX;
@@ -74,11 +87,16 @@ public class SaveLoad {
             // write the DataStorage object
             oos.writeObject(ds);
         }
+
         catch (Exception e) {
             System.out.println("Save Exception!");
         }
     }
 
+    /**
+     * Deserializes game state from disk and applies it to the current session.
+     * Restores player stats, rebuilds inventory via {@code EntityGenerator}, re-equips items, and recreates map objects including opened state.
+     */
     public void load() {
 
         try {
@@ -121,9 +139,11 @@ public class SaveLoad {
             for (int mapNum = 0; mapNum < gp.maxMap; mapNum++) {
 
                 for (int i = 0; i < gp.obj[1].length; i++) {
+
                     if (ds.mapObjectNames[mapNum][i].equals("N/a")) {
                         gp.obj[mapNum][i] = null;
                     }
+
                     else {
                         gp.obj[mapNum][i] = gp.eGenerator.getObject(ds.mapObjectNames[mapNum][i]);
                         gp.obj[mapNum][i].worldX = ds.mapObjectWorldX[mapNum][i];
@@ -134,14 +154,15 @@ public class SaveLoad {
                         }
 
                         gp.obj[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];
+
                         if (gp.obj[mapNum][i].opened) {
                             gp.obj[mapNum][i].down1 = gp.obj[mapNum][i].image2;
                         }
                     }
                 }
             }
-
         }
+
         catch (Exception e) {
             System.out.println("Load Exception!");
         }

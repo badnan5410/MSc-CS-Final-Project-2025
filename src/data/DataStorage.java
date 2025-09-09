@@ -3,6 +3,10 @@ package data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Serializable snapshot of game state for save/load.
+ * Holds player stats, inventory, and map object data.
+ */
 public class DataStorage implements Serializable {
 
     // player stats
