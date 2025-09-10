@@ -963,7 +963,6 @@ public class UserInterface {
 
     /**
      * Controls help screen.
-     * Displays action → key mappings (Move, Select/Attack, Shoot, Inventory, Pause, Settings) and a “Go Back” option.
      *
      * @param frameX left of the settings frame
      * @param frameY top of the settings frame
@@ -979,26 +978,28 @@ public class UserInterface {
         g2.drawString(text, textX, textY);
 
         textX = frameX + gp.TILE_SIZE;
-        textY += gp.TILE_SIZE/2;
+        textY += 5;
         g2.drawString("Move", textX, textY+= gp.TILE_SIZE);
         g2.drawString("Select/Attack", textX, textY+= gp.TILE_SIZE);
+        g2.drawString("Block", textX, textY+= gp.TILE_SIZE);
         g2.drawString("Shoot", textX, textY+= gp.TILE_SIZE);
         g2.drawString("Inventory", textX, textY+= gp.TILE_SIZE);
         g2.drawString("Pause Game", textX, textY+= gp.TILE_SIZE);
-        g2.drawString("Settings", textX, textY+= gp.TILE_SIZE);
+        g2.drawString("Map/Minimap", textX, textY+= gp.TILE_SIZE);
 
         textX = frameX + gp.TILE_SIZE*6;
-        textY = frameY + gp.TILE_SIZE + 24;
+        textY = frameY + gp.TILE_SIZE + 5;
         g2.drawString("WASD", textX, textY+= gp.TILE_SIZE);
         g2.drawString("ENTER", textX, textY+= gp.TILE_SIZE);
+        g2.drawString("SPACE", textX, textY+= gp.TILE_SIZE);
         g2.drawString("F", textX, textY+= gp.TILE_SIZE);
         g2.drawString("C", textX, textY+= gp.TILE_SIZE);
         g2.drawString("P", textX, textY+= gp.TILE_SIZE);
-        g2.drawString("ESC", textX, textY+= gp.TILE_SIZE);
+        g2.drawString("M/X", textX, textY+= gp.TILE_SIZE);
 
         // back
         textX = frameX + gp.TILE_SIZE;
-        textY = frameY + gp.TILE_SIZE*8;
+        textY = frameY + gp.TILE_SIZE*8 + 20;
         g2.drawString("Go Back", textX, textY+= gp.TILE_SIZE);
 
         if (cNum == 0) {
