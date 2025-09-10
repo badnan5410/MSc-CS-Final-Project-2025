@@ -41,7 +41,7 @@ public class MON_Boss extends Entity {
         maxLife = 80;
         life = maxLife;
         defaultAttack = 10;
-        defaultDefense = 4;
+        defaultDefense = 6;
         attack = defaultAttack;
         defense = defaultDefense;
         exp = 200;
@@ -161,7 +161,7 @@ public class MON_Boss extends Entity {
 
         // check if it attacks
         if (!attacking) {
-            int attackRate = enraged ? 40 : 60;
+            int attackRate = enraged ? 20 : 40;
             int verRange = enraged ? gp.TILE_SIZE * 9 : gp.TILE_SIZE * 7; // larger vertical reach
             int horRange = enraged ? gp.TILE_SIZE * 7 : gp.TILE_SIZE * 5;
             checkIfMonsterAttack(attackRate, verRange, horRange);

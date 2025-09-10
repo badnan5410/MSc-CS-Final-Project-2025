@@ -28,12 +28,12 @@ public class MON_RedSlime extends Entity {
         this.gp = gp;
         name = "Red Slime";
         type = TYPE_MONSTER;
-        defaultSpeed = 3;
+        defaultSpeed = 2;
         speed = defaultSpeed;
         maxLife = 12;
         life = maxLife;
-        defaultAttack = 3;
-        defaultDefense = 2;
+        defaultAttack = 4;
+        defaultDefense = 3;
         attack = defaultAttack;
         defense = defaultDefense;
         exp = 5;
@@ -80,18 +80,18 @@ public class MON_RedSlime extends Entity {
 
         if (onPath) {
 
-            // More likely to keep chasing (25% chance to give up)
-            checkIfPlayerOutOfAggro(gp.player, 14, 4);
+            // More likely to keep chasing
+            checkIfPlayerOutOfAggro(gp.player, 6, 2);
 
             // Uses A* pathfinding to track the player
             searchPath(getEndCol(gp.player), getEndRow(gp.player));
 
             // Shoots more frequently (25% chance per frame, 30-frame cooldown)
-            checkIfMonsterShoot(4, 30);
+            checkIfMonsterShoot(70, 30);
         } else {
 
             // 25% chance to enter aggro if player is nearby
-            checkIfPlayerInAggro(gp.player, 8, 4);
+            checkIfPlayerInAggro(gp.player, 3, 1);
 
             // Twitchier when wandering (changes direction every 35 frames)
             getRandomDirection(35);

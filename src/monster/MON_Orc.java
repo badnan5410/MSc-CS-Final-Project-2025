@@ -28,12 +28,12 @@ public class MON_Orc extends Entity {
         this.gp = gp;
         name = "Orc";
         type = TYPE_MONSTER;
-        defaultSpeed = 2;
+        defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 40;
         life = maxLife;
         defaultAttack = 6;
-        defaultDefense = 3;
+        defaultDefense = 4;
         attack = defaultAttack;
         defense = defaultDefense;
         exp = 20;
@@ -46,7 +46,7 @@ public class MON_Orc extends Entity {
         default_rectY = rect.y;
         attackArea.width = gp.TILE_SIZE;
         attackArea.height = gp.TILE_SIZE;
-        motion1_duration = 20;
+        motion1_duration = 25;
         motion2_duration = 30;
         getImage();
         getAttackImage();
@@ -94,7 +94,7 @@ public class MON_Orc extends Entity {
         if (onPath) {
 
             // check if it stops chasing
-            checkIfPlayerOutOfAggro(gp.player, 8, 4);
+            checkIfPlayerOutOfAggro(gp.player, 4, 2);
 
             // search the direction to go
             searchPath(getEndCol(gp.player), getEndRow(gp.player));
@@ -103,7 +103,7 @@ public class MON_Orc extends Entity {
         else {
 
             // check if it starts chasing
-            checkIfPlayerInAggro(gp.player, 4, 80);
+            checkIfPlayerInAggro(gp.player, 2, 2);
 
             // get a random direction if it's not onPath
             getRandomDirection(120);
@@ -111,7 +111,7 @@ public class MON_Orc extends Entity {
 
         // check if it attacks
         if (!attacking) {
-            checkIfMonsterAttack(25, gp.TILE_SIZE*3, gp.TILE_SIZE);
+            checkIfMonsterAttack(10, gp.TILE_SIZE*2, gp.TILE_SIZE);
         }
     }
 

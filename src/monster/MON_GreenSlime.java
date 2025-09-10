@@ -29,7 +29,7 @@ public class MON_GreenSlime extends Entity {
         this.gp = gp;
         name = "Green Slime";
         type = TYPE_MONSTER;
-        defaultSpeed = 2;
+        defaultSpeed = 1;
         speed = defaultSpeed;
         maxLife = 8;
         life = maxLife;
@@ -67,8 +67,8 @@ public class MON_GreenSlime extends Entity {
     /**
      * AI tick:
      * - Applies time-of-day combat boost.
-     * - If on a path: keeps chasing, may shoot (about 25% chance per tick, cooldown 30).
-     * - If not on a path: has about a 25% chance to start chasing when within 6 tiles,
+     * - If on a path: keeps chasing, may shoot (about 20% chance per tick, cooldown 60).
+     * - If not on a path: has about a 100% chance to start chasing when within 1 tiles,
      *   otherwise wanders with frequent direction changes.
      */
     public void setAction() {
@@ -76,20 +76,20 @@ public class MON_GreenSlime extends Entity {
 
         if (onPath) {
 
-            // much less likely to give up chase (25% chance)
-            checkIfPlayerOutOfAggro(gp.player, 12, 4);
+            // gives up the chase easily
+            checkIfPlayerOutOfAggro(gp.player, 4, 2);
 
             // pathfinding towards player
             searchPath(getEndCol(gp.player), getEndRow(gp.player));
 
-            // shoots often (≈25% chance per frame, cooldown 30)
-            checkIfMonsterShoot(4, 30);
+            // shoots often
+            checkIfMonsterShoot(100, 30);
         }
 
         else {
 
-            // much more likely to aggro (≈25% chance per frame)
-            checkIfPlayerInAggro(gp.player, 6, 4);
+            // 100% chance to aggro if you get too close
+            checkIfPlayerInAggro(gp.player, 4, 1);
 
             // still moves randomly, but changes direction more often
             getRandomDirection(45);

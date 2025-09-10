@@ -27,7 +27,7 @@ public class Tent extends Entity {
         name = objName;
         down1 = setup("/objects/tent");
         description = "[Tent]\nYou can sleep until\nnext morning.";
-        price = 75;
+        price = 30;
     }
 
     /**

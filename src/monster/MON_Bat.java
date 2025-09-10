@@ -26,7 +26,7 @@ public class MON_Bat extends Entity {
         this.gp = gp;
         name = "Bat";
         type = TYPE_MONSTER;
-        defaultSpeed = 6;
+        defaultSpeed = 4;
         speed = defaultSpeed;
         maxLife = 6;
         life = maxLife;
@@ -70,17 +70,17 @@ public class MON_Bat extends Entity {
         monsterBoost(0);
 
         if (onPath) {
-            checkIfPlayerOutOfAggro(gp.player, 8, 100);
+            checkIfPlayerOutOfAggro(gp.player, 4, 1);
             moveTowardsThePlayer(20);
         }
 
         else {
-            checkIfPlayerInAggro(gp.player, 4, 50);
-            getRandomDirection(40);
+            checkIfPlayerInAggro(gp.player, 1, 3);
+            getRandomDirection(45);
         }
 
         if (!attacking) {
-            checkIfMonsterAttack(20, gp.TILE_SIZE * 3, gp.TILE_SIZE * 3);
+            checkIfMonsterAttack(20, gp.TILE_SIZE, gp.TILE_SIZE);
         }
     }
 
