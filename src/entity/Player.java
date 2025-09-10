@@ -50,13 +50,9 @@ public class Player extends Entity {
 //        worldY = gp.TILE_SIZE * 12;
 //        gp.currentMap = 1;
 
-//        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
-//        worldY = gp.TILE_SIZE * 7;
-//        gp.currentMap = 2;
-
-//        worldX = gp.TILE_SIZE * 25; // starting pos
-//        worldY = gp.TILE_SIZE * 10;
-//        gp.currentMap = 3;
+        worldX = gp.TILE_SIZE * 9; // dungeon 2 entrance
+        worldY = gp.TILE_SIZE * 7;
+        gp.currentMap = 2;
 
         defaultSpeed = 4;
         speed = defaultSpeed;
@@ -158,6 +154,12 @@ public class Player extends Entity {
         inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
+        inventory.add(new Key(gp));
+        inventory.add(new Key(gp));
+        inventory.add(new Iron_Sword(gp));
+        inventory.add(new Iron_Shield(gp));
+        inventory.add(new Lantern(gp));
+        inventory.add(new Iron_Pickaxe(gp));
     }
 
     /**

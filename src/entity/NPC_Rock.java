@@ -62,6 +62,12 @@ public class NPC_Rock extends Entity {
     }
 
     /**
+     * empty method to ensure rock doesn't move on its own
+     */
+    @Override
+    public void update() {}
+
+    /**
      * Faces the player and advances dialogue set safely (clamps at end).
      * Keeps the last valid dialogue when the end is reached.
      */

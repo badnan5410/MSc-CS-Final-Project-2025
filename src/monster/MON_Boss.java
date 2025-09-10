@@ -176,28 +176,9 @@ public class MON_Boss extends Entity {
     }
 
     /**
-     * Drop table:
-     * - Guaranteed: 1 gold coin, 1 red potion, 1 blue potion.
-     * - Bonus roll (1–1000) for extra rewards such as more gold, tent, lantern,
-     *   and iron-tier equipment, with very rare outcomes near the top end.
+     * Drops a single gold coin
      */
     public void checkDrop() {
-        int i = new Random().nextInt(1000) + 1; // 1–1000 pool
-
-        // Guaranteed drops (boss always gives big loot)
-        dropItem(new Coin_Gold(gp));            // Always at least 1 gold
-        dropItem(new Potion_Red(gp));           // Always 1 healing potion
-        dropItem(new Potion_Blue(gp));          // Always 1 mana potion
-
-        // Bonus RNG drops
-        if (i <= 200) {dropItem(new Coin_Gold(gp));}          // 20% extra gold
-        else if (i <= 400) {dropItem(new Tent(gp));}          // 20%
-        else if (i <= 550) {dropItem(new Lantern(gp));}       // 15%
-        else if (i <= 700) {dropItem(new Iron_Shield(gp));}   // 15%
-        else if (i <= 850) {dropItem(new Iron_Sword(gp));}    // 15%
-        else if (i <= 950) {dropItem(new Iron_Axe(gp));}      // 10%
-        else if (i <= 990) {dropItem(new Key(gp));}           // 4%
-        else if (i <= 999) {dropItem(new Coin_Gold(gp));}     // 0.9% jackpot
-        else if (i == 1000) {dropItem(new Lantern(gp));}      // 0.1% ultra-rare duplicate
+        dropItem(new Coin_Gold(gp));
     }
 }

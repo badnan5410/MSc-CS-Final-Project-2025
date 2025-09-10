@@ -120,7 +120,7 @@ public class ObjectHandler {
         mapNum = 3; // dungeon floor 2
         i = 0; // index reset to 0
 
-        gp.obj[mapNum][i] = new Iron_Door(gp);
+        gp.obj[mapNum][i] = new Door(gp);
         gp.obj[mapNum][i].worldX = gp.TILE_SIZE*25;
         gp.obj[mapNum][i].worldY = gp.TILE_SIZE*15;
         i++;
